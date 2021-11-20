@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<mavlink>
+    <include>common.xml</include>
+    <include>ardupilotmega.xml</include>
+    <include>uAvionix.xml</include>
+    <include>icarous.xml</include>
+    <dialect>2</dialect>
+
+    <enums>
+        <enum name="PROP_ID_LOC">
+            <entry value="1" name="FrontRight"/>
+            <entry value="2" name="BackRight"/>
+            <entry value="3" name="BackLeft"/>
+            <entry value="4" name="FrontLeft"/>
+        </enum>
+
+        <!-- Added some new MAV_CMDs for controlling the Reel Deal Winch -->
+        <!-- VALUES FROM 0-40000 are reserved for the common message set. Values from 40000 to UINT16_MAX are available for dialects -->
+        <enum name="MAV_CMD">
+            <entry value="60000" name="MAV_CMD_RDW_DROP">
+                <description> Perform a drop and arrest. </description>
+            </entry>
+            <entry value="60001" name="MAV_CMD_RDW_DELIVER">
+                <description> Peform a drop, arrest, touch down, reel up and lock. </description>
+            </entry>
+            <entry value="60002" name="MAV_CMD_RDW_IDLE">
+                <description> Engage motor and hold current position. </description>
+            </entry>
+            <entry value="60003" name="MAV_CMD_RDW_FREEWHEEL">
+                <description> Disable motor and let freewheel. </description>
+            </entry>
+            <entry value="60004" name="MAV_CMD_RDW_REEL_UP">
+                <description> Reel up a specified distance or until locked. </description>
+                <param index="1" label="distance"> The distance to reel up by. </param>
+            </entry>
+            <entry value="60005" name="MAV_CMD_RDW_REEL_DOWN">
+                <description> Reel down a specified distance. </description>
+                <param index="1" label="distance"> The distance to reel down by. </param>
+            </entry>
+        </enum>
+    </enums>
+
+    <!-- We start at 13000 because it's unused. -->
+    <messages>
+        <message id="13001" name="EEPROM_PAGE">
+            <description> Contains information about an EEPROM with page size 16 bytes and 32 total pages </description>
+            <field type="uint8_t" name="target_system"> System ID </field>
+            <field type="uint32_t" name="index"> The eeprom board index, 0 indexed </field>
+            <field type="char[16]" name="page_data"> Opaque page data </field>
+            <field type="uint32_t" name="page_num"> Page number, 0 indexed </field>
+        </message>
+
+        <message id="13002" name="NETWORK_STATUS">
+            <description> Contains SSID of configured network and status of connection </description>
+            <field type="uint8_t" name="target_system"> System ID </field>
+            <field type="uint8_t" name="connected"> Boolean indcator to determine connection to internet </field>
+            <field type="char[32]" name="ssid"> SSID name -- 802.11 standard 32 characters max </field>
+        </message>
+
+        <message id="13003" name="NETWORK_CONNECTION_REQUEST">
+            <description> Request system/component to connect to the network </description>
+            <field type="uint8_t" name="target_system"> System ID </field>
+            <field type="char[32]" name="ssid"> SSID name -- 802.11 standard 32 characters max </field>
+            <field type="char[64]" name="password"> Network password -- WPA2 up to 63 characters </field>
+        </message>
+
+        <message id="13004" name="PRISM_VERSION_INFO">
+            <description> Contains version info for each PRISM asset </description>
+            <field type="uint8_t" name="target_system"> System ID </field>
+            <field type="uint8_t" name="is_current_version"> Boolean indicating if this is the current version </field>
+            <field type="char[16]" name="component_name"> Name of component </field>
+            <field type="char[16]" name="version"> Version </field>
+        </message>
+
+        <message id="13005" name="SOFTWARE_UPDATE_REQUEST">
+            <description> Contains information about an EEPROM with page size 16 bytes and 32 total pages </description>
+            <field type="uint8_t" name="target_system"> System ID </field>
+            <field type="char[16]" name="release_string"> Name of release to update to </field>
+        </message>
+
+        <message id="13006" name="PRISM_VEHICLE_INFO">
+            <description> Contains information about the vehicle. </description>
+            <field type="uint8_t" name="target_system"> System ID </field>
+            <field type="uint64_t" name="flight_time"> Total recorded flight time </field>
+            <field type="uint8_t" name="fpv_camera_selected"> Value is zero if not selected </field>
+            <extensions/>
+            <field type="uint8_t" name="kargo_box_loaded"> Value is 0 if the box is not loaded </field>
+            <!-- <field type="char[16]" name="name"> Name of the system </field> -->
+            <!-- <field type="int" name="system_type"> System type enum </field> -->
+            <!-- <field type="char[10]" name="dom"> Date of manufacture - mm_dd_yyyy </field> -->
+        </message>
+
+        <message id="13007" name="PRISM_PROPULSION_ID">
+            <description> Contains information relevant to PRISM Propulsion ID. </description>
+            <field type="uint8_t" name="target_system"> System ID </field>
+            <field type="uint8_t" name="eeprom_index"> The eeprom board index, 0 indexed </field>
+            <field type="uint8_t" name="id"> Propulsion ID </field>
+            <field type="uint8_t" name="location"> Location on aircraft. See PROP_ID_LOC enum. </field>
+            <field type="uint64_t" name="flight_time"> Propulsion system flight time </field>
+            <!-- <extensions/> -->
+        </message>
+
+        <message id="13008" name="RDW_TELEMETRY">
+            <description> Telemetry from the RDW </description>
+            <field type="uint64_t" name="serial_number"> The serial number of the winch </field>
+            <field type="uint32_t" name="state"> The current state of the winch. </field>
+            <field type="int32_t" name="error"> Error code. TBD. </field>
+            <field type="float" name="current"> The total current. </field>
+            <field type="float" name="torque"> The estimated torque in N/cm. </field>
+            <field type="float" name="spooled_cm"> The estimated spooled out length in cm. </field>
+        </message>
+    </messages>
+</mavlink>

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <mavlink>
   <include>common.xml</include>
+  <include>watts.xml</include>
   <dialect>2</dialect>
   <enums>
     <enum name="COMPONENT_CONTROL">
