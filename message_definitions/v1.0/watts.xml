@@ -17,13 +17,13 @@
         <!-- Added some new MAV_CMDs for controlling the Reel Deal Winch -->
         <!-- VALUES FROM 0-40000 are reserved for the common message set. Values from 40000 to UINT16_MAX are available for dialects -->
         <enum name="MAV_CMD">
-            <entry value="60000" name="MAV_CMD_RDW_DROP">
-                <description> Perform a drop and arrest. </description>
+            <entry value="60000" name="MAV_CMD_RDW_LOCK">
+                <description> Perform the locking sequence. </description>
             </entry>
             <entry value="60001" name="MAV_CMD_RDW_DELIVER">
                 <description> Peform a drop, arrest, touch down, reel up and lock. </description>
             </entry>
-            <entry value="60002" name="MAV_CMD_RDW_IDLE">
+            <entry value="60002" name="MAV_CMD_RDW_HOLD">
                 <description> Engage motor and hold current position. </description>
             </entry>
             <entry value="60003" name="MAV_CMD_RDW_FREEWHEEL">
@@ -102,12 +102,15 @@
 
         <message id="13008" name="RDW_TELEMETRY">
             <description> Telemetry from the RDW </description>
-            <field type="uint64_t" name="serial_number"> The serial number of the winch </field>
-            <field type="uint32_t" name="state"> The current state of the winch. </field>
+            <field type="uint64_t" name="serial_number"> The serial number of the winch. </field>
+            <field type="uint64_t" name="fw_version"> The firmware version of the winch. </field>
+            <field type="uint32_t" name="state"> The current WinchState of the winch. </field>
             <field type="int32_t" name="error"> Error code. TBD. </field>
-            <field type="float" name="current"> The total current. </field>
+            <field type="float" name="current"> The total current in Amps. </field>
             <field type="float" name="torque"> The estimated torque in N/cm. </field>
             <field type="float" name="spooled_cm"> The estimated spooled out length in cm. </field>
+            <field type="float" name="payload_weight"> The estimated weight of the payload in grams. </field>
+            <!-- <extensions/> -->
         </message>
     </messages>
 </mavlink>
