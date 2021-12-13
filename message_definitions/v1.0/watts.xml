@@ -17,25 +17,31 @@
         <!-- Added some new MAV_CMDs for controlling the Reel Deal Winch -->
         <!-- VALUES FROM 0-40000 are reserved for the common message set. Values from 40000 to UINT16_MAX are available for dialects -->
         <enum name="MAV_CMD">
-            <entry value="60000" name="MAV_CMD_RDW_LOCK">
+            <entry value="60000" name="MAV_CMD_REEL_LOCK">
                 <description> Perform the locking sequence. </description>
             </entry>
-            <entry value="60001" name="MAV_CMD_RDW_DELIVER">
+            <entry value="60001" name="MAV_CMD_REEL_DELIVER">
                 <description> Peform a drop, arrest, touch down, reel up and lock. </description>
             </entry>
-            <entry value="60002" name="MAV_CMD_RDW_HOLD">
+            <entry value="60002" name="MAV_CMD_REEL_HOLD">
                 <description> Engage motor and hold current position. </description>
             </entry>
-            <entry value="60003" name="MAV_CMD_RDW_FREEWHEEL">
+            <entry value="60003" name="MAV_CMD_REEL_FREEWHEEL">
                 <description> Disable motor and let freewheel. </description>
             </entry>
-            <entry value="60004" name="MAV_CMD_RDW_REEL_UP">
+            <entry value="60004" name="MAV_CMD_REEL_REEL_UP">
                 <description> Reel up a specified distance or until locked. </description>
                 <param index="1" label="distance"> The distance to reel up by. </param>
             </entry>
-            <entry value="60005" name="MAV_CMD_RDW_REEL_DOWN">
+            <entry value="60005" name="MAV_CMD_REEL_REEL_DOWN">
                 <description> Reel down a specified distance. </description>
                 <param index="1" label="distance"> The distance to reel down by. </param>
+            </entry>
+            <entry value="60006" name="MAV_CMD_REEL_RETURN">
+                <description> Return the REEL to the home position. </description>
+            </entry>
+            <entry value="60007" name="MAV_CMD_REEL_LOAD">
+                <description> Load the REEL with line. </description>
             </entry>
         </enum>
     </enums>
@@ -100,8 +106,8 @@
             <!-- <extensions/> -->
         </message>
 
-        <message id="13008" name="RDW_TELEMETRY">
-            <description> Telemetry from the RDW </description>
+        <message id="13008" name="REEL_TELEMETRY">
+            <description> Telemetry from the REEL </description>
             <field type="uint64_t" name="serial_number"> The serial number of the winch. </field>
             <field type="uint64_t" name="fw_version"> The firmware version of the winch. </field>
             <field type="uint32_t" name="state"> The current WinchState of the winch. </field>
