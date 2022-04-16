@@ -3,7 +3,14 @@
   <include>ras_a.xml</include>
   <version>0</version>
   <dialect>0</dialect>
-  <enums/>
+  <enums>
+    <enum name="MAV_CMD">
+      <entry value="303" name="MAV_CMD_DO_PRECISION_HOLD" hasLocation="false" isDestination="false">
+        <description>Initiate a precision hold at a distance above a target.</description>
+        <param index="1" label="Height above target"></param>
+      </entry>
+    </enum>
+  </enums>
   <messages>
     <message id="420" name="RADIO_STATUS_EXTENSIONS">
       <wip/>
@@ -69,6 +76,12 @@
       <field type="uint16_t" name="axis_multiplier">Axis value is first shifted, then multipled by this number before sending in the joystick state as an integer</field>
       <field type="uint16_t" name="joy_definition_version">Joystick definition version (iteration)</field>
       <field type="char[140]" name="joy_definition_uri">Joystick definition URI (if any, otherwise only basic functions will be available). HTTP- (http://) and MAVLink FTP- (mavlinkftp://) formatted URIs are allowed (and both must be supported by any GCS that implements the Camera Protocol). The definition file may be xz compressed, which will be indicated by the file extension .xml.xz (a GCS that implements the protocol must support decompressing the file). The string needs to be zero terminated.</field>
+    </message>
+    <message id="13000" name="MOTOR_INFO">
+        <description> Contains information about a motor. </description>
+        <field type="uint8_t" name="motor"> The motor number </field>
+        <field type="uint8_t" name="type"> The type of motor, TODO: define an enum </field>
+        <field type="uint64_t" name="accumulated_time"> Total accumulated usage time </field>
     </message>
   </messages>
 </mavlink>
