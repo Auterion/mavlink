@@ -45,5 +45,15 @@
       <field type="float" name="vel_e" units="m/s" invalid="[NaN:]"> East velocity of the object in global frame. NAN if unknown.</field>
       <field type="float" name="vel_up" units="m/s" invalid="[NaN:]"> Up velocity of the object in global frame. NAN if unknown.</field>
     </message>
+     <message id="701" name="RADIATION_DETECTOR_STATUS">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Radiation detector status.</description>
+      <field type="uint8_t" name="status">Some enum.</field>
+      <field type="uint32_t" name="timestamp" units="ms">Timestamp of the reading in .</field>
+      <field type="uint32_t" name="number_particles">Number particles that hit the detector.</field>
+      <field type="uint16_t" name="time_interval" units="ms">Time interval over which the reading was recorded.</field>
+    </message>
   </messages>
 </mavlink>
+~
