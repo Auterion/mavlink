@@ -1314,6 +1314,16 @@
         <param index="6">Empty</param>
         <param index="7">Empty</param>
       </entry>
+      <entry value="116" name="MAV_CMD_CONDITION_PAYLOAD_DROP" hasLocation="false" isDestination="false">
+        <description>Drop a payload at current location, either via winch or a servo</description>
+        <param index="1" label="Timeout" units="s">Timeout after which the command will come to an end, regardless of receiving the Command Ack message or not</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
       <entry value="159" name="MAV_CMD_CONDITION_LAST" hasLocation="false" isDestination="false">
         <description>NOP - This command is only used to mark the upper limit of the CONDITION commands in the enumeration</description>
         <param index="1">Empty</param>
