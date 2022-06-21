@@ -79,9 +79,10 @@
     </message>
     <message id="13000" name="MOTOR_INFO">
         <description> Contains information about a motor. </description>
-        <field type="uint8_t" name="motor"> The motor number </field>
+        <field type="uint8_t" name="index"> Motor index number starting with index 1. 0 if unknown. </field>
         <field type="uint8_t" name="type"> The type of motor, TODO: define an enum </field>
-        <field type="uint64_t" name="accumulated_time"> Total accumulated usage time </field>
+        <field type="uint64_t" name="total_time" units="seconds"> Total accumulated usage time</field>
+        <field type="int16_t" name="temperature" units="cdegC" invalid="INT16_MAX">Temperature of motor. INT16_MAX if unknown.</field>
     </message>
   </messages>
 </mavlink>
