@@ -329,6 +329,8 @@
       <field type="int32_t" name="x">X coordinate of center point. Coordinate system depends on frame field.</field>
       <field type="int32_t" name="y">Y coordinate of center point. Coordinate system depends on frame field.</field>
       <field type="float" name="z" units="m">Altitude of center point. Coordinate system depends on frame field.</field>
+      <field type="int32_t" name="entry_point_x">X coordinate of the entry point. Coordinate system depends on frame field.</field>
+      <field type="int32_t" name="entry_point_y">Y coordinate of the entry point. Coordinate system depends on frame field.</field>
     </message>
     <message id="396" name="COMPONENT_INFORMATION_BASIC">
       <description>Basic component information data.</description>
