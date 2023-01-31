@@ -7221,6 +7221,18 @@
       <field type="uint16_t" name="mcc" invalid="UINT16_MAX">Mobile country code. If unknown, set to UINT16_MAX</field>
       <field type="uint16_t" name="mnc" invalid="UINT16_MAX">Mobile network code. If unknown, set to UINT16_MAX</field>
       <field type="uint16_t" name="lac" invalid="0">Location area code. If unknown, set to 0</field>
+      <extensions/>
+      <field type="uint8_t" name="id" instance="true">Cellular instance number</field>
+      <field type="uint64_t" name="download_rate" invalid="0">download rate in kbits/s</field>
+      <field type="uint64_t" name="upload_rate" invalid="0">upload rate in kbits/s</field>
+      <field type="uint64_t" name="ber" invalid="0">bit rate error measurement</field>
+      <field type="float" name="rx_level" invalid="0">rx level.</field>
+      <field type="float" name="tx_level" invalid="0">rx level.</field>
+      <field type="float" name="signal_to_noise" invalid="0">signal to noise.</field>
+      <field type="char[9]" name="cell_tower_id" invalid="0">signal to noise.</field>
+      <field type="uint8_t" name="band_number" invalid="0">band number.</field>
+      <field type="float" name="band_frequency" invalid="0">band number. </field>
+      <field type="float" name="arfcn" invalid="0">Absolute radio-frequency channel number.</field>
     </message>
     <message id="335" name="ISBD_LINK_STATUS">
       <description>Status of the Iridium SBD link.</description>
@@ -7245,6 +7257,16 @@
       <field type="char[16]" name="puk">Required PUK code in case the user failed to authenticate 3 times with the PIN. Empty when message is sent back as a response.</field>
       <field type="uint8_t" name="roaming">Enable/disable roaming. 0: setting unchanged, 1: disabled, 2: enabled. Current setting when sent back as a response.</field>
       <field type="uint8_t" name="response" enum="CELLULAR_CONFIG_RESPONSE">Message acceptance response (sent back to GS).</field>
+    </message>
+    <message id="337" name="NIC_INFO">
+      <description>This message contains NIC device specific information.</description>
+      <field type="uint8_t" name="id" instance="true">NIC instance number.</field>
+      <field type="uint8_t" name="nic_id" invalid="0">Unique id for NIC (Vlan).</field>
+      <field type="char[50]" name="nic_model" invalid="[0]">NIC model.</field>
+      <field type="uint64_t" name="imei" invalid="0">Unique NIC International Mobile Equipment Identity Number.</field>
+      <field type="uint64_t" name="iccid" invalid="0">Integrated Circuit Card Identification Number of SIM Card.</field>
+      <field type="uint64_t" name="imsi" invalid="0"> Current SIM International mobile subscriber identity.</field>
+      <field type="float" name="firmware_version" invalid="NAN">The firmware version installed on the modem.</field>
     </message>
     <message id="339" name="RAW_RPM">
       <description>RPM sensor data message.</description>
