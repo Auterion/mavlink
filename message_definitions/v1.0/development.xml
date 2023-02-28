@@ -411,8 +411,11 @@
       <field type="uint16_t" name="data_rate" units="MiB/s">WiFi network data rate. Set to UINT16_MAX if data_rate information is not supplied.</field>
       <field type="uint8_t" name="security" enum="WIFI_NETWORK_SECURITY">WiFi network security type.</field>
     </message>
-      <message id="337" name="CELLULAR_MODEM_INFORMATION">
-      <description>Cellular modem device information. This contains static information about a modem and should be sent at low rate. Note that the dynamic information about the connection is provided in an associated CELLULAR_STATUS message.</description>
+    <message id="337" name="CELLULAR_MODEM_INFORMATION">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description> This message is still WIP, but was tentatively accepted upstream: https://github.com/mavlink/mavlink/pull/1945.
+                    Cellular modem device information. This contains static information about a modem and should be sent at low rate. Note that the dynamic information about the connection is provided in an associated CELLULAR_STATUS message.</description>
       <field type="uint8_t" name="id" instance="true">Modem instance number. Indexed from 1. Matches index in corresponding CELLULAR_STATUS message.</field>
       <field type="uint64_t" name="imei" invalid="NULL">Unique Modem International Mobile Equipment Identity Number.</field>
       <field type="uint64_t" name="imsi" invalid="NULL">Current SIM International mobile subscriber identity.</field>
