@@ -7288,6 +7288,12 @@
       <extensions/>
       <field type="float[58]" name="data">data</field>
     </message>
+    <message id="353" name="STICKS_RESPONSIVENESS">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Settings to adjust the vehicle response to stick movements.</description>
+      <field type="uint8_t" name="responsiveness">Stick responsiveness</field>
+    </message>
     <message id="354" name="VELOCITY_LIMITS">
       <wip/>
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
