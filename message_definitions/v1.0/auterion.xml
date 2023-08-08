@@ -9,6 +9,7 @@
         <description>Initiate a precision hold at a distance above a target.</description>
         <param index="1" label="Height above target"/>
       </entry>
+    </enum>
   </enums>
   <messages>
     <message id="354" name="VELOCITY_LIMITS">
