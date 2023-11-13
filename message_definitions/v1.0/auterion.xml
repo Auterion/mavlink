@@ -10,6 +10,48 @@
         <param index="1" label="Height above target"/>
       </entry>
     </enum>
+    <enum name="EMISSION_RESTRICTION" bitmask="true">
+      <description>Bitmask of restricted emissions (32-bit). If a bit is set, the aircraft should minimize emissions of its kind.</description>
+      <!-- Electromagnetic spectrum -->
+      <entry value="1" name="EMISSION_RESTRICTION_RADIO">
+        <description>Reduce radio emissions.</description>
+      </entry>
+      <entry value="2" name="EMISSION_RESTRICTION_MICROWAVE">
+        <description>Reduce microwave emissions.</description>
+      </entry>
+      <entry value="4" name="EMISSION_RESTRICTION_INFRARED">
+        <description>Reduce infrared emissions.</description>
+      </entry>
+      <entry value="8" name="EMISSION_RESTRICTION_VISIBLE">
+        <description>Reduce visible light emissions.</description>
+      </entry>
+      <entry value="16" name="EMISSION_RESTRICTION_ULTRAVIOLET">
+        <description>Reduce ultraviolet emissions.</description>
+      </entry>
+      <!-- Sound spectrum -->
+      <entry value="32" name="EMISSION_RESTRICTION_INFRASOUND">
+        <description>Reduce infrasound emissions.</description>
+      </entry>
+      <entry value="64" name="EMISSION_RESTRICTION_SOUND">
+        <description>Reduce sound emissions.</description>
+      </entry>
+      <entry value="128" name="EMISSION_RESTRICTION_ULTRASOUND">
+        <description>Reduce ultrasound emissions.</description>
+      </entry>
+      <!-- Specific Emissions -->
+      <entry value="65536" name="EMISSION_RESTRICTION_LASER">
+        <description>Reduce laser emissions.</description>
+      </entry>
+    </enum>
+    <enum name="EMISSION_CONTROL_MODE">
+      <description>The emission control operation mode and profile.</description>
+      <entry value="0" name="EMISSION_CONTROL_MODE_MANUAL">
+        <description>Pilot decides emission control.</description>
+      </entry>
+      <entry value="1" name="EMISSION_CONTROL_MODE_AUTO">
+        <description>Autopilot decides emission control.</description>
+      </entry>
+    </enum>
   </enums>
   <messages>
     <message id="354" name="VELOCITY_LIMITS">
@@ -103,6 +145,11 @@
       <field type="uint8_t" name="type"> The type of motor, TODO: define an enum </field>
       <field type="uint64_t" name="total_time" units="s"> Total accumulated usage time</field>
       <field type="int16_t" name="temperature" units="cdegC" invalid="INT16_MAX">Temperature of motor. INT16_MAX if unknown.</field>
+    </message>
+    <message id="2142" name="EMISSION_CONTROL">
+      <description>Contains information about what emissions are restricted.</description>
+      <field type="uint32_t" name="restriction" enum="EMISSION_RESTRICTION" display="bitmask">Restricted emissions bit field.</field>
+      <field type="uint8_t" name="mode" enum="EMISSION_CONTROL_MODE">Operation mode.</field>
     </message>
   </messages>
 </mavlink>
