@@ -274,6 +274,24 @@
         <param index="6" reserved="true" default="0"/>
         <param index="7" reserved="true" default="NaN"/>
       </entry>
+      <entry value="309" name="MAV_CMD_DO_PREFLIGHT_CS_CHECK" hasLocation="false" isDestination="false">
+        <description>
+            Command to test control surfaces. This is similar to
+            MAV_CMD_ACTUATOR_TEST, but rather than testing
+            individual actuators, this tests them in functional
+            groups, i.e. roll, pitch, yaw, and (if tiltrotor)
+            collective rotor tilt, all sequentially after receiving this
+            command. Autopilots typically refuse this command while
+            armed.
+        </description>
+        <param index="1">Empty</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
       <entry value="550" name="MAV_CMD_SET_AT_S_PARAM" hasLocation="false" isDestination="false">
         <description>Allows setting an AT S command of an SiK radio.
         </description>
@@ -335,7 +353,7 @@
           Other components in the system should monitor for the CONTROL_STATUS message with this flag, and set their controlling GCS to match its published system id.
           A GCS that wants to control the system should also monitor for the same message and flag, and address the MAV_CMD_REQUEST_OPERATOR_CONTROL to its component id.
           Note that integrators are required to ensure that there is only one system manager component in the system (i.e. one component emitting the message with GCS_CONTROL_STATUS_FLAGS_SYSTEM_MANAGER set).
-   
+
           The MAV_CMD_REQUEST_OPERATOR_CONTROL command is sent by a GCS to the system manager component to request or release control of a system, specifying whether subsequent takeover requests from another GCS are automatically granted, or require permission.
 
           The system manager component should grant control to the GCS if the system does not require takeover permission (or is uncontrolled) and ACK the request with MAV_RESULT_ACCEPTED.
@@ -343,10 +361,10 @@
 
           If the system manager component cannot grant control (because takeover requires permission), the request should be rejected with MAV_RESULT_FAILED.
           The system manager component should then send this same command to the current owning GCS in order to notify of the request.
-          The owning GCS would ACK with MAV_RESULT_ACCEPTED, and might choose to release control of the vehicle, or re-request control with the takeover bit set to allow permission. 
+          The owning GCS would ACK with MAV_RESULT_ACCEPTED, and might choose to release control of the vehicle, or re-request control with the takeover bit set to allow permission.
           In case it choses to re-request control with takeover bit set to allow permission, requestor GCS will only have 10 seconds to get control, otherwise owning GCS will re-request control with takeover bit set to disallow permission, and requestor GCS will need repeat the request if still interested in getting control.
           Note that the pilots of both GCS should co-ordinate safe handover offline.
-          
+
           Note that in most systems the only controlled component will be the "system manager component", and that will be the autopilot.
           However separate GCS control of a particular component is also permitted, if supported by the component.
           In this case the GCS will address MAV_CMD_REQUEST_OPERATOR_CONTROL to the specific component it wants to control.
