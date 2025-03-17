@@ -20,12 +20,13 @@
         <param index="1" label="Object ID"/>
       </entry>
       <entry value="2099" name="MAV_CMD_CAMERA_TRACKING_ADJUSTMENT">
-        <description>Provides fine adjustments to a target's tracked position in the video feed. The update is sent as relative step changes from the current tracking point.</description>
+        <description>Provides fine adjustments to a tracking window position and size in the video feed. The position adjustments are sent as relative step changes from the current tracking point. The user can also add a scaling factor so to change the size of the tracking window.</description>
         <param index="1" label="System ID" minValue="1" maxValue="255" increment="1">New system ID for target component(s). 0: ignore and reject command (broadcast system ID not allowed).</param>
         <param index="2" label="Component ID" minValue="0" maxValue="255" increment="1">New component ID for target component(s). 0: ignore (component IDs don't change).</param>
         <param index="3" label="Timestamp" units="us">Timestamp (UNIX epoch time)</param>
         <param index="4" label="Horizontal Step" minValue="-32768" maxValue="32767" increment="1">Horizontal adjustment in steps relative to the current position. Negative values shift the target left; positive values shift it right.</param>
         <param index="5" label="Vertical Step" minValue="-32768" maxValue="32767" increment="1">Vertical adjustment in steps relative to the current position. Negative values shift the target upward; positive values shift it downward.</param>
+        <param index="6" label="Scaling Factor" minValue="0.1" maxValue="10">Scaling factor to adjust the size of the tracking window. 0.1: maximum scale down; 10: maximum scale up.</param>
       </entry>
     </enum>
     <enum name="MAV_COMPONENT">
