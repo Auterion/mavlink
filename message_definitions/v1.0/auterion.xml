@@ -262,7 +262,7 @@
     </enum>
     <enum name="WIND_REFERENCE">
       <description>Specifies the frame of reference used for wind direction and speed measurements.</description>
-       <entry value="0" name="REFERENCE_TRUE">
+      <entry value="0" name="REFERENCE_TRUE">
         <description>REFERENCE_TRUE Wind referenced to geographic (true) North.</description>
       </entry>
       <entry value="1" name="REFERENCE_MAGNETIC">
