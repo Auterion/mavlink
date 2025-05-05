@@ -437,7 +437,7 @@
       <field type="uint8_t" name="speed_water_referenced_type" enum="SPEED_WATER_REFERENCED_TYPE">Speed water referenced type.</field>
       <field type="uint8_t" name="speed_direction">Speed direction.</field>
     </message>
-    <message id="670" name="WATER_DEPTH">
+    <message id="670" name="WATER_DEPTH_RAW">
       <wip/>
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>Water depth measurement data as interpreted through NMEA2000.</description>
