@@ -6,7 +6,7 @@ on:
   workflow_dispatch: # on button click
 
 jobs:
-  merge:
+  sync:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,16 +15,17 @@ jobs:
           PR_BRANCH_NAME=upstream-merge-$(date '+%Y-%m-%d')
           echo "pr_branch_name=$PR_BRANCH_NAME" >> $GITHUB_ENV
           echo "PR branch will be $PR_BRANCH_NAME"
+
       - name: Sync upstream/main with PR branch
         uses: wei/git-sync@v3
         with:
           source_repo: "mavlink/mavlink"
           source_branch: master
-          destination_repo: "https://auterion-ci:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY"
+          destination_repo: "https://auterion-ci:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY"
           destination_branch: ${{ env.pr_branch_name }}
       - name: Open PR to own master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           echo "**Sync time:** $(date '+%Y-%m-%d %H:%M:%S %Z %z')" > pr_body.md
           echo "> [!IMPORTANT]" >> pr_body.md
