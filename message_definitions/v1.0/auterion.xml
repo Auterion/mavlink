@@ -472,7 +472,7 @@
       <field type="uint8_t[6]" name="engine_state" enum="ENGINE_STATE">Engine state.</field>
       <field type="uint8_t[6]" name="engine_load" units="%">Engine load.</field>
       <field type="uint16_t[6]" name="engine_rpm" units="rpm">Engine RPM.</field>
-      <field type="float" name="fuel_consumption_rate" units="l/h">Fuel consumption rate.</field>
+      <field type="float" name="fuel_consumption_rate" units="L/h">Fuel consumption rate.</field>
       <field type="float[6]" name="oil_pressure" units="kPa">Engine oil pressure.</field>
       <field type="uint8_t[6]" name="throttle_position" units="%">Throttle position.</field>
       <field type="float[6]" name="engine_coolant_temperature" units="degC">Engine coolant temperature.</field>
