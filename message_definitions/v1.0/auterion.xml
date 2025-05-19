@@ -25,7 +25,7 @@
         <param index="2" label="Horizontal Step" minValue="-32768" maxValue="32767" increment="1">Horizontal adjustment in steps relative to the current position. Negative values shift the target left; positive values shift it right.</param>
         <param index="3" label="Vertical Step" minValue="-32768" maxValue="32767" increment="1">Vertical adjustment in steps relative to the current position. Negative values shift the target upward; positive values shift it downward.</param>
       </entry>
-      <entry value="670" name="MAV_CMD_DO_CONTROL_TAKEOVER" hasLocation="false" isDestination="false">
+      <entry value="13670" name="MAV_CMD_DO_CONTROL_TAKEOVER" hasLocation="false" isDestination="false">
         <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
         <description>Commands to take over control from the safety driver. This command cannot give control to safety driver.</description>
@@ -37,7 +37,7 @@
         <param index="6">Empty</param>
         <param index="7">Empty</param>
       </entry>
-      <entry value="671" name="MAV_CMD_DO_ENGINE_LEG_TRIM" hasLocation="false" isDestination="false">
+      <entry value="13671" name="MAV_CMD_DO_ENGINE_LEG_TRIM" hasLocation="false" isDestination="false">
         <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
         <description>Set engine leg trim position. Can execute trim for individual legs or all legs at once.</description>
@@ -49,7 +49,7 @@
         <param index="6">Empty</param>
         <param index="7">Empty</param>
       </entry>
-      <entry value="672" name="MAV_CMD_DO_SET_ENGINE_STATE" hasLocation="false" isDestination="false">
+      <entry value="13672" name="MAV_CMD_DO_SET_ENGINE_STATE" hasLocation="false" isDestination="false">
         <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
         <description>Commands the desired state for vehicle engines.</description>
@@ -393,68 +393,6 @@
       <field type="float[9]" name="ned_homography_matrix">3x3 matrix for NED (North-East-Down) homography transform of the image. Row-major order.</field>
       <field type="char[100]" name="error_message">Optional error message in case of failure. Max length 100 characters.</field>
     </message>
-    <message id="666" name="BOAT_ACTUATOR_STATUS">
-      <wip/>
-      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
-      <description>Boat actuator status reports status and position of all boat control surfaces (currently rudders, engine leg trims).</description>
-      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
-      <field type="uint8_t[6]" name="engine_leg_trim_state" enum="ENGINE_LEG_TRIM_STATE">Engine leg trim state.</field>
-      <field type="float[6]" name="engine_leg_trim_position" units="deg">Engine leg trim position.</field>
-      <field type="uint8_t[6]" name="rudder_state" enum="RUDDER_STATE">Rudder state.</field>
-      <field type="float[6]" name="rudder_position" units="deg">Rudder position.</field>
-    </message>
-    <message id="667" name="BOAT_ENGINE_STATUS">
-      <wip/>
-      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
-      <description>Boat engine status reports status and position of all boat engines.</description>
-      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
-      <field type="uint8_t[6]" name="engine_state" enum="ENGINE_STATE">Engine state.</field>
-      <field type="uint8_t[6]" name="engine_load" units="%">Engine load.</field>
-      <field type="uint16_t[6]" name="engine_rpm" units="rpm">Engine RPM.</field>
-      <field type="float" name="fuel_consumption_rate" units="l/h">Fuel consumption rate.</field>
-      <field type="float[6]" name="oil_pressure" units="kPa">Engine oil pressure.</field>
-      <field type="uint8_t[6]" name="throttle_position" units="%">Throttle position.</field>
-      <field type="float[6]" name="engine_coolant_temperature" units="degC">Engine coolant temperature.</field>
-      <field type="uint8_t[6]" name="transmission_state" enum="TRANSMISSION_STATE">Transmission state.</field>
-    </message>
-    <message id="668" name="FLUID_LEVEL">
-      <wip/>
-      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
-      <description>Boat fluid level reports fluid levels as interpreted through NMEA2000.</description>
-      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
-      <field type="uint8_t" name="instance">Fluid tank instance.</field>
-      <field type="uint8_t" name="type" enum="FLUID_TANK_TYPE">Fluid tank type.</field>
-      <field type="float" name="level" units="%">Fluid level in percentage of full tank.</field>
-      <field type="float" name="capacity" units="l">Fluid capacity left in tank in liters.</field>
-    </message>
-    <message id="669" name="VESSEL_SPEED">
-      <wip/>
-      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
-      <description>Vessel speed measurement as interpreted through NMEA2000.</description>
-      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
-      <field type="float" name="speed_water_referenced" units="m/s">Speed water referenced.</field>
-      <field type="float" name="speed_ground_referenced" units="m/s">Speed ground referenced.</field>
-      <field type="uint8_t" name="speed_water_referenced_type" enum="SPEED_WATER_REFERENCED_TYPE">Speed water referenced type.</field>
-      <field type="uint8_t" name="speed_direction">Speed direction.</field>
-    </message>
-    <message id="670" name="WATER_DEPTH_RAW">
-      <wip/>
-      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
-      <description>Water depth measurement data as interpreted through NMEA2000.</description>
-      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
-      <field type="float" name="depth" units="m">Depth below transducer.</field>
-      <field type="float" name="offset" units="m">Distance between transducer and surface (positive) or keel (negative).</field>
-      <field type="float" name="range" units="m">Max measurement range.</field>
-    </message>
-    <message id="671" name="WIND_DATA_RAW">
-      <wip/>
-      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
-      <description>Wind data measurement message as interpreted through NMEA2000.</description>
-      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
-      <field type="uint8_t" name="reference" enum="WIND_REFERENCE">Wind reference.</field>
-      <field type="float" name="wind_speed" units="m/s">Wind speed.</field>
-      <field type="float" name="wind_angle" units="rad">Wind angle.</field>
-    </message>
     <!-- PIXEL_TO_LLA END -->
     <message id="13000" name="MOTOR_INFO">
       <description> Contains information about a motor. </description>
@@ -515,5 +453,69 @@
       </description>
       <field type="char[32]" name="uuid">uuid of the sender.</field>
     </message>
+    <!-- Boat specific MAVLink-->
+    <message id="13666" name="BOAT_ACTUATOR_STATUS">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Boat actuator status reports status and position of all boat control surfaces (currently rudders, engine leg trims).</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
+      <field type="uint8_t[6]" name="engine_leg_trim_state" enum="ENGINE_LEG_TRIM_STATE">Engine leg trim state.</field>
+      <field type="float[6]" name="engine_leg_trim_position" units="deg">Engine leg trim position.</field>
+      <field type="uint8_t[6]" name="rudder_state" enum="RUDDER_STATE">Rudder state.</field>
+      <field type="float[6]" name="rudder_position" units="deg">Rudder position.</field>
+    </message>
+    <message id="13667" name="BOAT_ENGINE_STATUS">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Boat engine status reports status and position of all boat engines.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
+      <field type="uint8_t[6]" name="engine_state" enum="ENGINE_STATE">Engine state.</field>
+      <field type="uint8_t[6]" name="engine_load" units="%">Engine load.</field>
+      <field type="uint16_t[6]" name="engine_rpm" units="rpm">Engine RPM.</field>
+      <field type="float" name="fuel_consumption_rate" units="l/h">Fuel consumption rate.</field>
+      <field type="float[6]" name="oil_pressure" units="kPa">Engine oil pressure.</field>
+      <field type="uint8_t[6]" name="throttle_position" units="%">Throttle position.</field>
+      <field type="float[6]" name="engine_coolant_temperature" units="degC">Engine coolant temperature.</field>
+      <field type="uint8_t[6]" name="transmission_state" enum="TRANSMISSION_STATE">Transmission state.</field>
+    </message>
+    <message id="13668" name="FLUID_LEVEL">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Boat fluid level reports fluid levels as interpreted through NMEA2000.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
+      <field type="uint8_t" name="instance">Fluid tank instance.</field>
+      <field type="uint8_t" name="type" enum="FLUID_TANK_TYPE">Fluid tank type.</field>
+      <field type="float" name="level" units="%">Fluid level in percentage of full tank.</field>
+      <field type="float" name="capacity" units="l">Fluid capacity left in tank in liters.</field>
+    </message>
+    <message id="13669" name="VESSEL_SPEED">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Vessel speed measurement as interpreted through NMEA2000.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
+      <field type="float" name="speed_water_referenced" units="m/s">Speed water referenced.</field>
+      <field type="float" name="speed_ground_referenced" units="m/s">Speed ground referenced.</field>
+      <field type="uint8_t" name="speed_water_referenced_type" enum="SPEED_WATER_REFERENCED_TYPE">Speed water referenced type.</field>
+      <field type="uint8_t" name="speed_direction">Speed direction.</field>
+    </message>
+    <message id="13670" name="WATER_DEPTH_RAW">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Water depth measurement data as interpreted through NMEA2000.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
+      <field type="float" name="depth" units="m">Depth below transducer.</field>
+      <field type="float" name="offset" units="m">Distance between transducer and surface (positive) or keel (negative).</field>
+      <field type="float" name="range" units="m">Max measurement range.</field>
+    </message>
+    <message id="13671" name="WIND_DATA_RAW">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Wind data measurement message as interpreted through NMEA2000.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
+      <field type="uint8_t" name="reference" enum="WIND_REFERENCE">Wind reference.</field>
+      <field type="float" name="wind_speed" units="m/s">Wind speed.</field>
+      <field type="float" name="wind_angle" units="rad">Wind angle.</field>
+    </message>
+    <!-- BOAT specific MAVLink-->
   </messages>
 </mavlink>
