@@ -212,7 +212,7 @@
       <field type="uint16_t[10]" name="axis_value" invalid="[UINT16_MAX]">Value of each joystick axis</field>
       <field type="uint8_t[20]" name="button_value" invalid="[UINT8_MAX]">Value of each joystick button</field>
     </message>
-        <message id="514" name="TARGET_HANDOVER">
+    <message id="514" name="TARGET_HANDOVER">
       <wip/>
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>Signal sharing of selected tracker object to other connected drones</description>
