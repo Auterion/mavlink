@@ -26,6 +26,51 @@
         <param index="3" label="Vertical Step" minValue="-32768" maxValue="32767" increment="1">Vertical adjustment in steps relative to the current position. Negative values shift the target upward; positive values shift it downward.</param>
       </entry>
     </enum>
+    <enum name="BEARING_TYPE">
+      <description>Type of bearing measurement.</description>
+      <entry value="0" name="BEARING_TYPE_RELATIVE">
+        <description>Relative bearing in degrees with respect to vehicle heading.</description>
+      </entry>
+      <entry value="1" name="BEARING_TYPE_TRUE">
+        <description>True bearing in degrees with respect to True North.</description>
+      </entry>
+      <entry value="2" name="BEARING_TYPE_MAGNETIC">
+        <description>Magnetic bearing in degrees with respect to Magnetic North.</description>
+      </entry>
+    </enum>
+    <enum name="COURSE_TYPE">
+      <description>Type of course measurement.</description>
+      <entry value="0" name="COURSE_TYPE_RELATIVE">
+        <description>Relative course  in degrees with respect to vehicle heading.</description>
+      </entry>
+      <entry value="1" name="COURSE_TYPE_TRUE">
+        <description>True bearing in degrees with respect to True North.</description>
+      </entry>
+    </enum>
+    <enum name="TARGET_TRACK_STATUS">
+      <description>Target track status.</description>
+      <entry value="0" name="TARGET_TRACK_STATUS_LOST">
+        <description>Target track lost.</description>
+      </entry>
+      <entry value="1" name="TARGET_TRACK_STATUS_QUERY">
+        <description>Target track status is being queried.</description>
+      </entry>
+      <entry value="2" name="TARGET_TRACK_STATUS_TRACKING">
+        <description>Target is being tracked.</description>
+      </entry>
+    </enum>
+    <enum name="TARGET_TRACK_ACQUISITION_TYPE">
+      <description>Type of target acquisition.</description>
+      <entry value="0" name="TARGET_TRACK_ACQUISITION_TYPE_AUTO">
+        <description>Automatic target acquisition.</description>
+      </entry>
+      <entry value="1" name="TARGET_TRACK_ACQUISITION_TYPE_MANUAL">
+        <description>Manual target acquisition.</description>
+      </entry>
+      <entry value="2" name="TARGET_TRACK_ACQUISITION_TYPE_REPORTED">
+        <description>Target acquisition is reported by another system.</description>
+      </entry>
+    </enum>
     <enum name="MAV_COMPONENT">
       <entry value="110" name="MAV_COMP_ID_TRACKER">
         <description>Tracker #1.</description>
@@ -247,18 +292,18 @@
     </message>
     <message id="13441" name="CONTROL_STATUS_REPORT">
       <description>Status message indicating the currently active flight control and payload control entity.
-        This message should typically be send from the system at a low frequency as well as after a control ownership change to all connected GCS. 
+        This message should typically be send from the system at a low frequency as well as after a control ownership change to all connected GCS.
       </description>
       <field type="uint8_t" name="current_flight_controller" enum="CURRENT_CONTROL_ENTITY">Current flight control entity.</field>
       <field type="uint8_t" name="current_payload_controller" enum="CURRENT_CONTROL_ENTITY">Current payload control entity.</field>
     </message>
     <message id="13442" name="REQUEST_CONTROL">
       <description>Request the flight control and/or the payload control of the target system by a GCS.
-        The message can be used in a multi GCS environment. A GCS can request the control ownership of the target system. 
+        The message can be used in a multi GCS environment. A GCS can request the control ownership of the target system.
       </description>
       <field type="uint8_t" name="control_target" enum="CONTROL_TARGET_REQUEST">Control target to change to own ownership.</field>
       <field type="uint8_t" name="request_priority" default="0">Priority of the control request. If the priority is higher than the priority
-        of the current control entity, control is given without handoff request. 
+        of the current control entity, control is given without handoff request.
         The priority request should be authenticated on the target system before granting this privilegs. Default value of 0.</field>
       <field type="char[40]" name="requester_id">Identification of the control entity requesting ownership.</field>
       <field type="char[100]" name="reason">Reason for taking ownership.</field>
@@ -270,8 +315,8 @@
       <field type="uint8_t" name="error_code" enum="CONTROL_REQUEST_ERROR_CODE">Error code response.</field>
     </message>
     <message id="13444" name="RELEASE_CONTROL">
-      <description>Release the previously aquired control. 
-        The message can be used in a multi GCS environment to release the control of the target system. 
+      <description>Release the previously aquired control.
+        The message can be used in a multi GCS environment to release the control of the target system.
         This message is ignored when the GCS is not the current active control entity of the control target.
       </description>
       <field type="uint8_t" name="control_target" enum="CONTROL_TARGET_REQUEST">Control target to release own ownership.</field>
@@ -285,7 +330,7 @@
       <field type="char[100]" name="reason">Reason from the control entity requesting ownership.</field>
     </message>
     <message id="13446" name="HANDOFF_RESPOND">
-      <description>Handoff response to handoff request. 
+      <description>Handoff response to handoff request.
         This message is the response from the GCS in control to the handoff request.
       </description>
       <field type="uint8_t" name="control_target" enum="CONTROL_TARGET_REQUEST">Control target to handoff.</field>
@@ -297,5 +342,23 @@
       </description>
       <field type="char[32]" name="uuid">uuid of the sender.</field>
     </message>
+    <!-- NMEA0183 RATTM message for radar target info extraction to MAVLink-->
+    <message id="13672" name="TARGET_TRACK">
+      <description> TARGET_TRACK message contains information about the radar extracted target. This message is sent to GCS to visualize target tracks for operators. </description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
+      <field type="uint16_t" name="target_number"> Numeric ID of a particular target. Each target has a unique numeric ID. </field>
+      <field type="float" name="distance_to_target" units="m"> Distance of the vehicle to the target in meters. </field>
+      <field type="float" name="bearing_to_target" units="deg"> Bearing of the target in degrees. See bearing_type field for reference frame.</field>
+      <field type="uint8_t" name="bearing_type" enum="BEARING_TYPE"> Type of bearing measurement. </field>
+      <field type="float" name="target_speed" units="m/s"> Target's absolute speed over ground. Measured in meters per second. </field>
+      <field type="float" name="target_course" units="deg"> Target's course. Measured in degrees. See course_type field for reference frame.</field>
+      <field type="uint8_t" name="course_type" enum="COURSE_TYPE"> Type of course measurement. </field>
+      <field type="float" name="distance_to_closest_point_of_approach" units="m"> Distance to the closest point of approach. Measured in meters. </field>
+      <field type="float" name="time_to_closest_point_of_approach" units="s"> Time to the closest point of approach. Measured in seconds. </field>
+      <field type="char[20]" name="target_name"> Name of the target. </field>
+      <field type="uint8_t" name="target_track_status" enum="TARGET_TRACK_STATUS"> Status of the target track. </field>
+      <field type="uint8_t" name="target_track_acquisition_type" enum="TARGET_TRACK_ACQUISITION_TYPE"> Type of target acquisition. </field>
+    </message>
+    <!-- NMEA0183 RATTM END-->
   </messages>
 </mavlink>
