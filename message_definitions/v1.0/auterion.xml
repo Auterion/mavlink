@@ -13,7 +13,7 @@
         <param index="2" label="Transport" enum="PARAM_TRANSACTION_TRANSPORT">Possible transport layers to set and get parameters via mavlink during a parameter transaction.</param>
         <param index="3" label="Transaction ID">Identifier for a specific transaction.</param>
       </entry>
-      <entry value="2007" name="MAV_CMD_SHARE_TARGET" hasLocation="false" isDestination="false">
+      <entry value="2090" name="MAV_CMD_SHARE_TARGET" hasLocation="false" isDestination="false">
         <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
         <description>Signal to start sharing current tracked object with connected peers</description>
