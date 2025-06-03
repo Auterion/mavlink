@@ -61,6 +61,18 @@
         <param index="6">Empty</param>
         <param index="7">Empty</param>
       </entry>
+      <entry value="13673" name="MAV_CMD_ESAD" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Command for ESAD device.</description>
+        <param index="1" label="Arm" minValue="0" increment="1" maxValue="1">Boolean indicating arm cmd (1).</param>
+        <param index="2" label="Trigger" minValue="0" increment="1" maxValue="1">Boolean indicating trigger cmd (1).</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
     </enum>
     <enum name="MAV_COMPONENT">
       <entry value="110" name="MAV_COMP_ID_TRACKER">
@@ -516,6 +528,14 @@
       <field type="float" name="wind_speed" units="m/s">Wind speed.</field>
       <field type="float" name="wind_angle" units="rad">Wind angle.</field>
     </message>
-    <!-- BOAT specific MAVLink-->
+    <!-- BOAT specific MAVLink End-->
+    <!-- ESAD specific MAVLink-->
+    <message id="13674" name="ESAD_STATUS">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Status of ESAD device to GCS.</description>
+      <field type="char[16]" name="status">Status, for human-friendly display in a Ground Control Station</field>
+    </message>
+    <!-- ESAD specific MAVLink End-->
   </messages>
 </mavlink>
