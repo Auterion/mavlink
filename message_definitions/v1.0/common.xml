@@ -3688,19 +3688,22 @@
         <description>RTK basestation centered, north, east, down</description>
       </entry>
     </enum>
-    <enum name="LANDING_TARGET_TYPE">
-      <description>Type of landing target</description>
-      <entry value="0" name="LANDING_TARGET_TYPE_LIGHT_BEACON">
-        <description>Landing target signaled by light beacon (ex: IR-LOCK)</description>
+    <enum name="TARGET_TYPE">
+      <description>Defines source of target data.</description>
+      <entry value="0" name="TARGET_TYPE_LIGHT_BEACON">
+        <description>Target signaled by light beacon (ex: IR-LOCK)</description>
       </entry>
-      <entry value="1" name="LANDING_TARGET_TYPE_RADIO_BEACON">
-        <description>Landing target signaled by radio beacon (ex: ILS, NDB)</description>
+      <entry value="1" name="TARGET_TYPE_RADIO_BEACON">
+        <description>Target signaled by radio beacon (ex: ILS, NDB)</description>
       </entry>
-      <entry value="2" name="LANDING_TARGET_TYPE_VISION_FIDUCIAL">
-        <description>Landing target represented by a fiducial marker (ex: ARTag)</description>
+      <entry value="2" name="TARGET_TYPE_VISION_FIDUCIAL">
+        <description>Target represented by a fiducial marker (ex: ARTag)</description>
       </entry>
-      <entry value="3" name="LANDING_TARGET_TYPE_VISION_OTHER">
-        <description>Landing target represented by a pre-defined visual shape/feature (ex: X-marker, H-marker, square)</description>
+      <entry value="3" name="TARGET_TYPE_VISION_OTHER">
+        <description>Target represented by a pre-defined visual shape/feature (ex: X-marker, H-marker, square)</description>
+      </entry>
+      <entry value="4" name="TARGET_TYPE_RADAR">
+        <description>Target signaled by a radar hits.</description>
       </entry>
     </enum>
     <enum name="VTOL_TRANSITION_HEADING">
@@ -6631,7 +6634,7 @@
       <field type="float" name="y" units="m">Y Position of the landing target in MAV_FRAME</field>
       <field type="float" name="z" units="m">Z Position of the landing target in MAV_FRAME</field>
       <field type="float[4]" name="q">Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)</field>
-      <field type="uint8_t" name="type" enum="LANDING_TARGET_TYPE">Type of landing target</field>
+      <field type="uint8_t" name="type" enum="TARGET_TYPE">Type of landing target</field>
       <field type="uint8_t" name="position_valid" enum="MAV_BOOL" default="0">Position fields (x, y, z, q, type) contain valid target position information (MAV_BOOL_FALSE: invalid values). Values not equal to 0 or 1 are invalid.</field>
     </message>
     <!-- imported from ardupilotmega.xml (2019) -->
