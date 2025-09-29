@@ -3,8 +3,30 @@
   <!-- MAVLink standard messages -->
   <include>minimal.xml</include>
   <dialect>0</dialect>
-  <!-- use minimal.xml enums -->
-  <enums/>
-  <!-- use minimal.xml messages -->
-  <messages/>
+  <enums>
+    <enum name="MAV_BOOL" bitmask="true">
+      <description>Enum used to indicate true or false (also: success or failure, enabled or disabled, active or inactive).</description>
+      <entry value="0" name="MAV_BOOL_FALSE">
+        <description>False.</description>
+      </entry>
+      <entry value="1" name="MAV_BOOL_TRUE">
+        <description>True.</description>
+      </entry>
+    </enum>
+  </enums>
+  <messages>
+    <!-- also includes minimal.xml messages -->
+    <message id="33" name="GLOBAL_POSITION_INT">
+      <description>The filtered global position (e.g. fused GPS and accelerometers). The position is in GPS-frame (right-handed, Z-up). It is designed as scaled integer message since the resolution of float is not sufficient.</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (time since system boot).</field>
+      <field type="int32_t" name="lat" units="degE7">Latitude, expressed</field>
+      <field type="int32_t" name="lon" units="degE7">Longitude, expressed</field>
+      <field type="int32_t" name="alt" units="mm">Altitude (MSL). Note that virtually all GPS modules provide both WGS84 and MSL.</field>
+      <field type="int32_t" name="relative_alt" units="mm">Altitude above home</field>
+      <field type="int16_t" name="vx" units="cm/s">Ground X Speed (Latitude, positive north)</field>
+      <field type="int16_t" name="vy" units="cm/s">Ground Y Speed (Longitude, positive east)</field>
+      <field type="int16_t" name="vz" units="cm/s">Ground Z Speed (Altitude, positive down)</field>
+      <field type="uint16_t" name="hdg" units="cdeg" invalid="UINT16_MAX">Vehicle heading (yaw angle), 0.0..359.99 degrees. If unknown, set to: UINT16_MAX</field>
+    </message>
+  </messages>
 </mavlink>
