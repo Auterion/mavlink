@@ -66,6 +66,18 @@
         <param index="6">Empty</param>
         <param index="7">Empty</param>
       </entry>
+      <entry value="13673" name="MAV_CMD_DO_SET_SHIP_APPROACH_SECTORS" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Set the user defined ship approach sectors. These sector represent approach vectors for the drone's landing sequence, with a 360/8 degree arc.</description>
+        <param index="1" label="Approach bitmask" minValue="0" increment="1" maxValue="255">Approach sector bitmask.</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
     </enum>
     <enum name="CURRENT_CONTROL_ENTITY">
       <description>List of the currently active control entity.</description>
@@ -698,5 +710,11 @@
       <field type="uint8_t" name="target_track_acquisition_type" enum="TARGET_TRACK_ACQUISITION_TYPE"> Type of target acquisition.</field>
     </message>
     <!-- NMEA0183 RATTM END-->
+    <message id="13680" name="SHIP_APPROACH_SECTORS_STATUS">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Currently set ship approach sectors, vehicle heading aligned, clockwise orderer bitmask with a high bit indicating an approach sector is set.</description>
+      <field type="uint8_t" name="sectors">Bitmap indicating which ship approach sectors are set. In clockwise order.</field>
+    </message>
   </messages>
 </mavlink>
