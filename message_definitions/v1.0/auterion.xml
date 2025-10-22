@@ -78,7 +78,7 @@
         <param index="6">Empty</param>
         <param index="7">Empty</param>
       </entry>
-      <entry value="13673" name="MAV_CMD_GPIO_DEVICE" hasLocation="false" isDestination="false">
+      <entry value="13800" name="MAV_CMD_GPIO_DEVICE" hasLocation="false" isDestination="false">
         <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
         <description>Command for GPIO_DEVICE.</description>
@@ -728,7 +728,7 @@
       <description>Currently set ship approach sectors, vehicle heading aligned, clockwise orderer bitmask with a high bit indicating an approach sector is set.</description>
       <field type="uint8_t" name="sectors">Bitmap indicating which ship approach sectors are set. In clockwise order.</field>
     </message>
-    <message id="13674" name="GPIO_DEVICE_STATUS">
+    <message id="13800" name="GPIO_DEVICE_STATUS">
       <wip/>
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>Status of GPIO_DEVICE to GCS.</description>
