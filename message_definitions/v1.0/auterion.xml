@@ -555,9 +555,10 @@
     </message>
     <!-- NMEA0183 RATTM END-->
     <!-- Trellys specific MAVLink-->
-    <message id="13673" name="TRELLYS_MESH_BEACON">
-      <description>TRELLYS_MESH_BEACON message serves the purpose to coordinate vehicles in a Trellys swarm.</description>
+    <message id="13673" name="TRELLYS_BEACON">
+      <description>TRELLYS_BEACON message serves the purpose to coordinate vehicles in a Trellys swarm.</description>
       <field type="uint32_t" name="beacon_id">Unique Beacon ID</field>
+      <field type="uint8_t[64]" name="known_ids">Beacon IDs</field>
       <field type="int32_t" name="latitude" units="degE7">Latitude (WGS84), in degrees * 1E7</field>
       <field type="int32_t" name="longitude" units="degE7">Longitude (WGS84), in degrees * 1E7</field>
       <field type="float" name="altitude" units="m">Altitude (MSL), in meters</field>
