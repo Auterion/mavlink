@@ -79,7 +79,7 @@
         <param index="7">Empty</param>
       </entry>
       <!-- Temporary duplicate Boat definitions-->
-      <entry value="670" name="MAV_CMD_DO_CONTROL_TAKEOVER" hasLocation="false" isDestination="false">
+      <entry value="670" name="MAV_CMD_DO_CONTROL_TAKEOVER_OLD" hasLocation="false" isDestination="false">
         <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
         <description>Commands to take over control from the safety driver. This command cannot give control to safety driver.</description>
@@ -91,7 +91,7 @@
         <param index="6">Empty</param>
         <param index="7">Empty</param>
       </entry>
-      <entry value="671" name="MAV_CMD_DO_ENGINE_LEG_TRIM" hasLocation="false" isDestination="false">
+      <entry value="671" name="MAV_CMD_DO_ENGINE_LEG_TRIM_OLD" hasLocation="false" isDestination="false">
         <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
         <description>Set engine leg trim position. Can execute trim for individual legs or all legs at once.</description>
@@ -103,7 +103,7 @@
         <param index="6">Empty</param>
         <param index="7">Empty</param>
       </entry>
-      <entry value="672" name="MAV_CMD_DO_SET_ENGINE_STATE" hasLocation="false" isDestination="false">
+      <entry value="672" name="MAV_CMD_DO_SET_ENGINE_STATE_OLD" hasLocation="false" isDestination="false">
         <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
         <description>Commands the desired state for vehicle engines.</description>
@@ -608,7 +608,7 @@
     </message>
     <!-- PIXEL_TO_LLA END -->
     <!-- Temporary duplicate Boat MAVLink-->
-    <message id="666" name="BOAT_ACTUATOR_STATUS">
+    <message id="666" name="BOAT_ACTUATOR_STATUS_OLD">
       <wip/>
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>Boat actuator status reports status and position of all boat control surfaces (currently rudders, engine leg trims).</description>
@@ -618,7 +618,7 @@
       <field type="uint8_t[6]" name="rudder_state" enum="RUDDER_STATE">Rudder state.</field>
       <field type="float[6]" name="rudder_position" units="deg">Rudder position.</field>
     </message>
-    <message id="667" name="BOAT_ENGINE_STATUS">
+    <message id="667" name="BOAT_ENGINE_STATUS_OLD">
       <wip/>
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>Boat engine status reports status and position of all boat engines.</description>
