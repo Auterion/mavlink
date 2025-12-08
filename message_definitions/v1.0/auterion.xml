@@ -565,6 +565,22 @@
       <field type="char[16]" name="state">State</field>
       <field type="uint16_t" name="flags">Flags.</field>
     </message>
+    <message id="13674" name="NEMYX_FLW_LTR">
+      <description>Loiter command with extended state information</description>
+      <field type="uint8_t[16]" name="vehicle_ids">Target vehicle system IDs</field>
+      <field type="double" name="lat">Latitude (degrees)</field>
+      <field type="double" name="lon">Longitude (degrees)</field>
+      <field type="float" name="alt">Altitude AMSL (meters)</field>
+      <field type="float" name="vx">North velocity in NED earth-fixed frame (metres/sec)</field>
+      <field type="float" name="vy">East velocity in NED earth-fixed frame (metres/sec)</field>
+      <field type="float" name="vz">Down velocity in NED earth-fixed frame (metres/sec)</field>
+      <field type="float" name="heading">Euler yaw angle transforming the tangent plane relative to NED earth-fixed frame, -PI..+PI (radians)</field>
+    </message>
+    <message id="13675" name="NEMYX_FLW_STATE">
+      <description>Loiter command for follower state</description>
+      <field type="uint8_t[16]" name="vehicle_ids">Target vehicle system IDs</field>
+      <field type="char[16]" name="state">State</field>
+    </message>
     <!-- Nemyx specific MAVLink END-->
   </messages>
 </mavlink>
