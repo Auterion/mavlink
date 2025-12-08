@@ -562,6 +562,7 @@
       <field type="int32_t" name="latitude" units="degE7">Latitude (WGS84), in degrees * 1E7</field>
       <field type="int32_t" name="longitude" units="degE7">Longitude (WGS84), in degrees * 1E7</field>
       <field type="float" name="altitude" units="m">Altitude (MSL), in meters</field>
+      <field type="char[16]" name="state">State</field>
       <field type="uint16_t" name="flags">Flags.</field>
     </message>
     <!-- Nemyx specific MAVLink END-->
