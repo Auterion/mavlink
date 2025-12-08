@@ -554,9 +554,9 @@
       <field type="uint8_t" name="target_track_acquisition_type" enum="TARGET_TRACK_ACQUISITION_TYPE"> Type of target acquisition.</field>
     </message>
     <!-- NMEA0183 RATTM END-->
-    <!-- Trellys specific MAVLink-->
-    <message id="13673" name="TRELLYS_BEACON">
-      <description>TRELLYS_BEACON message serves the purpose to coordinate vehicles in a Trellys swarm.</description>
+    <!-- Nemyx specific MAVLink-->
+    <message id="13673" name="NEMYX_BEACON">
+      <description>NEMYX_BEACON message serves the purpose to coordinate vehicles in a Nemyx swarm.</description>
       <field type="uint32_t" name="beacon_id">Unique Beacon ID</field>
       <field type="uint8_t[64]" name="known_ids">Beacon IDs</field>
       <field type="int32_t" name="latitude" units="degE7">Latitude (WGS84), in degrees * 1E7</field>
