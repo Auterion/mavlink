@@ -297,6 +297,91 @@
         <description>Target acquisition is reported by another system.</description>
       </entry>
     </enum>
+    <enum name="NEMYX_STATE_TYPE">
+      <description>TBD.</description>
+      <entry value="0" name="NEMYX_STATE_IDLE">
+        <description>TBD.</description>
+      </entry>
+      <entry value="1" name="NEMYX_STATE_INIT">
+        <description>TBD.</description>
+      </entry>
+      <entry value="2" name="NEMYX_STATE_LEADER">
+        <description>TBD.</description>
+      </entry>
+      <entry value="3" name="NEMYX_STATE_FOLLOWER">
+        <description>TBD.</description>
+      </entry>
+    </enum>
+    <enum name="NEMYX_SUB_STATE_TYPE">
+      <description>TBD.</description>
+      <entry value="0" name="NEMYX_SUB_STATE_UNDEFINED">
+        <description>TBD.</description>
+      </entry>
+      <entry value="1" name="NEMYX_SUB_STATE_FOLLOWER_LANDED">
+        <description>TBD.</description>
+      </entry>
+      <entry value="2" name="NEMYX_SUB_STATE_FOLLOWER_TAKEOFF">
+        <description>TBD.</description>
+      </entry>
+      <entry value="3" name="NEMYX_SUB_STATE_FOLLOWER_LAND">
+        <description>TBD.</description>
+      </entry>
+      <entry value="4" name="NEMYX_SUB_STATE_FOLLOWER_GOTO">
+        <description>TBD.</description>
+      </entry>
+      <entry value="5" name="NEMYX_SUB_STATE_FOLLOWER_HOLD">
+        <description>TBD.</description>
+      </entry>
+      <entry value="6" name="NEMYX_SUB_STATE_LEADER_LANDED">
+        <description>TBD.</description>
+      </entry>
+      <entry value="7" name="NEMYX_SUB_STATE_LEADER_TAKEOFF">
+        <description>TBD.</description>
+      </entry>
+      <entry value="8" name="NEMYX_SUB_STATE_LEADER_LAND">
+        <description>TBD.</description>
+      </entry>
+      <entry value="9" name="NEMYX_SUB_STATE_LEADER_GOTO">
+        <description>TBD.</description>
+      </entry>
+      <entry value="10" name="NEMYX_SUB_STATE_LEADER_HOLD">
+        <description>TBD.</description>
+      </entry>
+    </enum>
+    <enum name="NEMYX_CMD">
+      <description>Commands to be executed by the MAV. They can be executed on user request, or as part of a mission script. If the action is used in a mission, the parameter mapping to the waypoint/mission message is as follows: Param 1, Param 2, Param 3, Param 4, X: Param 5, Y:Param 6, Z:Param 7. This command list is similar what ARINC 424 is for commercial aircraft: A data format how to interpret waypoint/mission data. NaN and INT32_MAX may be used in float/integer params (respectively) to indicate optional/default values (e.g. to use the component's current yaw or latitude rather than a specific value). See https://mavlink.io/en/guide/xml_schema.html#MAV_CMD for information about the structure of the MAV_CMD entries</description>
+      <entry value="0" name="NEMYX_CMD_GOTO" hasLocation="true" isDestination="true">
+        <description>Navigate to waypoint. This is intended for use in missions (for guided commands outside of missions use MAV_CMD_DO_REPOSITION).</description>
+        <param index="1" label="Hold" units="s" minValue="0">Hold time. (ignored by fixed wing, time to stay at waypoint for rotary wing)</param>
+        <param index="2" label="Accept Radius" units="m" minValue="0">Acceptance radius (if the sphere with this radius is hit, the waypoint counts as reached)</param>
+        <param index="3" label="Pass Radius" units="m">0 to pass through the WP, if &gt; 0 radius to pass by WP. Positive value for clockwise orbit, negative value for counter-clockwise orbit. Allows trajectory control.</param>
+        <param index="4" label="Yaw" units="deg">Desired yaw angle at waypoint (rotary wing). NaN to use the current system yaw heading mode (e.g. yaw towards next waypoint, yaw to home, etc.).</param>
+        <param index="5" label="Latitude">Latitude</param>
+        <param index="6" label="Longitude">Longitude</param>
+        <param index="7" label="Altitude" units="m">Altitude</param>
+        <param index="8">Empty</param>
+      </entry>
+      <entry value="1" name="NEMYX_CMD_LAND" hasLocation="true" isDestination="true">
+        <description>Land at location.</description>
+        <param index="1" label="Abort Alt" units="m">Minimum target altitude if landing is aborted (0 = undefined/use system default).</param>
+        <param index="2" label="Land Mode" enum="PRECISION_LAND_MODE">Precision land mode.</param>
+        <param index="3">Empty.</param>
+        <param index="4" label="Yaw Angle" units="deg">Desired yaw angle. NaN to use the current system yaw heading mode (e.g. yaw towards next waypoint, yaw to home, etc.).</param>
+        <param index="5" label="Latitude">Latitude.</param>
+        <param index="6" label="Longitude">Longitude.</param>
+        <param index="7" label="Altitude" units="m">Landing altitude (ground level in current frame).</param>
+      </entry>
+      <entry value="2" name="NEMYX_CMD_TAKEOFF" hasLocation="true" isDestination="true">
+        <description>Takeoff from ground / hand. Vehicles that support multiple takeoff modes (e.g. VTOL quadplane) should take off using the currently configured mode.</description>
+        <param index="1" label="Pitch" units="deg">Minimum pitch (if airspeed sensor present), desired pitch without sensor</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4" label="Yaw" units="deg">Yaw angle (if magnetometer present), ignored without magnetometer. NaN to use the current system yaw heading mode (e.g. yaw towards next waypoint, yaw to home, etc.).</param>
+        <param index="5" label="Latitude">Latitude</param>
+        <param index="6" label="Longitude">Longitude</param>
+        <param index="7" label="Altitude" units="m">Altitude</param>
+      </entry>
+    </enum>
   </enums>
   <messages>
     <!-- Transactions for parameter protocol -->
@@ -558,16 +643,18 @@
     <message id="13673" name="NEMYX_BEACON">
       <description>NEMYX_BEACON message serves the purpose to coordinate vehicles in a Nemyx swarm.</description>
       <field type="uint32_t" name="beacon_id">Unique Beacon ID</field>
-      <field type="uint8_t[64]" name="known_ids">Beacon IDs</field>
+      <field type="uint8_t[32]" name="known_ids">Beacon IDs</field>
       <field type="int32_t" name="latitude" units="degE7">Latitude (WGS84), in degrees * 1E7</field>
       <field type="int32_t" name="longitude" units="degE7">Longitude (WGS84), in degrees * 1E7</field>
       <field type="float" name="altitude" units="m">Altitude (MSL), in meters</field>
-      <field type="char[16]" name="state">State</field>
-      <field type="uint16_t" name="flags">Flags.</field>
+      <field type="float" name="yaw" units="rad">Yaw heading</field>
+      <field type="uint8_t" name="state" enum="NEMYX_STATE_TYPE">State.</field>
+      <field type="uint8_t" name="sub_state" enum="NEMYX_SUB_STATE_TYPE">Sub-state.</field>
+      <field type="uint16_t" name="action_id">Action ID.</field>
     </message>
-    <message id="13674" name="NEMYX_FLW_LTR">
+    <!-- <message id="13674" name="NEMYX_FLW_LTR">
       <description>Loiter command with extended state information</description>
-      <field type="uint8_t[16]" name="vehicle_ids">Target vehicle system IDs</field>
+      <field type="uint8_t[32]" name="vehicle_ids">Target vehicle system IDs</field>
       <field type="double" name="lat">Latitude (degrees)</field>
       <field type="double" name="lon">Longitude (degrees)</field>
       <field type="float" name="alt">Altitude AMSL (meters)</field>
@@ -580,6 +667,19 @@
       <description>Loiter command for follower state</description>
       <field type="uint8_t[16]" name="vehicle_ids">Target vehicle system IDs</field>
       <field type="char[16]" name="state">State</field>
+    </message> -->
+    <message id="76" name="NEMYX_COMMAND">
+      <description>Send a command with up to seven parameters to the MAV.</description>
+      <field type="uint8_t[32]" name="target_ids">System which should execute the command</field>
+      <field type="uint16_t" name="command" enum="MAV_CMD">Command ID (of command to send).</field>
+      <field type="float" name="param1" invalid="NaN">Parameter 1 (for the specific command).</field>
+      <field type="float" name="param2" invalid="NaN">Parameter 2 (for the specific command).</field>
+      <field type="float" name="param3" invalid="NaN">Parameter 3 (for the specific command).</field>
+      <field type="float" name="param4" invalid="NaN">Parameter 4 (for the specific command).</field>
+      <field type="float" name="param5" invalid="NaN">Parameter 5 (for the specific command).</field>
+      <field type="float" name="param6" invalid="NaN">Parameter 6 (for the specific command).</field>
+      <field type="float" name="param7" invalid="NaN">Parameter 7 (for the specific command).</field>
+      <field type="char[16]" name="param8">Parameter 8 (for the specific command).</field>
     </message>
     <!-- Nemyx specific MAVLink END-->
   </messages>
