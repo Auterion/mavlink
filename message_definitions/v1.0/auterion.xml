@@ -381,6 +381,16 @@
         <param index="6" label="Longitude">Longitude</param>
         <param index="7" label="Altitude" units="m">Altitude</param>
       </entry>
+      <entry value="2" name="NEMYX_CMD_TAKEOFF_LOCAL" hasLocation="true" isDestination="true">
+        <description>Takeoff from ground / hand. Vehicles that support multiple takeoff modes (e.g. VTOL quadplane) should take off using the currently configured mode.</description>
+        <param index="1" label="Pitch" units="deg">Minimum pitch (if airspeed sensor present), desired pitch without sensor</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4" label="Yaw" units="deg">Yaw angle (if magnetometer present), ignored without magnetometer. NaN to use the current system yaw heading mode (e.g. yaw towards next waypoint, yaw to home, etc.).</param>
+        <param index="5" label="Y Position" units="m">Y-axis position</param>
+        <param index="6" label="X Position" units="m">X-axis position</param>
+        <param index="7" label="Z Position" units="m">Z-axis position</param>
+      </entry>
     </enum>
   </enums>
   <messages>
@@ -648,9 +658,11 @@
       <field type="int32_t" name="longitude" units="degE7">Longitude (WGS84), in degrees * 1E7</field>
       <field type="float" name="altitude" units="m">Altitude (MSL), in meters</field>
       <field type="float" name="yaw" units="rad">Yaw heading</field>
-      <field type="uint8_t" name="state" enum="NEMYX_STATE_TYPE">State.</field>
-      <field type="uint8_t" name="sub_state" enum="NEMYX_SUB_STATE_TYPE">Sub-state.</field>
-      <field type="uint16_t" name="action_id">Action ID.</field>
+      <field type="uint8_t" name="state" enum="NEMYX_STATE_TYPE">Nemyx state.</field>
+      <field type="uint8_t" name="sub_state" enum="NEMYX_SUB_STATE_TYPE">Nemyx sub-state.</field>
+      <field type="uint16_t" name="action_id">Action ID. To identify an action in the nemyx/leaders intention</field>
+      <field type="uint8_t" name="base_mode" enum="MAV_MODE_FLAG">PX4 System mode bitmap.</field>
+      <field type="uint32_t" name="custom_mode">PX4 A bitfield for use for autopilot-specific flags</field>
     </message>
     <!-- <message id="13674" name="NEMYX_FLW_LTR">
       <description>Loiter command with extended state information</description>
@@ -668,7 +680,7 @@
       <field type="uint8_t[16]" name="vehicle_ids">Target vehicle system IDs</field>
       <field type="char[16]" name="state">State</field>
     </message> -->
-    <message id="76" name="NEMYX_COMMAND">
+    <message id="13674" name="NEMYX_COMMAND">
       <description>Send a command with up to seven parameters to the MAV.</description>
       <field type="uint8_t[32]" name="target_ids">System which should execute the command</field>
       <field type="uint16_t" name="command" enum="MAV_CMD">Command ID (of command to send).</field>
