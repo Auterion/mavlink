@@ -79,7 +79,7 @@
         <param index="7">Empty</param>
       </entry>
       <entry value="13800" name="MAV_CMD_PAYLOAD_DEVICE_TRIGGER" hasLocation="false" isDestination="false">
-        <wip />
+        <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
         <description>Commands the payload device to trigger it's payload.</description>
         <param index="1" label="Trigger" minValue="0" increment="1" maxValue="1">Set to 1 to trigger the payload device.</param>
