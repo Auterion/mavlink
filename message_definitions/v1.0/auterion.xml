@@ -78,6 +78,18 @@
         <param index="6">Empty</param>
         <param index="7">Empty</param>
       </entry>
+      <entry value="13800" name="MAV_CMD_PAYLOAD_DEVICE_TRIGGER" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the payload device to trigger its payload.</description>
+        <param index="1" label="Trigger" minValue="0" increment="1" maxValue="1">Set to 1 to trigger the payload device.</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
     </enum>
     <enum name="CURRENT_CONTROL_ENTITY">
       <description>List of the currently active control entity.</description>
@@ -443,6 +455,27 @@
         <description>Parachute's internal IMU calibration failed</description>
       </entry>
     </enum>
+    <enum name="MAV_PAYLOAD_STATE">
+      <description>State of a payload device.</description>
+      <entry value="0" name="MAV_PAYLOAD_STATE_SAFE">
+        <description>Device is in a safe state; not armed and not enabled.</description>
+      </entry>
+      <entry value="1" name="MAV_PAYLOAD_STATE_SST">
+        <description>Device is waiting on its "safe separation timer", or other pre-arm countdown.</description>
+      </entry>
+      <entry value="2" name="MAV_PAYLOAD_STATE_ENABLED">
+        <description>Device is enabled, but not yet armed.</description>
+      </entry>
+      <entry value="3" name="MAV_PAYLOAD_STATE_ARMED">
+        <description>Device is armed and ready.</description>
+      </entry>
+      <entry value="4" name="MAV_PAYLOAD_STATE_TRIGGERED">
+        <description>Device has been triggered and payload has been released.</description>
+      </entry>
+      <entry value="5" name="MAV_PAYLOAD_STATE_ABORTED">
+        <description>Device is in a safe state due to abort command. This may require a power cycle before it can be re-enabled.</description>
+      </entry>
+    </enum>
   </enums>
   <messages>
     <!-- Transactions for parameter protocol -->
@@ -715,6 +748,15 @@
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>Currently set ship approach sectors, vehicle heading aligned, clockwise orderer bitmask with a high bit indicating an approach sector is set.</description>
       <field type="uint8_t" name="sectors">Bitmap indicating which ship approach sectors are set. In clockwise order.</field>
+    </message>
+    <message id="13800" name="PAYLOAD_DEVICE_STATUS">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Status of payload device.</description>
+      <field type="uint8_t" name="state" enum="MAV_PAYLOAD_STATE">Device state.</field>
+      <field type="uint32_t" name="countdown" units="s">Countdown timer value for SST or other timed state.</field>
+      <field type="uint8_t" name="mode">Mode; this can be a sub-state within the current state or other indicator. This may vary based on device and state.</field>
+      <field type="char[64]" name="message">Message, or other text from device.</field>
     </message>
   </messages>
 </mavlink>
