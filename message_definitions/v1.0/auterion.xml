@@ -359,6 +359,9 @@
       <entry value="2" name="NEMYX_CMD_MODE_RTL">
         <description>TBD.</description>
       </entry>
+      <entry value="3" name="NEMYX_CMD_MODE_STRIKE">
+        <description>TBD.</description>
+      </entry>
     </enum>
     <enum name="NEMYX_CMD">
       <description>Commands to be executed by the MAV. They can be executed on user request, or as part of a mission script. If the action is used in a mission, the parameter mapping to the waypoint/mission message is as follows: Param 1, Param 2, Param 3, Param 4, X: Param 5, Y:Param 6, Z:Param 7. This command list is similar what ARINC 424 is for commercial aircraft: A data format how to interpret waypoint/mission data. NaN and INT32_MAX may be used in float/integer params (respectively) to indicate optional/default values (e.g. to use the component's current yaw or latitude rather than a specific value). See https://mavlink.io/en/guide/xml_schema.html#MAV_CMD for information about the structure of the MAV_CMD entries</description>
@@ -404,7 +407,7 @@
         <param index="7" label="Z Position" units="m">Z-axis position</param>
       </entry>
       <entry value="4" name="NEMYX_CMD_SET_MODE" hasLocation="true" isDestination="true">
-        <description>Set mode of followers.</description>
+        <description>Set an official mode without any other parameters of followers.</description>
         <param index="1" label="mode" enum="NEMYX_CMD_MODE">Follower mode.</param>
         <param index="2">Empty</param>
         <param index="3">Empty</param>
@@ -690,6 +693,7 @@
     <message id="13674" name="NEMYX_COMMAND">
       <description>Send a command with up to seven parameters to the MAV.</description>
       <field type="uint8_t[32]" name="target_ids">System which should execute the command</field>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
       <field type="uint16_t" name="command" enum="MAV_CMD">Command ID (of command to send).</field>
       <field type="float" name="param1" invalid="NaN">Parameter 1 (for the specific command).</field>
       <field type="float" name="param2" invalid="NaN">Parameter 2 (for the specific command).</field>
