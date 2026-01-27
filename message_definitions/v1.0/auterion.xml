@@ -365,7 +365,17 @@
     </enum>
     <enum name="NEMYX_CMD">
       <description>Commands to be executed by the MAV. They can be executed on user request, or as part of a mission script. If the action is used in a mission, the parameter mapping to the waypoint/mission message is as follows: Param 1, Param 2, Param 3, Param 4, X: Param 5, Y:Param 6, Z:Param 7. This command list is similar what ARINC 424 is for commercial aircraft: A data format how to interpret waypoint/mission data. NaN and INT32_MAX may be used in float/integer params (respectively) to indicate optional/default values (e.g. to use the component's current yaw or latitude rather than a specific value). See https://mavlink.io/en/guide/xml_schema.html#MAV_CMD for information about the structure of the MAV_CMD entries</description>
-      <entry value="0" name="NEMYX_CMD_GOTO" hasLocation="true" isDestination="true">
+      <entry value="0" name="NEMYX_CMD_IDLE" hasLocation="true" isDestination="true">
+        <description>Land at location.</description>
+        <param index="1">Empty.</param>
+        <param index="2">Empty.</param>
+        <param index="3">Empty.</param>
+        <param index="4">Empty.</param>
+        <param index="5">Empty.</param>
+        <param index="6">Empty.</param>
+        <param index="7">Empty.</param>
+      </entry>
+      <entry value="1" name="NEMYX_CMD_GOTO" hasLocation="true" isDestination="true">
         <description>Navigate to waypoint. This is intended for use in missions (for guided commands outside of missions use MAV_CMD_DO_REPOSITION).</description>
         <param index="1" label="Hold" units="s" minValue="0">Hold time. (ignored by fixed wing, time to stay at waypoint for rotary wing)</param>
         <param index="2" label="Accept Radius" units="m" minValue="0">Acceptance radius (if the sphere with this radius is hit, the waypoint counts as reached)</param>
@@ -376,7 +386,7 @@
         <param index="7" label="Altitude" units="m">Altitude</param>
         <param index="8">Empty</param>
       </entry>
-      <entry value="1" name="NEMYX_CMD_LAND" hasLocation="true" isDestination="true">
+      <entry value="2" name="NEMYX_CMD_LAND" hasLocation="true" isDestination="true">
         <description>Land at location.</description>
         <param index="1" label="Abort Alt" units="m">Minimum target altitude if landing is aborted (0 = undefined/use system default).</param>
         <param index="2" label="Land Mode" enum="PRECISION_LAND_MODE">Precision land mode.</param>
@@ -386,7 +396,7 @@
         <param index="6" label="Longitude">Longitude.</param>
         <param index="7" label="Altitude" units="m">Landing altitude (ground level in current frame).</param>
       </entry>
-      <entry value="2" name="NEMYX_CMD_TAKEOFF" hasLocation="true" isDestination="true">
+      <entry value="3" name="NEMYX_CMD_TAKEOFF" hasLocation="true" isDestination="true">
         <description>Takeoff from ground / hand. Vehicles that support multiple takeoff modes (e.g. VTOL quadplane) should take off using the currently configured mode.</description>
         <param index="1" label="Pitch" units="deg">Minimum pitch (if airspeed sensor present), desired pitch without sensor</param>
         <param index="2">Empty</param>
@@ -396,7 +406,7 @@
         <param index="6" label="Longitude">Longitude</param>
         <param index="7" label="Altitude" units="m">Altitude</param>
       </entry>
-      <entry value="3" name="NEMYX_CMD_TAKEOFF_LOCAL" hasLocation="true" isDestination="true">
+      <entry value="4" name="NEMYX_CMD_TAKEOFF_LOCAL" hasLocation="true" isDestination="true">
         <description>Takeoff from ground / hand. Vehicles that support multiple takeoff modes (e.g. VTOL quadplane) should take off using the currently configured mode.</description>
         <param index="1" label="Pitch" units="deg">Minimum pitch (if airspeed sensor present), desired pitch without sensor</param>
         <param index="2">Empty</param>
@@ -406,7 +416,7 @@
         <param index="6" label="X Position" units="m">X-axis position</param>
         <param index="7" label="Z Position" units="m">Z-axis position</param>
       </entry>
-      <entry value="4" name="NEMYX_CMD_SET_MODE" hasLocation="true" isDestination="true">
+      <entry value="5" name="NEMYX_CMD_SET_MODE" hasLocation="true" isDestination="true">
         <description>Set an official mode without any other parameters of followers.</description>
         <param index="1" label="mode" enum="NEMYX_CMD_MODE">Follower mode.</param>
         <param index="2">Empty</param>
@@ -675,20 +685,20 @@
     </message>
     <!-- NMEA0183 RATTM END-->
     <!-- Nemyx specific MAVLink-->
-    <message id="13673" name="NEMYX_BEACON">
-      <description>NEMYX_BEACON message serves the purpose to coordinate vehicles in a Nemyx swarm.</description>
+    <message id="13673" name="NEMYX_STATUS">
+      <description>NEMYX_STATUS message serves the purpose to coordinate vehicles in a Nemyx swarm.</description>
       <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
-      <field type="uint32_t" name="agent_id">Unique Beacon ID</field>
-      <field type="uint8_t[32]" name="known_ids">Beacon IDs</field>
+      <field type="uint32_t" name="agent_id">Unique Agent ID</field>
+      <field type="uint8_t[32]" name="agents_known">Bitset. Bit i (0..255) indicates whether agent ID i+1 is known. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
+      <field type="uint8_t" name="base_mode" enum="MAV_MODE_FLAG">PX4 System mode bitmap.</field>
+      <field type="uint32_t" name="custom_mode">PX4 A bitfield for use for autopilot-specific flags</field>
       <field type="int32_t" name="latitude" units="degE7">Latitude (WGS84), in degrees * 1E7</field>
       <field type="int32_t" name="longitude" units="degE7">Longitude (WGS84), in degrees * 1E7</field>
       <field type="float" name="altitude" units="m">Altitude (MSL), in meters</field>
       <field type="float" name="heading" units="rad">Vehicle heading</field>
-      <field type="uint8_t" name="state" enum="NEMYX_STATE_TYPE">Nemyx state.</field>
-      <field type="uint8_t" name="sub_state" enum="NEMYX_SUB_STATE_TYPE">Nemyx sub-state.</field>
-      <field type="uint16_t" name="action_id">Action ID. To identify an action in the nemyx/leaders intention</field>
-      <field type="uint8_t" name="base_mode" enum="MAV_MODE_FLAG">PX4 System mode bitmap.</field>
-      <field type="uint32_t" name="custom_mode">PX4 A bitfield for use for autopilot-specific flags</field>
+      <field type="uint16_t" name="task" enum="NEMYX_CMD">Command ID (of command to send).</field>
+      <field type="uint16_t" name="result" enum="MAV_RESULT">Command ID (of command to send).</field>
+	    <field type="uint32_t" name="flags" enum="NEMYX_FLAGS">Nemyx state flags.</field>
     </message>
     <message id="13674" name="NEMYX_COMMAND">
       <description>Send a command with up to seven parameters to the MAV.</description>
