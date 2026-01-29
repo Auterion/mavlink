@@ -704,7 +704,7 @@
       <description>Send a command with up to seven parameters to the MAV.</description>
       <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
       <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is known. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
-      <field type="uint16_t" name="command" enum="MAV_CMD">Command ID (of command to send).</field>
+      <field type="uint16_t" name="task" enum="NEMYX_CMD">Command ID (of command to send).</field>
       <field type="float" name="param1" invalid="NaN">Parameter 1 (for the specific command).</field>
       <field type="float" name="param2" invalid="NaN">Parameter 2 (for the specific command).</field>
       <field type="float" name="param3" invalid="NaN">Parameter 3 (for the specific command).</field>
