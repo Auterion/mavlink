@@ -246,7 +246,7 @@
         <param index="7">Empty</param>
       </entry>
       <entry value="13713" name="MAV_CMD_RADAR_SET_SPEED_THRESHOLD" hasLocation="false" isDestination="false">
-      <wip/>
+        <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
         <description>Commands the radar system to change its doppler velocity threshold setting.</description>
         <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
@@ -1191,23 +1191,23 @@
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>Status message of a radar system.</description>
       <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
-      <field type="uint8_t"  name="radar_index">Radar system ID.</field>
-      <field type="uint8_t"  name="radar_state" enum="RADAR_STATE">Radar state.</field>
-      <field type="uint8_t"  name="interference_rejection">Radar interference rejection setting.</field>
-      <field type="uint8_t"  name="gain" minValue="-1" maxValue="100"> Radar gain setting.</field>
-      <field type="uint8_t"  name="radar_mode" enum="RADAR_MODE">Radar mode.</field>
-      <field type="uint8_t"  name="sea_clutter" minValue="-1" maxValue="100">Radar sea clutter setting.</field>
-      <field type="uint8_t"  name="sea_state" enum="RADAR_SEA_STATE">Radar sea state setting.</field>
-      <field type="uint8_t"  name="rain_clutter" minValue="-1" maxValue="100">Radar rain clutter setting.</field>
-      <field type="uint8_t"  name="interface_rejection">Radar interface rejection setting.</field>
-      <field type="uint8_t"  name="target_expansion_level" enum="RADAR_TARGET_EXPANSION">Radar target expansion level.</field>
-      <field type="uint8_t"  name="target_separation_level" enum="RADAR_TARGET_SEPARATION">Radar target separation level.</field>
-      <field type="uint8_t"  name="noise_rejection_level" enum="RADAR_NOISE_REJECTION">Radar noise rejection level.</field>
-      <field type="uint8_t"  name="scan_speed" enum="RADAR_SCAN_SPEED">Radar scan speed.</field>
-      <field type="uint8_t"  name="doppler_mode" enum="RADAR_DOPPLER_MODE">Radar Doppler mode.</field>
-      <field type="float"    name="doppler_speed_threshold" units="m/s">Radar Doppler speed threshold setting.</field>
-      <field type="uint8_t"  name="sidelobe_suppression" minValue="-1" maxValue="100">Radar sidelobe suppression setting.</field>
-      <field type="uint8_t"  name="light_intensity_level" enum="RADAR_LIGHT_INTENSITY">Radar light intensity level.</field>
+      <field type="uint8_t" name="radar_index">Radar system ID.</field>
+      <field type="uint8_t" name="radar_state" enum="RADAR_STATE">Radar state.</field>
+      <field type="uint8_t" name="interference_rejection">Radar interference rejection setting.</field>
+      <field type="uint8_t" name="gain" minValue="-1" maxValue="100"> Radar gain setting.</field>
+      <field type="uint8_t" name="radar_mode" enum="RADAR_MODE">Radar mode.</field>
+      <field type="uint8_t" name="sea_clutter" minValue="-1" maxValue="100">Radar sea clutter setting.</field>
+      <field type="uint8_t" name="sea_state" enum="RADAR_SEA_STATE">Radar sea state setting.</field>
+      <field type="uint8_t" name="rain_clutter" minValue="-1" maxValue="100">Radar rain clutter setting.</field>
+      <field type="uint8_t" name="interface_rejection">Radar interface rejection setting.</field>
+      <field type="uint8_t" name="target_expansion_level" enum="RADAR_TARGET_EXPANSION">Radar target expansion level.</field>
+      <field type="uint8_t" name="target_separation_level" enum="RADAR_TARGET_SEPARATION">Radar target separation level.</field>
+      <field type="uint8_t" name="noise_rejection_level" enum="RADAR_NOISE_REJECTION">Radar noise rejection level.</field>
+      <field type="uint8_t" name="scan_speed" enum="RADAR_SCAN_SPEED">Radar scan speed.</field>
+      <field type="uint8_t" name="doppler_mode" enum="RADAR_DOPPLER_MODE">Radar Doppler mode.</field>
+      <field type="float" name="doppler_speed_threshold" units="m/s">Radar Doppler speed threshold setting.</field>
+      <field type="uint8_t" name="sidelobe_suppression" minValue="-1" maxValue="100">Radar sidelobe suppression setting.</field>
+      <field type="uint8_t" name="light_intensity_level" enum="RADAR_LIGHT_INTENSITY">Radar light intensity level.</field>
     </message>
   </messages>
 </mavlink>
