@@ -90,6 +90,197 @@
         <param index="6">Empty</param>
         <param index="7">Empty</param>
       </entry>
+      <entry value="13700" name="MAV_CMD_RADAR_SET_STATE" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its transmission state.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Commanded state" enum="RADAR_STATE">Set the commanded state for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13701" name="MAV_CMD_RADAR_SET_GAIN" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its transmission gain.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Gain" minValue="-1" increment="1" maxValue="100">Set the commanded gain for the radar. Auto gain setting if user sets to -1.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13702" name="MAV_CMD_RADAR_SET_RANGE" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its range.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Range" enum="RADAR_RANGE">Set the commanded range for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13703" name="MAV_CMD_RADAR_SET_MODE" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its mode.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Mode" enum="RADAR_MODE">Set the commanded mode for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13704" name="MAV_CMD_RADAR_SET_SEA_CLUTTER" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its sea clutter setting.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Gain" minValue="-1" increment="1" maxValue="100">Set the commanded sea clutter parameter for the radar. Auto gain setting if user sets to -1.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13705" name="MAV_CMD_RADAR_SET_RAIN_CLUTTER" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its rain clutter setting.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Gain" minValue="-1" increment="1" maxValue="100">Set the commanded rain clutter parameter for the radar. Auto gain setting if user sets to -1.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13706" name="MAV_CMD_RADAR_SET_SEA_STATE" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its sea state setting.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Sea state" enum="RADAR_SEA_STATE">Set the commanded sea state for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13707" name="MAV_CMD_RADAR_SET_NOISE_REJECTION" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its noise rejection setting.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Noise rejection" enum="RADAR_NOISE_REJECTION">Set the commanded noise rejection for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13708" name="MAV_CMD_RADAR_SET_TARGET_EXPANSION" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its target expansion setting.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Target expansion" enum="RADAR_TARGET_EXPANSION">Set the commanded target expansion for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13709" name="MAV_CMD_RADAR_SET_INTERFERENCE_REJECTION" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its interference rejection setting.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Interference rejection" enum="RADAR_INTERFERENCE_REJECTION">Set the commanded interference rejection for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13710" name="MAV_CMD_RADAR_SET_TARGET_SEPARATION" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its target separation setting.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Target separation" enum="RADAR_TARGET_SEPARATION">Set the commanded target separation for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13711" name="MAV_CMD_RADAR_SET_SCAN_SPEED" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its scan speed setting.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Scan speed" enum="RADAR_SCAN_SPEED">Set the commanded scan speed for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13712" name="MAV_CMD_RADAR_SET_DOPPLER_MODE" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its doppler mode setting.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Doppler mode" enum="RADAR_DOPPLER_MODE">Set the commanded doppler mode for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13713" name="MAV_CMD_RADAR_SET_SPEED_THRESHOLD" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its doppler velocity threshold setting.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Doppler velocity threshold" minValue="0" increment="1" maxValue="100">Set the commanded doppler velocity threshold for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13714" name="MAV_CMD_RADAR_SET_SIDE_LOBE_SUPPRESSION" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its side lobe suppression setting.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Side lobe suppression" minValue="-1" increment="1" maxValue="100">Set the commanded side lobe suppression parameter for the radar. Auto gain setting if user sets to -1.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="13715" name="MAV_CMD_RADAR_LIGHT" hasLocation="false" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Commands the radar system to change its illumination settings.</description>
+        <param index="1" label="Radar index" minValue="0" increment="1" maxValue="255">Set the radar index if multiple radars are present.</param>
+        <param index="2" label="Illumination" enum="RADAR_LIGHT_INTENSITY">Set the commanded illumination for the radar.</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
     </enum>
     <enum name="CURRENT_CONTROL_ENTITY">
       <description>List of the currently active control entity.</description>
@@ -476,6 +667,243 @@
         <description>Device is in a safe state due to abort command. This may require a power cycle before it can be re-enabled.</description>
       </entry>
     </enum>
+    <enum name="RADAR_STATE">
+      <description>Device state of radar system. Can refer to the operational status or a commanded state of the radar system.</description>
+      <entry value="0" name="RADAR_STATE_NOT_DETECTED">
+        <description>Radar system is not detected.</description>
+      </entry>
+      <entry value="1" name="RADAR_STATE_STANDBY">
+        <description>Radar system is in standby mode.</description>
+      </entry>
+      <entry value="2" name="RADAR_STATE_SPINNING_UP">
+        <description>Radar system is spinning up.</description>
+      </entry>
+      <entry value="3" name="RADAR_STATE_TRANSMIT">
+        <description>Radar system is transmitting.</description>
+      </entry>
+      <entry value="4" name="RADAR_STATE_UNKNOWN">
+        <description>Radar system state is unknown.</description>
+      </entry>
+    </enum>
+    <enum name="RADAR_RANGE">
+      <description>Radar range settings.</description>
+      <entry value="0" name="RADAR_RANGE_50M">
+        <description>Radar range setting for 50 meters.</description>
+      </entry>
+      <entry value="1" name="RADAR_RANGE_1_32NM">
+        <description>Radar range setting for 1/32 nautical miles (approximately 57.75 meters).</description>
+      </entry>
+      <entry value="2" name="RADAR_RANGE_100M">
+        <description>Radar range setting for 100 meters.</description>
+      </entry>
+      <entry value="3" name="RADAR_RANGE_1_16NM">
+        <description>Radar range setting for 1/16 nautical miles (approximately 115.5 meters).</description>
+      </entry>
+      <entry value="4" name="RADAR_RANGE_1_8NM">
+        <description>Radar range setting for 1/8 nautical miles (approximately 231 meters).</description>
+      </entry>
+      <entry value="5" name="RADAR_RANGE_1_4NM">
+        <description>Radar range setting for 1/4 nautical miles (approximately 462 meters).</description>
+      </entry>
+      <entry value="6" name="RADAR_RANGE_1_2NM">
+        <description>Radar range setting for 1/2 nautical miles (approximately 926 meters).</description>
+      </entry>
+      <entry value="7" name="RADAR_RANGE_1NM">
+        <description>Radar range setting for 1 nautical mile (approximately 1852 meters).</description>
+      </entry>
+      <entry value="8" name="RADAR_RANGE_3_2NM">
+        <description>Radar range setting for 3/2 nautical miles (approximately 2778 meters).</description>
+      </entry>
+      <entry value="9" name="RADAR_RANGE_2NM">
+        <description>Radar range setting for 2 nautical miles (approximately 3704 meters).</description>
+      </entry>
+      <entry value="10" name="RADAR_RANGE_3NM">
+        <description>Radar range setting for 3 nautical miles (approximately 5556 meters).</description>
+      </entry>
+      <entry value="11" name="RADAR_RANGE_4NM">
+        <description>Radar range setting for 4 nautical miles (approximately 7408 meters).</description>
+      </entry>
+      <entry value="12" name="RADAR_RANGE_6NM">
+        <description>Radar range setting for 6 nautical miles (approximately 11112 meters).</description>
+      </entry>
+      <entry value="13" name="RADAR_RANGE_8NM">
+        <description>Radar range setting for 8 nautical miles (approximately 14816 meters).</description>
+      </entry>
+      <entry value="14" name="RADAR_RANGE_12NM">
+        <description>Radar range setting for 12 nautical miles (approximately 22224 meters).</description>
+      </entry>
+      <entry value="15" name="RADAR_RANGE_16NM">
+        <description>Radar range setting for 16 nautical miles (approximately 29632 meters).</description>
+      </entry>
+      <entry value="16" name="RADAR_RANGE_24NM">
+        <description>Radar range setting for 24 nautical miles (approximately 44448 meters).</description>
+      </entry>
+      <entry value="17" name="RADAR_RANGE_32NM">
+        <description>Radar range setting for 32 nautical miles (approximately 59264 meters).</description>
+      </entry>
+    </enum>
+    <enum name="RADAR_MODE">
+      <description>Radar mode settings.</description>
+      <entry value="0" name="RADAR_MODE_CUSTOM">
+        <description>Radar mode off.</description>
+      </entry>
+      <entry value="1" name="RADAR_MODE_HARBOR">
+        <description>Radar mode harbor.</description>
+      </entry>
+      <entry value="2" name="RADAR_MODE_OFFSHORE">
+        <description>Radar mode offshore.</description>
+      </entry>
+      <entry value="3" name="RADAR_MODE_WEATHER">
+        <description>Radar mode weather.</description>
+      </entry>
+      <entry value="4" name="RADAR_MODE_BIRD">
+        <description>Radar mode bird.</description>
+      </entry>
+      <entry value="5" name="RADAR_MODE_UNKNOWN">
+        <description>Radar mode unknown.</description>
+      </entry>
+    </enum>
+    <enum name="RADAR_SEA_STATE">
+      <description>Sea state settings for radar system. This does not follow the standard WMO sea state definitions and weather conditions ranges.</description>
+      <entry value="0" name="RADAR_SEA_STATE_CALM">
+        <description>Radar sea state setting for calm sea.</description>
+      </entry>
+      <entry value="1" name="RADAR_SEA_STATE_MODERATE">
+        <description>Radar sea state setting for moderate sea.</description>
+      </entry>
+      <entry value="2" name="RADAR_SEA_STATE_ROUGH">
+        <description>Radar sea state setting for rough sea.</description>
+      </entry>
+      <entry value="3" name="RADAR_SEA_STATE_UNKNOWN">
+        <description>Radar sea state setting for unknown sea state.</description>
+      </entry>
+    </enum>
+    <enum name="RADAR_INTERFERENCE_REJECTION">
+      <description>Interference rejection level settings for radar system.</description>
+      <entry value="0" name="RADAR_INTERFERENCE_REJECTION_OFF">
+        <description>Radar interference rejection off.</description>
+      </entry>
+      <entry value="1" name="RADAR_INTERFERENCE_REJECTION_LOW">
+        <description>Radar interference rejection level low.</description>
+      </entry>
+      <entry value="2" name="RADAR_INTERFERENCE_REJECTION_MEDIUM">
+        <description>Radar interference rejection level medium.</description>
+      </entry>
+      <entry value="3" name="RADAR_INTERFERENCE_REJECTION_HIGH">
+        <description>Radar interference rejection level high.</description>
+      </entry>
+      <entry value="4" name="RADAR_INTERFERENCE_REJECTION_UNKNOWN">
+        <description>Radar interference rejection level unknown.</description>
+      </entry>
+    </enum>
+    <enum name="RADAR_TARGET_EXPANSION">
+      <description>Target expansion settings for radar system.</description>
+      <entry value="0" name="RADAR_TARGET_EXPANSION_OFF">
+        <description>Radar target expansion off.</description>
+      </entry>
+      <entry value="1" name="RADAR_TARGET_EXPANSION_LOW">
+        <description>Radar target expansion level low.</description>
+      </entry>
+      <entry value="2" name="RADAR_TARGET_EXPANSION_MEDIUM">
+        <description>Radar target expansion level medium.</description>
+      </entry>
+      <entry value="3" name="RADAR_TARGET_EXPANSION_HIGH">
+        <description>Radar target expansion level high.</description>
+      </entry>
+      <entry value="4" name="RADAR_TARGET_EXPANSION_UNKNOWN">
+        <description>Radar target expansion level unknown.</description>
+      </entry>
+    </enum>
+    <enum name="RADAR_TARGET_SEPARATION">
+      <description>Target separation settings for radar system.</description>
+      <entry value="0" name="RADAR_TARGET_SEPARATION_OFF">
+        <description>Radar target separation off.</description>
+      </entry>
+      <entry value="1" name="RADAR_TARGET_SEPARATION_LOW">
+        <description>Radar target separation level low.</description>
+      </entry>
+      <entry value="2" name="RADAR_TARGET_SEPARATION_MEDIUM">
+        <description>Radar target separation level medium.</description>
+      </entry>
+      <entry value="3" name="RADAR_TARGET_SEPARATION_HIGH">
+        <description>Radar target separation level high.</description>
+      </entry>
+      <entry value="4" name="RADAR_TARGET_SEPARATION_UNKNOWN">
+        <description>Radar target separation level unknown.</description>
+      </entry>
+    </enum>
+    <enum name="RADAR_LIGHT_INTENSITY">
+      <description>Light intensity settings for radar system.</description>
+      <entry value="0" name="RADAR_LIGHT_INTENSITY_OFF">
+        <description>Radar light intensity off.</description>
+      </entry>
+      <entry value="1" name="RADAR_LIGHT_INTENSITY_LOW">
+        <description>Radar light intensity level low.</description>
+      </entry>
+      <entry value="2" name="RADAR_LIGHT_INTENSITY_MEDIUM">
+        <description>Radar light intensity level medium.</description>
+      </entry>
+      <entry value="3" name="RADAR_LIGHT_INTENSITY_HIGH">
+        <description>Radar light intensity level high.</description>
+      </entry>
+      <entry value="4" name="RADAR_LIGHT_INTENSITY_UNKNOWN">
+        <description>Radar light intensity level unknown.</description>
+      </entry>
+    </enum>
+    <enum name="RADAR_NOISE_REJECTION">
+      <description>Noise rejection settings for radar system.</description>
+      <entry value="0" name="RADAR_NOISE_REJECTION_OFF">
+        <description>Radar noise rejection off.</description>
+      </entry>
+      <entry value="1" name="RADAR_NOISE_REJECTION_LOW">
+        <description>Radar noise rejection level low.</description>
+      </entry>
+      <entry value="2" name="RADAR_NOISE_REJECTION_MEDIUM">
+        <description>Radar noise rejection level medium.</description>
+      </entry>
+      <entry value="3" name="RADAR_NOISE_REJECTION_HIGH">
+        <description>Radar noise rejection level high.</description>
+      </entry>
+      <entry value="4" name="RADAR_NOISE_REJECTION_UNKNOWN">
+        <description>Radar noise rejection level unknown.</description>
+      </entry>
+    </enum>
+    <enum name="RADAR_SCAN_SPEED">
+      <description>Scan speed settings for radar system.</description>
+      <entry value="0" name="RADAR_SCAN_SPEED_OFF">
+        <description>Radar scan speed off.</description>
+      </entry>
+      <entry value="1" name="RADAR_SCAN_SPEED_SLOW">
+        <description>Radar scan speed slow.</description>
+      </entry>
+      <entry value="2" name="RADAR_SCAN_SPEED_MEDIUM">
+        <description>Radar scan speed medium.</description>
+      </entry>
+      <entry value="3" name="RADAR_SCAN_SPEED_FAST">
+        <description>Radar scan speed fast.</description>
+      </entry>
+      <entry value="4" name="RADAR_SCAN_SPEED_DEFAULT">
+        <description>Radar scan speed default.</description>
+      </entry>
+      <entry value="5" name="RADAR_SCAN_SPEED_UNKNOWN">
+        <description>Radar scan speed unknown.</description>
+      </entry>
+    </enum>
+    <enum name="RADAR_DOPPLER_MODE">
+      <description>Doppler mode settings for radar system.</description>
+      <entry value="0" name="RADAR_DOPPLER_MODE_OFF">
+        <description>Radar Doppler mode off.</description>
+      </entry>
+      <entry value="1" name="RADAR_DOPPLER_MODE_NORMAL">
+        <description>Radar Doppler mode normal.</description>
+      </entry>
+      <entry value="2" name="RADAR_DOPPLER_MODE_APPROACHING_ONLY">
+        <description>Radar Doppler mode approaching only.</description>
+      </entry>
+      <entry value="3" name="RADAR_DOPPLER_MODE_UNKNOWN">
+        <description>Radar Doppler mode unknown.</description>
+      </entry>
+    </enum>
   </enums>
   <messages>
     <!-- Transactions for parameter protocol -->
@@ -757,6 +1185,29 @@
       <field type="uint32_t" name="countdown" units="s">Countdown timer value for SST or other timed state.</field>
       <field type="uint8_t" name="mode">Mode; this can be a sub-state within the current state or other indicator. This may vary based on device and state.</field>
       <field type="char[64]" name="message">Message, or other text from device.</field>
+    </message>
+    <message id="13700" name="RADAR_SYSTEM_STATUS">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Status message of a radar system.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
+      <field type="uint8_t" name="radar_index">Radar system ID.</field>
+      <field type="uint8_t" name="radar_state" enum="RADAR_STATE">Radar state.</field>
+      <field type="uint8_t" name="interference_rejection">Radar interference rejection setting.</field>
+      <field type="uint8_t" name="gain" minValue="-1" maxValue="100"> Radar gain setting.</field>
+      <field type="uint8_t" name="radar_mode" enum="RADAR_MODE">Radar mode.</field>
+      <field type="uint8_t" name="sea_clutter" minValue="-1" maxValue="100">Radar sea clutter setting.</field>
+      <field type="uint8_t" name="sea_state" enum="RADAR_SEA_STATE">Radar sea state setting.</field>
+      <field type="uint8_t" name="rain_clutter" minValue="-1" maxValue="100">Radar rain clutter setting.</field>
+      <field type="uint8_t" name="interface_rejection">Radar interface rejection setting.</field>
+      <field type="uint8_t" name="target_expansion_level" enum="RADAR_TARGET_EXPANSION">Radar target expansion level.</field>
+      <field type="uint8_t" name="target_separation_level" enum="RADAR_TARGET_SEPARATION">Radar target separation level.</field>
+      <field type="uint8_t" name="noise_rejection_level" enum="RADAR_NOISE_REJECTION">Radar noise rejection level.</field>
+      <field type="uint8_t" name="scan_speed" enum="RADAR_SCAN_SPEED">Radar scan speed.</field>
+      <field type="uint8_t" name="doppler_mode" enum="RADAR_DOPPLER_MODE">Radar Doppler mode.</field>
+      <field type="float" name="doppler_speed_threshold" units="m/s">Radar Doppler speed threshold setting.</field>
+      <field type="uint8_t" name="sidelobe_suppression" minValue="-1" maxValue="100">Radar sidelobe suppression setting.</field>
+      <field type="uint8_t" name="light_intensity_level" enum="RADAR_LIGHT_INTENSITY">Radar light intensity level.</field>
     </message>
   </messages>
 </mavlink>
