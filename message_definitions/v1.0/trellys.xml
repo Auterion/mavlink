@@ -79,6 +79,11 @@
       <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
       <field type="uint8_t" name="mode" enum="TRELLYS_CMD_MODE">Target flight mode.</field>
     </message>
+    <message id="13682" name="TRELLYS_CMD_HOLD">
+      <description>Command agents to hold position.</description>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
+      <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
+    </message>
     <!-- Trellys specific MAVLink END-->
   </messages>
 </mavlink>
