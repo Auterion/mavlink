@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<mavlink>
+  <include>auterion.xml</include>
+  <version>0</version>
+  <dialect>0</dialect>
+  <enums>
+    <enum name="TRELLYS_CMD_MODE">
+      <description>TBD.</description>
+      <entry value="0" name="TRELLYS_CMD_MODE_TRELLYS">
+        <description>TBD.</description>
+      </entry>
+      <entry value="1" name="TRELLYS_CMD_MODE_HOLD">
+        <description>TBD.</description>
+      </entry>
+      <entry value="2" name="TRELLYS_CMD_MODE_RTL">
+        <description>TBD.</description>
+      </entry>
+      <entry value="3" name="TRELLYS_CMD_MODE_STRIKE">
+        <description>TBD.</description>
+      </entry>
+    </enum>
+  </enums>
+  <messages>
+    <!-- Trellys specific MAVLink-->
+    <message id="13673" name="TRELLYS_STATUS">
+      <description>TRELLYS_STATUS message serves the purpose to coordinate vehicles in a Trellys swarm.</description>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
+      <field type="uint32_t" name="agent_id">Unique Agent ID</field>
+      <field type="uint8_t[32]" name="agents_known">Bitset. Bit i (0..255) indicates whether agent ID i+1 is known. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
+      <field type="uint8_t" name="base_mode" enum="MAV_MODE_FLAG">PX4 System mode bitmap.</field>
+      <field type="uint32_t" name="custom_mode">PX4 A bitfield for use for autopilot-specific flags</field>
+      <field type="int32_t" name="latitude" units="degE7">Latitude (WGS84), in degrees * 1E7</field>
+      <field type="int32_t" name="longitude" units="degE7">Longitude (WGS84), in degrees * 1E7</field>
+      <field type="float" name="altitude" units="m">Altitude (MSL), in meters</field>
+      <field type="float" name="heading" units="rad">Vehicle heading</field>
+      <field type="uint16_t" name="command" enum="TRELLYS_CMD">Command ID (of command to send).</field>
+      <field type="uint16_t" name="result" enum="MAV_RESULT">Command ID (of command to send).</field>
+      <field type="uint32_t" name="flags" enum="TRELLYS_FLAGS">Trellys state flags.</field>
+    </message>
+    <message id="13674" name="TRELLYS_CMD_IDLE">
+      <description>Command agents to idle.</description>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
+      <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
+    </message>
+    <message id="13675" name="TRELLYS_CMD_GOTO">
+      <description>Command agents to navigate to a waypoint.</description>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
+      <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
+      <field type="float" name="yaw" units="deg">Desired yaw angle at waypoint. NaN to use the current system yaw heading mode.</field>
+      <field type="float" name="latitude">Latitude (WGS84)</field>
+      <field type="float" name="longitude">Longitude (WGS84)</field>
+      <field type="float" name="altitude" units="m">Altitude (MSL)</field>
+    </message>
+    <message id="13676" name="TRELLYS_CMD_LAND">
+      <description>Command agents to land.</description>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
+      <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
+    </message>
+    <message id="13677" name="TRELLYS_CMD_TAKEOFF">
+      <description>Command agents to take off.</description>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
+      <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
+      <field type="float" name="yaw" units="deg">Desired yaw angle. NaN to use current heading.</field>
+      <field type="float" name="latitude">Latitude (WGS84)</field>
+      <field type="float" name="longitude">Longitude (WGS84)</field>
+      <field type="float" name="altitude" units="m">Target altitude (MSL)</field>
+    </message>
+    <message id="13678" name="TRELLYS_CMD_TAKEOFF_LOCAL">
+      <description>Command agents to take off using local coordinates.</description>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
+      <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
+      <field type="float" name="x" units="m">X-axis position</field>
+      <field type="float" name="y" units="m">Y-axis position</field>
+      <field type="float" name="z" units="m">Z-axis position</field>
+    </message>
+    <message id="13679" name="TRELLYS_CMD_SET_MODE">
+      <description>Set the flight mode of follower agents.</description>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
+      <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
+      <field type="uint8_t" name="mode" enum="TRELLYS_CMD_MODE">Target flight mode.</field>
+    </message>
+    <message id="13682" name="TRELLYS_CMD_HOLD">
+      <description>Command agents to hold position.</description>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
+      <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
+    </message>
+    <!-- Trellys specific MAVLink END-->
+  </messages>
+</mavlink>
