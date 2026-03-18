@@ -467,16 +467,13 @@
       <entry value="6" name="ESTIMATOR_SENSOR_FUSION_SOURCE_RNG">
         <description>Range Finder</description>
       </entry>
-      <entry value="7" name="ESTIMATOR_SENSOR_FUSION_SOURCE_DRAG">
-        <description>Drag</description>
-      </entry>
-      <entry value="8" name="ESTIMATOR_SENSOR_FUSION_SOURCE_MAG">
+      <entry value="7" name="ESTIMATOR_SENSOR_FUSION_SOURCE_MAG">
         <description>Magnetometer</description>
       </entry>
-      <entry value="9" name="ESTIMATOR_SENSOR_FUSION_SOURCE_ASPD">
+      <entry value="8" name="ESTIMATOR_SENSOR_FUSION_SOURCE_ASPD">
         <description>Airspeed</description>
       </entry>
-      <entry value="10" name="ESTIMATOR_SENSOR_FUSION_SOURCE_RANGING_BEACON">
+      <entry value="9" name="ESTIMATOR_SENSOR_FUSION_SOURCE_RANGING_BEACON">
         <description>Ranging Beacon</description>
       </entry>
     </enum>
@@ -647,9 +644,9 @@
     </message>
     <message id="514" name="ESTIMATOR_SENSOR_FUSION_STATUS">
       <description>Status of estimator sensor fusion sources. Each array is indexed by ESTIMATOR_SENSOR_FUSION_SOURCE - 1. Each element is a per-instance bitmask (bit 0 = instance 0, etc.). For single-instance sources only bit 0 is used. For multi-instance sources like AGP, multiple bits may be set.</description>
-      <field type="uint8_t[10]" name="intended">Per-source instance bitmask of sensors the estimator intends to fuse (reflects CTRL params with runtime overrides via MAV_CMD_SET_ESTIMATOR_SENSOR_FUSION).</field>
-      <field type="uint8_t[10]" name="active">Per-source instance bitmask of sensors the estimator is actively fusing.</field>
-      <field type="float[10]" name="test_ratio" invalid="[NaN]">Per-source normalized innovation test ratio. NaN if not available.</field>
+      <field type="uint8_t[9]" name="intended">Per-source instance bitmask of sensors the estimator intends to fuse (reflects CTRL params with runtime overrides via MAV_CMD_SET_ESTIMATOR_SENSOR_FUSION).</field>
+      <field type="uint8_t[9]" name="active">Per-source instance bitmask of sensors the estimator is actively fusing.</field>
+      <field type="float[9]" name="test_ratio" invalid="[NaN]">Per-source normalized innovation test ratio. NaN if not available.</field>
     </message>
   </messages>
 </mavlink>
