@@ -231,7 +231,7 @@
         </description>
         <param index="1" label="Source" enum="ESTIMATOR_SENSOR_FUSION_SOURCE" minValue="1" increment="1">Sensor fusion source type.</param>
         <param index="2" label="Instance" minValue="0" increment="1">Sensor instance (0-based, for multi-instance).</param>
-        <param index="3" label="Action" minValue="0" maxValue="1" increment="1">Action: 0: Disable, 1: Enable.</param>
+        <param index="3" label="Enable" enum="MAV_BOOL">Enable (1) or Disable (0) the source.</param>
         <param index="4">Empty</param>
         <param index="5">Empty</param>
         <param index="6">Empty</param>
@@ -558,6 +558,8 @@
       <wip since="2026-03"/>
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>
+        Highly bandwidth-efficient RC override message for professional networked operations (LTE, Zigbee, GCP).
+        Supersedes RC_CHANNELS_OVERRIDE by adding 32-channel support and a bitmask for multi-master conflict avoidance.
         Uses centered-at-zero values and extension-field placement to maximize MAVLink 2 trailing-zero truncation.
       </description>
       <field type="uint8_t" name="target_system">System ID.</field>
@@ -565,6 +567,8 @@
       <field type="uint32_t" name="active_mask">Bitmap of included channels (bit 0 = CH1). 1: Valid/Override, 0: Ignore.</field>
       <extensions/>
       <field type="int16_t[32]" name="channels" minValue="-4096" maxValue="4096">
+        RC channels in centered 13-bit format. Range: -4096 to 4096, Center: 0.
+        Conversion to PWM: (x * 5/32) + 1500.
         Unused channels must be set to 0 to enable MAVLink 2 trailing-zero trimming.
       </field>
     </message>
