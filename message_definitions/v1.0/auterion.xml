@@ -356,7 +356,7 @@
     <enum name="PARACHUTE_DEPLOYMENT_TRIGGER">
       <description>Parachute deployment trigger source</description>
       <entry value="0" name="PARACHUTE_DEPLOYMENT_TRIGGER_NONE">
-        <description>None (parachute has not deployed)</description>
+        <description>None - not triggered automatically</description>
       </entry>
       <entry value="1" name="PARACHUTE_DEPLOYMENT_TRIGGER_MANUAL">
         <description>Manual</description>
