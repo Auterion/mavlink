@@ -217,12 +217,6 @@
           The vehicle maintains its current altitude and airspeed while turning to the new ground track bearing.
         </description>
         <param index="1" label="Course" units="deg" minValue="0" maxValue="360" invalid="NaN">Course bearing (0=North, clockwise). NaN = no change.</param>
-        <param index="2">Empty</param>
-        <param index="3">Empty</param>
-        <param index="4">Empty</param>
-        <param index="5">Empty</param>
-        <param index="6">Empty</param>
-        <param index="7">Empty</param>
       </entry>
       <entry value="620" name="MAV_CMD_EXTERNAL_ATTITUDE_ESTIMATE" hasLocation="false" isDestination="false">
         <description>Set an external estimate of vehicle attitude.
