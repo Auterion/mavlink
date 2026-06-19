@@ -36,6 +36,8 @@
       <field type="uint16_t" name="command" enum="TRELLYS_CMD">Command ID (of command to send).</field>
       <field type="uint16_t" name="result" enum="MAV_RESULT">Command ID (of command to send).</field>
       <field type="uint32_t" name="flags" enum="TRELLYS_FLAGS">Trellys state flags.</field>
+      <extensions/>
+      <field type="float" name="delta_from_launch" units="m">Height above launch altitude (launch altitude latched on arming; 0 when disarmed).</field>
     </message>
     <message id="13674" name="TRELLYS_CMD_IDLE">
       <description>Command agents to idle.</description>
