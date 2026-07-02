@@ -780,8 +780,31 @@
       <field type="uint8_t" name="failure_flags" enum="APP_HEALTH_FLAGS">
         Bitmask of detected failure types across all default bundled apps
       </field>
-      <field type="uint8_t" name="failing_apps_count">
-        Number of default bundled apps in failure state
+      <field type="uint8_t" name="total_apps_count">
+        Total number of default bundled apps tracked (number of
+        ONBOARD_COMPUTER_APP_HEALTH messages to expect on request)
+      </field>
+    </message>
+    <message id="13802" name="ONBOARD_COMPUTER_APP_HEALTH">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>
+        Health of a single default AOS bundled application.
+        Sent on request, one message per bundled app (a burst covering the full set).
+        A healthy app reports failure_flags = 0. The recipient can use total_apps_count
+        from ONBOARD_COMPUTER_APPS_STATUS to detect a truncated burst and re-request.
+      </description>
+      <field type="char[128]" name="app_name">
+        Name of the application
+      </field>
+      <field type="uint8_t" name="failure_flags" enum="APP_HEALTH_FLAGS">
+        Bitmask of failure reasons for this application (0 = healthy)
+      </field>
+      <field type="char[32]" name="expected_version">
+        Expected bundled version
+      </field>
+      <field type="char[32]" name="actual_version">
+        Actual installed/running version
       </field>
     </message>
   </messages>
