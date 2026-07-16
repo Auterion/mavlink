@@ -7,6 +7,12 @@ on:
   pull_request:
     branches:
     - '*'
+  workflow_dispatch:
+    inputs:
+      clibrary_branch:
+        description: 'Branch to create/update in c_library_v1 & c_library_v2 (defaults to the branch this run is dispatched on)'
+        required: false
+        default: ''
 
 # paths:
 # - "*"
@@ -131,9 +137,14 @@ jobs:
     name: Generate and push C headers
     needs: [format, xml-consistency, spell-check, python-lint, python-tests, node-tests]
     runs-on: ubuntu-22.04
-    if: github.ref == 'refs/heads/master'
+    # Runs automatically on master pushes, or manually on any branch via the
+    # "Run workflow" button (workflow_dispatch).
+    if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      # master push -> "master"; manual dispatch -> the dispatched branch name
+      # (or the optional clibrary_branch input override).
+      CLIBRARY_GIT_BRANCHNAME: ${{ inputs.clibrary_branch || github.ref_name }}
     steps:
       - uses: actions/checkout@v6
         with:
