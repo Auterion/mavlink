@@ -4,14 +4,20 @@
   <version>0</version>
   <dialect>0</dialect>
   <messages>
-    <!-- Placeholder inter-drone message for the mc-swarm network smoother.
-         Real fields (per-epoch odometry dx/dy, pairwise ranges) TBD. -->
-    <message id="13690" name="MC_SWARM_DATA">
-      <description>mc-swarm drone-to-drone data (placeholder).</description>
-      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
-      <field type="uint8_t" name="agent_id">Sending agent ID</field>
-      <field type="uint32_t" name="epoch">Smoother epoch counter</field>
-      <field type="float[8]" name="payload">Placeholder payload</field>
+    <message id="54001" name="SWARM_RANGE_ODOMETRY">
+      <description>Broadcast by each swarm member at every ranging event: the raw
+        range measurement plus the sender's own odometry sample at that instant.
+        GPS fields are the sender's global position at the same instant, for
+        ground-truth evaluation.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp of the ranging event (synchronized time)</field>
+      <field type="uint8_t" name="target_sysid">MAVLink sysid of the ranged peer. 0 = no range in this message</field>
+      <field type="float" name="range" units="m">Measured 3D slant range to target. (NaN/0) when target_sysid is 0</field>
+      <field type="float" name="vn" units="m/s">Sender velocity North</field>
+      <field type="float" name="ve" units="m/s">Sender velocity East</field>
+      <field type="float" name="alt" units="m">Sender altitude</field>
+      <field type="int32_t" name="gt_lat" units="degE7">Ground truth: sender GPS latitude (WGS84). INT32_MAX if no fix</field>
+      <field type="int32_t" name="gt_lon" units="degE7">Ground truth: sender GPS longitude (WGS84). INT32_MAX if no fix</field>
+      <field type="float" name="gt_alt" units="m">Ground truth: sender GPS altitude AMSL. NaN if no fix</field>
     </message>
   </messages>
 </mavlink>
