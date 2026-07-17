@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<mavlink>
+  <include>trellys.xml</include>
+  <version>0</version>
+  <dialect>0</dialect>
+  <messages>
+    <!-- Placeholder inter-drone message for the mc-swarm network smoother.
+         Real fields (per-epoch odometry dx/dy, pairwise ranges) TBD. -->
+    <message id="13690" name="MC_SWARM_DATA">
+      <description>mc-swarm drone-to-drone data (placeholder).</description>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
+      <field type="uint8_t" name="agent_id">Sending agent ID</field>
+      <field type="uint32_t" name="epoch">Smoother epoch counter</field>
+      <field type="float[8]" name="payload">Placeholder payload</field>
+    </message>
+  </messages>
+</mavlink>
