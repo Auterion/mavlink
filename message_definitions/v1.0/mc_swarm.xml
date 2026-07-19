@@ -15,6 +15,7 @@
       <field type="float" name="vn" units="m/s">Sender velocity North</field>
       <field type="float" name="ve" units="m/s">Sender velocity East</field>
       <field type="float" name="alt" units="m">Sender altitude</field>
+      <field type="float" name="heading" units="rad">Sender heading</field>
       <field type="int32_t" name="gt_lat" units="degE7">Ground truth: sender GPS latitude (WGS84). INT32_MAX if no fix</field>
       <field type="int32_t" name="gt_lon" units="degE7">Ground truth: sender GPS longitude (WGS84). INT32_MAX if no fix</field>
       <field type="float" name="gt_alt" units="m">Ground truth: sender GPS altitude AMSL. NaN if no fix</field>
