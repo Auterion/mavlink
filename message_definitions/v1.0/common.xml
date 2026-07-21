@@ -208,6 +208,18 @@
       <entry value="2" name="MAV_SYS_STATUS_SENSOR_LEAK">
         <description>0x02 Leak detection</description>
       </entry>
+      <entry value="4" name="MAV_SYS_STATUS_SENSOR_3D_GYRO3">
+        <description>0x04 3rd 3D gyro</description>
+      </entry>
+      <entry value="8" name="MAV_SYS_STATUS_SENSOR_3D_ACCEL3">
+        <description>0x08 3rd 3D accelerometer</description>
+      </entry>
+      <entry value="16" name="MAV_SYS_STATUS_SENSOR_3D_GYRO4">
+        <description>0x10 4th 3D gyro</description>
+      </entry>
+      <entry value="32" name="MAV_SYS_STATUS_SENSOR_3D_ACCEL4">
+        <description>0x20 4th 3D accelerometer</description>
+      </entry>
     </enum>
     <enum name="MAV_FRAME">
       <description>Coordinate frames used by MAVLink. Not all frames are supported by all commands, messages, or vehicles.
@@ -4015,11 +4027,9 @@
         <description>Camera tracking in error state</description>
       </entry>
       <entry value="4" name="CAMERA_TRACKING_STATUS_FLAGS_MTI">
-        <wip/>
         <description>Camera Moving Target Indicators (MTI) are active</description>
       </entry>
       <entry value="8" name="CAMERA_TRACKING_STATUS_FLAGS_COASTING">
-        <wip/>
         <description>Camera tracking target is obscured and is being predicted</description>
       </entry>
     </enum>
@@ -4962,6 +4972,9 @@
       <entry value="106" name="FAILURE_UNIT_SYSTEM_ESC">
         <description>Interrupts the telemetry reported by the ESC.</description>
       </entry>
+      <entry value="107" name="FAILURE_UNIT_SYSTEM_TRAFFIC_AVOIDANCE">
+        <description>Traffic avoidance system like ADS-B or FLARM.</description>
+      </entry>
     </enum>
     <enum name="FAILURE_TYPE">
       <!-- This enum is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
@@ -4989,6 +5002,9 @@
       </entry>
       <entry value="7" name="FAILURE_TYPE_INTERMITTENT">
         <description>Unit is sometimes working, sometimes not.</description>
+      </entry>
+      <entry value="8" name="FAILURE_TYPE_DRIFT">
+        <description>Unit is publishing plausible values but drifting away from true values.</description>
       </entry>
     </enum>
     <enum name="NAV_VTOL_LAND_OPTIONS">
