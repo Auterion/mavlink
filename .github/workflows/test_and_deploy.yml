@@ -20,7 +20,7 @@ jobs:
     name: Formatting check
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: 'recursive'
       - run: |
@@ -30,11 +30,20 @@ jobs:
         run: |
           ./scripts/test.sh format
 
+  xml-consistency:
+    name: XML consistency check
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v6
+      - run: pip install beautifulsoup4 lxml
+      - name: Check XML consistency
+        run: python3 scripts/xml_consistency_check.py --exception
+
   spell-check:
     name: Find typos with codespell
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: pipx install codespell
       # Discover typos in all non-XML files and the four XML files that this repo controls
       - run: codespell --skip="*.xml"
@@ -47,7 +56,7 @@ jobs:
     name: Lint Python code with ruff
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: astral-sh/ruff-action@v3
 
   python-tests:
@@ -58,11 +67,11 @@ jobs:
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.x']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: 'recursive'
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
@@ -76,7 +85,7 @@ jobs:
     name: Build cmake C example
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: 'recursive'
       - name: Install dependencies
@@ -101,17 +110,17 @@ jobs:
       matrix:
         node-version: ['14', '15', '16',' 17', '18', 'lts/*']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: 'recursive'
       - name: Set up Python 3.8
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: 3.8
       - name: Install dependencies
         run: |
           pip install future lxml
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
       - name: Test mavlink
@@ -120,17 +129,17 @@ jobs:
 
   deploy:
     name: Generate and push C headers
-    needs: [format, spell-check, python-lint, python-tests, node-tests]
+    needs: [format, xml-consistency, spell-check, python-lint, python-tests, node-tests]
     runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/master'
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: 'recursive'
       - name: Set up Python 3.8
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: 3.8
       - name: Install dependencies
