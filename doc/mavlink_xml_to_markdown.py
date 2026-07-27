@@ -19,11 +19,12 @@ It can also be imported and used to get information about the XML.
 
 # import lxml.etree as ET
 # import requests
-from bs4 import BeautifulSoup as bs
-import re
-import os  # for walk
-
 import argparse  # for command line parsing
+import os  # for walk
+import re
+import sys
+
+from bs4 import BeautifulSoup as bs
 
 MAXIMUM_INCLUDE_FILE_NESTING = 5
 
@@ -88,7 +89,7 @@ class MAVXML:
             item = MAVEnum(enum, self.basename)
             self.enums[item.name] = item
         # reorder the enum values
-        for enumName in self.enums.keys():
+        for enumName in self.enums:
             # Sort the entries based on the 'value' property
             mav_enum_entries = self.enums[enumName].entries.values()
             sorted_entries = sorted(
@@ -119,7 +120,7 @@ class MAVXML:
         # print(f"debug: mergeIn {mergeXML.basename} into {self.basename}")
 
         # merge messages
-        for messageName in mergeXML.messages.keys():
+        for messageName in mergeXML.messages:
             if messageName in self.messages:
                 # print(f"debug: mergeIn {messageName} already present, skip")
                 continue
@@ -134,7 +135,7 @@ class MAVXML:
         self.messages.update(sorted_items)
 
         # merge commands
-        for commandName in mergeXML.commands.keys():
+        for commandName in mergeXML.commands:
             if commandName in self.commands:
                 # print(f"debug: mergeIn {commandName} already present, skip")
                 continue
@@ -150,13 +151,13 @@ class MAVXML:
         self.commands.update(sorted_items)
 
         # merge enums
-        for enumName in mergeXML.enums.keys():
+        for enumName in mergeXML.enums:
             if enumName in self.enums:
                 # print(
                 #     f"TODO need to merge the values: debug: mergeIn {enumName} "
                 #     "already present, skip"
                 # )
-                for enumValue in mergeXML.enums[enumName].entries.keys():
+                for enumValue in mergeXML.enums[enumName].entries:
                     if enumValue in self.enums[enumName].entries:
                         # print(f"{enumValue} - skip: already present")
                         pass
@@ -619,7 +620,6 @@ class MAVMessage:
                         print(
                             f"DEBUG: message desc multiple array problem: {self.name}"
                         )
-                    pass
                 elif child.name == "deprecated":
                     self.deprecated = MAVDeprecated(child)
                 elif child.name == "superseded":
@@ -990,7 +990,6 @@ class MAVCommandParam:
 class MAVCommand:
     def __init__(self, soup, basename):
         # name, value, description='', end_marker=False, autovalue=False, origin_file='', origin_line=0, has_location=False
-        pass
         self.name = soup["name"]
         self.value = (
             int(soup.get("value")) if soup.get(
@@ -1206,7 +1205,7 @@ def generateMarkdownTable(headings, rows):
 
 class XMLFiles:
     def __init__(self, dialect=None, source_dir="."):
-        self.xml_dialects = dict()
+        self.xml_dialects = {}
         self.source_dir = source_dir
         if not dialect:
             raise ValueError(
@@ -1219,11 +1218,11 @@ class XMLFiles:
         else:
             dialectNames.append(dialect)
 
-        for dialect in dialectNames:
-            xmlFileName = f"{self.source_dir}{dialect}.xml"
+        for dialect_name in dialectNames:
+            xmlFileName = f"{self.source_dir}{dialect_name}.xml"
             print(f"Importing: {xmlFileName}")
             xmlParser = MAVXML(xmlFileName)
-            self.xml_dialects[dialect] = xmlParser
+            self.xml_dialects[dialect_name] = xmlParser
 
         self.expand_includes()
         self.update_includes()  # TODO - make this optional based on a setting?
@@ -1341,7 +1340,7 @@ The dialect definitions are:
 
 """
 
-        for xmlfile in self.xml_dialects.keys():
+        for xmlfile in self.xml_dialects:
             if xmlfile not in [
                 "common",
                 "standard",
@@ -1390,7 +1389,7 @@ The following definitions are used for testing and dialect validation:
             """
             includeadded = False
             includes_to_add = set()
-            for name in self.xml_dialects.keys():
+            for name in self.xml_dialects:
                 for incl in self.xml_dialects[name].includes:
                     # print(incl)
                     if incl not in self.xml_dialects:
@@ -1423,7 +1422,7 @@ The following definitions are used for testing and dialect validation:
                 # print(f"\nFile with no includes found (ENDPOINT): {xmldialect.basename}"  )
         if len(done) == 0:
             print("\nERROR in includes tree, no base found!")
-            exit(1)
+            sys.exit(1)
 
         # 2: Update all 'not done' files for which all includes have been done.
         #    Returns True if any updates were made
@@ -1482,7 +1481,7 @@ The following definitions are used for testing and dialect validation:
             if len(done) == initial_done_length:
                 # we've made no progress
                 print("ERROR include tree can't be resolved, no base found!")
-                exit(1)
+                sys.exit(1)
             return True
 
         for i in range(MAXIMUM_INCLUDE_FILE_NESTING):

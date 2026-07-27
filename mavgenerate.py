@@ -22,13 +22,11 @@ Released under GNU GPL version 3 or later
 """
 import os
 import re
-
-from tkinter import *  # noqa: F403
 import tkinter.filedialog
 import tkinter.messagebox
+from tkinter import *
 
-from pymavlink.generator import mavgen
-from pymavlink.generator import mavparse
+from pymavlink.generator import mavgen, mavparse
 
 title = "MAVLink Generator"
 
@@ -153,9 +151,8 @@ class Application(Frame):
             return
 
 
-        if os.path.isdir(self.out_value.get()):
-            if not tkinter.messagebox.askokcancel('Overwrite Headers?','The output directory \'{0}\' already exists. Headers may be overwritten if they already exist.'.format(self.out_value.get())):
-                return
+        if os.path.isdir(self.out_value.get()) and not tkinter.messagebox.askokcancel('Overwrite Headers?',f'The output directory \'{self.out_value.get()}\' already exists. Headers may be overwritten if they already exist.'):
+            return
 
         # Generate headers
         opts = mavgen.Opts(self.out_value.get(), wire_protocol=self.protocol_value.get(), language=self.language_value.get(), validate=self.validate_value.get(), strict_units=self.strict_units_value.get())
@@ -164,16 +161,16 @@ class Application(Frame):
             mavgen.mavgen(opts,args)
             tkinter.messagebox.showinfo('Successfully Generated Headers', 'Headers generated successfully.')
 
-        except Exception as ex:
+        except Exception as ex:  # noqa: BLE001
             exStr = formatErrorMessage(str(ex))
-            tkinter.messagebox.showerror('Error Generating Headers','{0!s}'.format(exStr))
+            tkinter.messagebox.showerror('Error Generating Headers',f'{exStr!s}')
             return
 
 """\
 Format the mavgen exceptions by removing 'ERROR: '.
 """
 def formatErrorMessage(message):
-    reObj = re.compile(r'^(ERROR):\s+',re.M)
+    reObj = re.compile(r'^(ERROR):\s+',re.MULTILINE)
     matches = re.findall(reObj, message)
     prefix = ("An error occurred in mavgen:" if len(matches) == 1 else "Errors occurred in mavgen:\n")
     message = re.sub(reObj, '\n', message)
