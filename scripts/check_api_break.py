@@ -21,11 +21,10 @@ import subprocess
 import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Union
 from urllib import error, request
 
 from lxml import etree
-
 
 NameKey = Union['EnumKey', 'EnumEntryKey', 'MessageKey', 'FieldKey']
 
@@ -78,7 +77,7 @@ def describe_key(name: NameKey) -> str:
     return str(name)
 
 
-def collect_names(root: etree._Element) -> Tuple[Dict[NameKey, bool], Dict[NameKey, Dict[str, Any]]]:
+def collect_names(root: etree._Element) -> tuple[dict[NameKey, bool], dict[NameKey, dict[str, Any]]]:
     """Collect names and wire-critical attributes (id, type, value) from a MAVLink XML root."""
     names = {}
     attrs = {}
@@ -124,17 +123,17 @@ def get_base_commit() -> str:
         ["git", "merge-base", "origin/master", "HEAD"], text=True
     ).strip()
 
-def get_changed_xml_files(base: str) -> List[str]:
+def get_changed_xml_files(base: str) -> list[str]:
     changed = subprocess.check_output(
         ["git", "diff", "--name-only", base], text=True
     ).splitlines()
     return [f for f in changed if f.endswith(".xml")]
 
-def parse_xml(content: Union[str, bytes]) -> etree._Element:
+def parse_xml(content: str | bytes) -> etree._Element:
     return etree.fromstring(content.encode() if isinstance(content, str) else content)
 
 
-def get_pull_request_info() -> Optional[Tuple[str, int]]:
+def get_pull_request_info() -> tuple[str, int] | None:
     """Return (repo_full_name, pr_number) when running in a PR context."""
     event_path = os.getenv("GITHUB_EVENT_PATH")
     if not event_path:
@@ -194,7 +193,7 @@ def post_pr_comment(body: str) -> bool:
     return False
 
 
-def describe_mutation(key: NameKey, old_a: Dict[str, Any], new_a: Dict[str, Any]) -> str:
+def describe_mutation(key: NameKey, old_a: dict[str, Any], new_a: dict[str, Any]) -> str:
     """Describe a wire-breaking attribute mutation for a given key."""
     changes = []
     for attr in sorted(set(old_a) | set(new_a)):
@@ -206,13 +205,13 @@ def describe_mutation(key: NameKey, old_a: Dict[str, Any], new_a: Dict[str, Any]
 
 
 def find_mutations(
-    old_names: Dict[NameKey, bool],
-    new_names: Dict[NameKey, bool],
-    old_attrs: Dict[NameKey, Dict[str, Any]],
-    new_attrs: Dict[NameKey, Dict[str, Any]],
-) -> List[str]:
+    old_names: dict[NameKey, bool],
+    new_names: dict[NameKey, bool],
+    old_attrs: dict[NameKey, dict[str, Any]],
+    new_attrs: dict[NameKey, dict[str, Any]],
+) -> list[str]:
     """Return description strings for wire-breaking attribute mutations (type, id, value)."""
-    mutation_descs: List[str] = []
+    mutation_descs: list[str] = []
     for key in old_names:
         if key not in new_names:
             continue
@@ -228,11 +227,11 @@ def find_mutations(
 
 
 def build_removal_comment(
-    removed_by_file: Dict[str, List[NameKey]],
-    mutations_by_file: Optional[Dict[str, List[str]]] = None,
+    removed_by_file: dict[str, list[NameKey]],
+    mutations_by_file: dict[str, list[str]] | None = None,
 ) -> str:
     """Format a PR comment listing removed messages/enums and attribute mutations."""
-    lines: List[str] = []
+    lines: list[str] = []
 
     if removed_by_file:
         lines.extend(["Detected removed MAVLink messages or enums:", ""])
@@ -261,9 +260,9 @@ def main() -> None:
         print("No XML files changed.")
         return
 
-    removals_for_comment: Dict[str, List[NameKey]] = {}
-    mutations_for_comment: Dict[str, List[str]] = {}
-    breaking_by_file: Dict[str, List[str]] = {}
+    removals_for_comment: dict[str, list[NameKey]] = {}
+    mutations_for_comment: dict[str, list[str]] = {}
+    breaking_by_file: dict[str, list[str]] = {}
 
     for xml in xml_files:
         if xml.endswith("development.xml"):
@@ -273,7 +272,8 @@ def main() -> None:
             old_content = subprocess.check_output(
                 ["git", "show", f"{base}:{xml}"], text=True
             )
-            new_content = open(xml).read()
+            with open(xml) as _f:
+                new_content = _f.read()
         except subprocess.CalledProcessError:
             continue  # new file or removed, ignore
 
@@ -296,7 +296,7 @@ def main() -> None:
 
         confirmed_breaking = [b for b in breaking_candidates if not any(b.is_relative_of(item) for item in removed_enum_or_message)]
 
-        breaking_descs: List[str] = []
+        breaking_descs: list[str] = []
         for name in confirmed_breaking:
             breaking_descs.append(f"Removed {describe_key(name)}")
 
