@@ -479,6 +479,21 @@
         <description>Device has reported an error. Requires an explicit reset before it can be re-enabled.</description>
       </entry>
     </enum>
+    <enum name="APPS_HEALTH_STATE">
+      <entry value="0" name="APPS_HEALTH_OK"/>
+      <entry value="1" name="APPS_HEALTH_UNKNOWN"/>
+      <entry value="2" name="APPS_HEALTH_ERROR"/>
+    </enum>
+    <enum name="APP_HEALTH_FLAGS" bitmask="true">
+      <description>
+        Bitmask describing application health failures.
+        Used both per-app and aggregated across all apps.
+      </description>
+      <entry value="1" name="APP_NOT_INSTALLED"/>
+      <entry value="2" name="APP_NOT_RUNNING"/>
+      <entry value="4" name="APP_VERSION_MISMATCH"/>
+      <entry value="8" name="APP_CONFIG_MISMATCH"/>
+    </enum>
   </enums>
   <messages>
     <!-- Transactions for parameter protocol -->
@@ -751,6 +766,46 @@
       <field type="uint32_t" name="countdown" units="s">Countdown timer value for SST or other timed state.</field>
       <field type="uint8_t" name="mode">Mode; this can be a sub-state within the current state or other indicator. This may vary based on device and state.</field>
       <field type="char[64]" name="message">Message, or other text from device.</field>
+    </message>
+    <message id="13801" name="AOS_BUNDLED_APP_HEALTH_SUMMARY">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>
+        Aggregated health summary of default AOS bundled applications.
+        failure_flags is the OR-combination of all failing apps.
+      </description>
+      <field type="uint8_t" name="overall_health" enum="APPS_HEALTH_STATE">
+        Overall system health state
+      </field>
+      <field type="uint8_t" name="failure_flags" enum="APP_HEALTH_FLAGS">
+        Bitmask of detected failure types across all default bundled apps
+      </field>
+      <field type="uint8_t" name="total_apps_count">
+        Total number of default bundled apps tracked (number of
+        AOS_BUNDLED_APP_HEALTH messages to expect on request)
+      </field>
+    </message>
+    <message id="13802" name="AOS_BUNDLED_APP_HEALTH">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>
+        Health of a single default AOS bundled application.
+        Sent on request, one message per bundled app (a burst covering the full set).
+        A healthy app reports failure_flags = 0. The recipient can use total_apps_count
+        from AOS_BUNDLED_APP_HEALTH_SUMMARY to detect a truncated burst and re-request.
+      </description>
+      <field type="char[128]" name="app_name">
+        Name of the application
+      </field>
+      <field type="uint8_t" name="failure_flags" enum="APP_HEALTH_FLAGS">
+        Bitmask of failure reasons for this application (0 = healthy)
+      </field>
+      <field type="char[32]" name="expected_version">
+        Expected bundled version
+      </field>
+      <field type="char[32]" name="actual_version">
+        Actual installed/running version
+      </field>
     </message>
   </messages>
 </mavlink>
