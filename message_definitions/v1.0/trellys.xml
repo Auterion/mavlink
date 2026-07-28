@@ -62,7 +62,7 @@
       <description>Command agents to take off.</description>
       <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
       <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
-      <field type="float" name="delay"> Inter agent takeoff delay, agents targeted with takeoff at delay*id_in_swarm seconds.</field>
+      <field type="uint8_t" name="delay"> Inter agent takeoff delay, agents targeted with takeoff at delay*id_in_swarm seconds.</field>
       <field type="float" name="yaw" units="deg">Desired yaw angle. NaN to use current heading.</field>
       <field type="float" name="latitude">Latitude (WGS84)</field>
       <field type="float" name="longitude">Longitude (WGS84)</field>
@@ -72,7 +72,7 @@
       <description>Command agents to take off using local coordinates.</description>
       <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
       <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
-      <field type="float" name="delay"> Inter agent takeoff delay, agents targeted with takeoff at delay*id_in_swarm seconds.</field>
+      <field type="uint8_t" name="delay"> Inter agent takeoff delay, agents targeted with takeoff at delay*id_in_swarm seconds.</field>
       <field type="float" name="x" units="m">X-axis position</field>
       <field type="float" name="y" units="m">Y-axis position</field>
       <field type="float" name="z" units="m">Z-axis position</field>
