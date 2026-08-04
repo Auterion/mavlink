@@ -197,7 +197,7 @@
     <enum name="ENGINE_STATE">
       <description>Defines the operation state of an engine.</description>
       <entry value="0" name="ENGINE_NONE">
-        <description>ENGINE_NONE indicates engine is not running and ignition is off.</description>
+        <description>ENGINE_NONE indicates the engine is not present, or is present but not reporting: it is not running and its ignition is off.</description>
       </entry>
       <entry value="1" name="ENGINE_STOPPED">
         <description>ENGINE_STOPPED indicates the engine is not running, but ignition is on.</description>
@@ -209,7 +209,10 @@
         <description>ENGINE_RUNNING indicates the engine is running.</description>
       </entry>
       <entry value="4" name="ENGINE_FAULT">
-        <description>ENGINE_FAULT indicates a fault in the engine system.</description>
+        <description>ENGINE_FAULT indicates a fault in the engine system, including a fault in its ignition or keyswitch system.</description>
+      </entry>
+      <entry value="5" name="ENGINE_UNKNOWN">
+        <description>ENGINE_UNKNOWN indicates no data: the sender has no engine at this index, or has never received a report from it, or its last report is too old to be trusted. Distinct from ENGINE_NONE, which is a positive statement that the engine is off. Receivers must not display any other per-engine field for an index reporting ENGINE_UNKNOWN.</description>
       </entry>
     </enum>
     <enum name="TRANSMISSION_STATE">
@@ -228,6 +231,9 @@
       </entry>
       <entry value="4" name="TRANSMISSION_FAULT">
         <description>TRANSMISSION_FAULT indicates a fault in the transmission system.</description>
+      </entry>
+      <entry value="5" name="TRANSMISSION_UNKNOWN">
+        <description>TRANSMISSION_UNKNOWN indicates no data: the sender cannot observe the transmission. Distinct from TRANSMISSION_NONE, which is a positive statement that no transmission system is fitted.</description>
       </entry>
     </enum>
     <enum name="FLUID_TANK_TYPE">
@@ -686,14 +692,14 @@
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>Boat engine status reports status and position of all boat engines.</description>
       <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
-      <field type="uint8_t[6]" name="engine_state" enum="ENGINE_STATE">Engine state.</field>
-      <field type="uint8_t[6]" name="engine_load" units="%">Engine load.</field>
-      <field type="uint16_t[6]" name="engine_rpm" units="rpm">Engine RPM.</field>
-      <field type="float" name="fuel_consumption_rate" units="L/h">Fuel consumption rate.</field>
-      <field type="float[6]" name="oil_pressure" units="kPa">Engine oil pressure.</field>
-      <field type="uint8_t[6]" name="throttle_position" units="%">Throttle position.</field>
-      <field type="float[6]" name="engine_coolant_temperature" units="degC">Engine coolant temperature.</field>
-      <field type="uint8_t[6]" name="transmission_state" enum="TRANSMISSION_STATE">Transmission state.</field>
+      <field type="uint8_t[6]" name="engine_state" enum="ENGINE_STATE">Engine state. Index i reports the engine with instance number i; indexes with no engine, no report yet, or a stale report are ENGINE_UNKNOWN, and every other per-engine field at that index carries its own unknown value and must be ignored. Senders collapse any finer-grained internal state onto this enum as follows: a transient start attempt, including a failed crank that will be retried, reports ENGINE_STARTING, and only giving up reports ENGINE_FAULT; a stop in progress reports ENGINE_RUNNING for as long as the shaft is still turning, so a stopped engine is never reported while it moves; a fault in the ignition or keyswitch system reports ENGINE_FAULT rather than ENGINE_NONE, so it cannot be confused with an absent engine.</field>
+      <field type="uint8_t[6]" name="engine_load" units="%" invalid="UINT8_MAX">Engine load. May exceed 100% where the underlying sensor allows it (J1939 SPN 92 ranges 0-125%). UINT8_MAX if unknown.</field>
+      <field type="uint16_t[6]" name="engine_rpm" units="rpm" invalid="UINT16_MAX">Engine RPM. UINT16_MAX if unknown.</field>
+      <field type="float" name="fuel_consumption_rate" units="L/h" invalid="NaN">Fuel consumption rate, summed over all engines reporting a rate: this is a vessel total, not a per-engine value. NaN if unknown.</field>
+      <field type="float[6]" name="oil_pressure" units="kPa" invalid="NaN">Engine oil pressure. NaN if unknown.</field>
+      <field type="uint8_t[6]" name="throttle_position" units="%" invalid="UINT8_MAX">Throttle position. UINT8_MAX if unknown.</field>
+      <field type="float[6]" name="engine_coolant_temperature" units="degC" invalid="NaN">Engine coolant temperature. NaN if unknown — note that 0 is a valid temperature and must not be used to mean "no data".</field>
+      <field type="uint8_t[6]" name="transmission_state" enum="TRANSMISSION_STATE">Transmission state. TRANSMISSION_UNKNOWN if unknown.</field>
     </message>
     <message id="13668" name="FLUID_LEVEL">
       <wip/>
