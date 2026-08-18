@@ -4,11 +4,11 @@ Script to parse all XML definition files in ../message_definitions/v1.0/ for con
 These might include flag enums that do not include bitmask attributes, and so on.
 """
 
-from bs4 import BeautifulSoup as bs
-import os
 import itertools
-
+import os
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
+
+from bs4 import BeautifulSoup as bs
 
 # Integer ranges of given types
 types = {
@@ -56,7 +56,7 @@ def check_enum(enum, file_name):
             bitmask = value == 'true'
 
     if name is None:
-        raise Exception(f"{file_name}: No name for Enum: {enum}")
+        raise ValueError(f"{file_name}: No name for Enum: {enum}")
 
     values = []
     enumEntries = enum.find_all('entry')
@@ -255,8 +255,8 @@ so that CI can gate on new warnings while tolerating ones we can't fix yet.
 
     # Get all enums
     all_enums = {}
-    for key in xml:
-        for enum in xml[key].find_all('enum'):
+    for key, xml_content in xml.items():
+        for enum in xml_content.find_all('enum'):
             if enum.find('deprecated', recursive=False) is not None:
                 # Skip and deprecated items
                 continue
@@ -273,9 +273,8 @@ so that CI can gate on new warnings while tolerating ones we can't fix yet.
                     key], 'enum': [decoded], 'used': False}
 
     # Check for enums declared in multiple locations
-    for name in all_enums:
+    for name, enum in all_enums.items():
         # Combine results
-        enum = all_enums[name]
 
         # Combine file names
         enum['file'] = ", ".join(enum['file'])
@@ -308,8 +307,8 @@ so that CI can gate on new warnings while tolerating ones we can't fix yet.
             warn(f"{enum['file']}: Enum: {name} has conflicting values")
 
     # Check all fields against enums
-    for key in xml:
-        for message in xml[key].find_all('message'):
+    for key, xml_content in xml.items():
+        for message in xml_content.find_all('message'):
             if message.find('deprecated', recursive=False) is not None:
                 # Skip and deprecated items
                 continue
@@ -319,8 +318,8 @@ so that CI can gate on new warnings while tolerating ones we can't fix yet.
                 check_field(key, name, field, all_enums)
 
     # Check params in MAV_CMD
-    for key in xml:
-        for enum in xml[key].find_all('enum', {"name": "MAV_CMD"}):
+    for key, xml_content in xml.items():
+        for enum in xml_content.find_all('enum', {"name": "MAV_CMD"}):
             for entry in enum.find_all('entry'):
                 if entry.find('deprecated', recursive=False) is not None:
                     # Skip and deprecated items
@@ -379,7 +378,7 @@ so that CI can gate on new warnings while tolerating ones we can't fix yet.
                f"entry(ies) in: {files}")
 
     if args.exception and (warning_count > 0 or stale):
-        raise Exception(summary + "\n")
+        raise ValueError(summary + "\n")
 
     print(f"\n{summary}\n")
 

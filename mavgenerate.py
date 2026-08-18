@@ -22,13 +22,11 @@ Released under GNU GPL version 3 or later
 """
 import os
 import re
-
-from tkinter import *  # noqa: F403
 import tkinter.filedialog
 import tkinter.messagebox
+from tkinter import *
 
-from pymavlink.generator import mavgen
-from pymavlink.generator import mavparse
+from pymavlink.generator import mavgen, mavparse
 
 title = "MAVLink Generator"
 
@@ -164,7 +162,7 @@ class Application(Frame):
             mavgen.mavgen(opts,args)
             tkinter.messagebox.showinfo('Successfully Generated Headers', 'Headers generated successfully.')
 
-        except Exception as ex:
+        except Exception as ex:  # noqa: BLE001
             exStr = formatErrorMessage(str(ex))
             tkinter.messagebox.showerror('Error Generating Headers', f"{exStr}")
             return
@@ -173,7 +171,7 @@ class Application(Frame):
 Format the mavgen exceptions by removing 'ERROR: '.
 """
 def formatErrorMessage(message):
-    reObj = re.compile(r'^(ERROR):\s+',re.M)
+    reObj = re.compile(r'^(ERROR):\s+',re.MULTILINE)
     matches = re.findall(reObj, message)
     prefix = ("An error occurred in mavgen:" if len(matches) == 1 else "Errors occurred in mavgen:\n")
     message = re.sub(reObj, '\n', message)
