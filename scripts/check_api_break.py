@@ -21,7 +21,7 @@ import subprocess
 import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, List, Union
+from typing import Any, Union
 
 from lxml import etree
 
@@ -239,7 +239,7 @@ def build_removal_comment(
     mutations_by_file: dict[str, list[str]] | None = None,
 ) -> str:
     """Format a PR comment listing removed messages/enums and attribute mutations."""
-    lines: List[str] = [COMMENT_MARKER, ""]
+    lines: list[str] = [COMMENT_MARKER, ""]
 
     if removed_by_file:
         lines.extend(["Detected removed MAVLink messages or enums:", ""])
