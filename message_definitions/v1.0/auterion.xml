@@ -557,16 +557,12 @@
       <field type="float" name="dt" units="s">delta-t integration period</field>
     </message>
     <message id="500" name="TRACKER_STATUS">
-      <wip/>
-      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>Current status of the tracker. This message should be broadcast a low regular rate e.g. 1 Hz.</description>
       <field type="uint8_t" name="tracker_status"> </field>
       <field type="uint16_t" name="number_objects_detected"> Number of objects currently detected.</field>
       <field type="uint32_t" name="tracked_object_id"> The UID of the object currently being tracked.</field>
     </message>
     <message id="501" name="TRACKER_DETECTION_2D">
-      <wip/>
-      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>Contains information on an object detection in a video stream. Note that the video frame (image) ID must uniquely identify the same frame on all receiving devices. </description>
       <field type="uint64_t" name="img_ts" units="us"> Time stamp of the image.</field>
       <field type="uint64_t" name="img_id"> Unique ID specifiying the video frame (image) in the message sender video stream.</field>
