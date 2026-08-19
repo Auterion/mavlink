@@ -21,7 +21,7 @@ import subprocess
 import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, List, Union
 
 from lxml import etree
 

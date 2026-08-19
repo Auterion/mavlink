@@ -24,7 +24,7 @@ import os
 import re
 import tkinter.filedialog
 import tkinter.messagebox
-from tkinter import *
+from tkinter import BooleanVar, Button, Checkbutton, E, Entry, Frame, Label, N, OptionMenu, S, StringVar, W
 
 from pymavlink.generator import mavgen, mavparse
 
