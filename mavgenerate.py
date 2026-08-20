@@ -24,7 +24,7 @@ import os
 import re
 import tkinter.filedialog
 import tkinter.messagebox
-from tkinter import *
+from tkinter import BooleanVar, Button, Checkbutton, E, Entry, Frame, Label, N, OptionMenu, S, StringVar, W
 
 from pymavlink.generator import mavgen, mavparse
 
@@ -151,8 +151,9 @@ class Application(Frame):
             return
 
 
-        if os.path.isdir(self.out_value.get()) and not tkinter.messagebox.askokcancel('Overwrite Headers?',f'The output directory \'{self.out_value.get()}\' already exists. Headers may be overwritten if they already exist.'):
-            return
+        if os.path.isdir(self.out_value.get()):
+            if not tkinter.messagebox.askokcancel('Overwrite Headers?', f"The output directory '{self.out_value.get()}' already exists. Headers may be overwritten if they already exist."):
+                return
 
         # Generate headers
         opts = mavgen.Opts(self.out_value.get(), wire_protocol=self.protocol_value.get(), language=self.language_value.get(), validate=self.validate_value.get(), strict_units=self.strict_units_value.get())
@@ -163,7 +164,7 @@ class Application(Frame):
 
         except Exception as ex:  # noqa: BLE001
             exStr = formatErrorMessage(str(ex))
-            tkinter.messagebox.showerror('Error Generating Headers',f'{exStr!s}')
+            tkinter.messagebox.showerror('Error Generating Headers', f"{exStr}")
             return
 
 """\

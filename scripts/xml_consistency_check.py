@@ -121,7 +121,7 @@ def check_field(file_name, msg_name, field, enums):
         # bitmask field still needs display="bitmask" as its only way to
         # signal that, so that case is not deprecated.
         if display is not None and enums[enum].get("bitmask"):
-            warn(f"{file_name}: Message {msg_name} field {name} display=\"{display}\" is deprecated")
+            warn(f'{file_name}: Message {msg_name} field {name} display="{display}" is deprecated')
 
         # An enum with no entries has min/max set to None during aggregation
         # and was already warned about there, so there's nothing to range-check.
@@ -291,7 +291,7 @@ so that CI can gate on new warnings while tolerating ones we can't fix yet.
             values += enum['enum'][i]['values']
 
         if not values:
-            warn("{}: Enum: {} has no entries".format(enum['file'], name))
+            warn(f"{enum['file']}: Enum: {name} has no entries")
             # Leave min/max defined (as None) so downstream field checks can
             # detect the empty enum rather than hitting a KeyError.
             enum['min'] = enum['max'] = None
@@ -301,10 +301,10 @@ so that CI can gate on new warnings while tolerating ones we can't fix yet.
         enum['max'] = max(values)
 
         if bitmask_conflict:
-            warn("{}: Enum: {} has conflicting bitmask definitions".format(enum['file'],  name))
+            warn(f"{enum['file']}: Enum: {name} has conflicting bitmask definitions")
 
         if values_conflict:
-            warn("{}: Enum: {} has conflicting values".format(enum['file'],  name))
+            warn(f"{enum['file']}: Enum: {name} has conflicting values")
 
     # Check all fields against enums
     for key, xml_content in xml.items():
@@ -352,7 +352,7 @@ so that CI can gate on new warnings while tolerating ones we can't fix yet.
     # added to the allowlist rather than removed.
     for key in all_enums:
         if all_enums[key]["used"] is False:
-            warn("{}: Enum: {} is unused".format(all_enums[key]['file'], all_enums[key]["name"]))
+            warn(f"{all_enums[key]['file']}: Enum: {all_enums[key]['name']} is unused")
 
     # Detect stale allowlist entries that no longer match any warning (e.g. a
     # warning was fixed, or its message was reworded). Only meaningful on a full
