@@ -282,7 +282,7 @@ def main() -> None:
             )
             with open(xml) as _f:
                 new_content = _f.read()
-        except subprocess.CalledProcessError:
+        except (subprocess.CalledProcessError, FileNotFoundError):
             continue  # new file or removed, ignore
 
         old_root = parse_xml(old_content)
