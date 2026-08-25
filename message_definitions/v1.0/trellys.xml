@@ -38,6 +38,8 @@
       <field type="uint32_t" name="flags" enum="TRELLYS_FLAGS">Trellys state flags.</field>
       <extensions/>
       <field type="float" name="delta_from_launch" units="m">Height above launch altitude (launch altitude latched on arming; 0 when disarmed).</field>
+      <field type="uint8_t" name="battery" units="%">Battery remaining. UINT8_MAX if unknown.</field>
+      <field type="uint8_t" name="sat_count">Number of GPS satellites visible. UINT8_MAX if unknown.</field>
     </message>
     <message id="13674" name="TRELLYS_CMD_IDLE">
       <description>Command agents to idle.</description>
