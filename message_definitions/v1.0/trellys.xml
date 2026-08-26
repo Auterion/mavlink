@@ -42,6 +42,8 @@
       <field type="uint8_t" name="sat_count">Number of GPS satellites visible. UINT8_MAX if unknown.</field>
       <field type="uint16_t" name="voltage" units="mV">Battery voltage. UINT16_MAX if unknown.</field>
       <field type="uint16_t" name="flight_time" units="s">Estimated remaining flight time. UINT16_MAX if unknown.</field>
+      <field type="int8_t" name="radio_rssi" units="dBm">Radio link RSSI. INT8_MAX if unknown.</field>
+      <field type="int8_t" name="radio_snr" units="dB">Radio link SNR. INT8_MAX if unknown.</field>
     </message>
     <message id="13674" name="TRELLYS_CMD_IDLE">
       <description>Command agents to idle.</description>
