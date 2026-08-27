@@ -44,6 +44,7 @@
       <field type="uint16_t" name="flight_time" units="s">Estimated remaining flight time. UINT16_MAX if unknown.</field>
       <field type="int8_t" name="radio_rssi" units="dBm">Radio link RSSI. INT8_MAX if unknown.</field>
       <field type="int8_t" name="radio_snr" units="dB">Radio link SNR. INT8_MAX if unknown.</field>
+      <field type="uint16_t" name="command_seq">Sequence number of the most recently received TRELLYS_CMD_*, pairing with `command` to identify which instance of that command was seen. UINT16_MAX if none received.</field>
     </message>
     <message id="13674" name="TRELLYS_CMD_IDLE">
       <description>Command agents to idle.</description>
