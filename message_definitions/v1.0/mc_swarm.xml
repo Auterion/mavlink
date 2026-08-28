@@ -19,6 +19,8 @@
       <field type="int32_t" name="gt_lat" units="degE7">Ground truth: sender GPS latitude (WGS84). INT32_MAX if no fix</field>
       <field type="int32_t" name="gt_lon" units="degE7">Ground truth: sender GPS longitude (WGS84). INT32_MAX if no fix</field>
       <field type="float" name="gt_alt" units="m">Ground truth: sender GPS altitude AMSL. NaN if no fix</field>
+      <extensions/>
+      <field type="uint8_t" name="gps_en">Sender EKF GNSS-fusion state, meaningful ONLY from a leader (a drone not flying MC Swarm, i.e. the one broadcasting a finite heading above). 0 = unknown / not leading / sender predates this field, 1 = fusing GNSS, 2 = not fusing GNSS. Extension field, so it is excluded from crc_extra and a drone on the older dialect still parses this message; its absence zero-fills to 0 = unknown, never to "GNSS off"</field>
     </message>
   </messages>
 </mavlink>
