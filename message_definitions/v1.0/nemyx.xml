@@ -15,5 +15,18 @@
       <description>Tracking status broadcast by each agent in strike mode.</description>
       <field type="float" name="tracking_confidence">Tracking confidence [0.0, 1.0].</field>
     </message>
+    <!-- Sent by the commercial_drone_dock (launch-ctrl) app, not by an agent.
+         The field names, types and ORDER must match launch-ctrl's own definition
+         byte for byte (commercial_drone_dock/mavlink/launch_ctrl.xml) -- the
+         CRC_EXTRA libmav derives from them is what makes the frame decodable at
+         all, and a mismatch is silent: every frame is simply dropped.
+         Note the id: 31011 is numerically also MAV_CMD_USER_2 in common.xml, but
+         that is the MAV_CMD enum namespace, not the message-id namespace, so
+         there is no wire collision. Message id 31011 is unclaimed. -->
+    <message id="31011" name="LAUNCH_POSITION_REACHED">
+      <description>Sent by the commercial_drone_dock launch-ctrl once per platform during a launch sequence, the moment the lift physically arrives at that platform's launch position -- strictly before it waits for that platform's drone to report launched.</description>
+      <field type="uint32_t" name="time_boot_ms">Elapsed ms since the move that reached this platform started. Despite the common-dialect name, this is a move DURATION, not a time since boot.</field>
+      <field type="uint8_t" name="platform">0-based platform index.</field>
+    </message>
   </messages>
 </mavlink>
