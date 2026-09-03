@@ -45,11 +45,11 @@
       <entry value="13671" name="MAV_CMD_DO_ENGINE_LEG_TRIM" hasLocation="false" isDestination="false">
         <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
-        <description>Set engine leg trim position. Can execute trim for individual legs or all legs at once.</description>
-        <param index="1" label="Engine bitmask" minValue="0" increment="1" maxValue="255">Engine leg selection bitmask.</param>
-        <param index="2" label="Direction" minValue="0" maxValue="1" increment="1">Executes engine leg trimming for all selected engines(0: Down, 1:up)</param>
-        <param index="3">Empty</param>
-        <param index="4">Empty</param>
+        <description>Move the engine leg trim of individual legs or of all legs at once. The motion is commanded as a target position (param3), a target preset (param4), or a rate (param2), and param2 additionally sets the rate used to reach a target when one is commanded. At most one target may be given: param3 and param4 are mutually exclusive. A rate on its own moves the leg for as long as the command keeps being sent and is the way to drive a leg that has no position feedback.</description>
+        <param index="1" label="Engine bitmask" minValue="0" increment="1" maxValue="255">Engine leg selection bitmask. 0: all legs.</param>
+        <param index="2" label="Rate" units="deg/s">Rate at which to move the selected engine legs, signed in the direction of increasing reported position (BOAT_ACTUATOR_STATUS_V2.engine_leg_trim_position), and clamped to what the actuator can achieve: a leg driven by a fixed-speed motor moves at its one speed for any non-zero magnitude. With a target commanded in param3 or param4 this is the rate used to reach it. On its own it moves the leg until the command stops being sent, a travel limit is reached, or 0 is commanded. NaN: move a commanded target at the vehicle's default rate; not a target on its own.</param>
+        <param index="3" label="Target position" units="deg" minValue="-90" maxValue="90">Target trim position for all selected engine legs, in the same frame and units as BOAT_ACTUATOR_STATUS_V2.engine_leg_trim_position. NaN: no position target.</param>
+        <param index="4" label="Target state" enum="ENGINE_LEG_TRIM_STATE">Target trim state for all selected engine legs. ENGINE_LEG_TRIM_FAULT is report-only and is not a valid target. 0 (ENGINE_LEG_TRIM_NONE) or NaN: no state target.</param>
         <param index="5">Empty</param>
         <param index="6">Empty</param>
         <param index="7">Empty</param>
@@ -59,7 +59,7 @@
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
         <description>Commands the desired state for vehicle engines.</description>
         <param index="1" label="Engine bitmask" minValue="0" increment="1" maxValue="255">Engine selection bitmask.</param>
-        <param index="2" label="Command" minValue="0" increment="1" maxValue="4">Commanded engine state for the selected engines.</param>
+        <param index="2" label="Command" enum="ENGINE_CMD" minValue="0" increment="1" maxValue="5">Action commanded on the selected engines.</param>
         <param index="3">Empty</param>
         <param index="4">Empty</param>
         <param index="5">Empty</param>
@@ -196,11 +196,11 @@
     </enum>
     <enum name="ENGINE_STATE">
       <description>Defines the operation state of an engine.</description>
-      <entry value="0" name="ENGINE_NONE">
-        <description>ENGINE_NONE indicates engine is not running and ignition is off.</description>
+      <entry value="0" name="ENGINE_OFF">
+        <description>ENGINE_OFF indicates the engine is not running and its ignition or keyswitch circuit is de-energized. This is a statement about an engine the sender can see; an engine that is absent or not reporting is ENGINE_UNKNOWN, not ENGINE_OFF.</description>
       </entry>
       <entry value="1" name="ENGINE_STOPPED">
-        <description>ENGINE_STOPPED indicates the engine is not running, but ignition is on.</description>
+        <description>ENGINE_STOPPED indicates the engine is not running while its ignition or keyswitch circuit is energized. This is where ENGINE_CMD_STOP leaves a running engine; ENGINE_CMD_IGNITION_OFF then moves it to ENGINE_OFF.</description>
       </entry>
       <entry value="2" name="ENGINE_STARTING">
         <description>ENGINE_STARTING indicates the engine is starting.</description>
@@ -209,7 +209,30 @@
         <description>ENGINE_RUNNING indicates the engine is running.</description>
       </entry>
       <entry value="4" name="ENGINE_FAULT">
-        <description>ENGINE_FAULT indicates a fault in the engine system.</description>
+        <description>ENGINE_FAULT indicates a fault in the engine system, including a fault in its ignition or keyswitch system.</description>
+      </entry>
+      <entry value="5" name="ENGINE_UNKNOWN">
+        <description>ENGINE_UNKNOWN indicates no data: the sender has no engine at this index, or has never received a report from it, or its last report is too old to be trusted. Distinct from ENGINE_OFF, which is a statement about an engine the sender can see: present, not running, ignition de-energized. Receivers must not display any other per-engine field for an index reporting ENGINE_UNKNOWN.</description>
+      </entry>
+    </enum>
+    <enum name="ENGINE_CMD">
+      <wip/>
+      <!-- This enum is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Action commanded on an engine, carried in MAV_CMD_DO_SET_ENGINE_STATE param2. This is a command vocabulary and is deliberately not the ENGINE_STATE numbering, which reports observed state: several ENGINE_STATE values (ENGINE_STARTING, ENGINE_FAULT) are observations that cannot be commanded, and the two numberings must never be cast into one another. A receiver that cannot carry out a commanded action must reject the command rather than silently ignore it.</description>
+      <entry value="0" name="ENGINE_CMD_STOP">
+        <description>Stop a running engine. The ignition or keyswitch circuit is left as it is; use ENGINE_CMD_IGNITION_OFF to de-energize it.</description>
+      </entry>
+      <entry value="1" name="ENGINE_CMD_IGNITION_ON">
+        <description>Energize the ignition or keyswitch circuit without cranking. The engine is left not running.</description>
+      </entry>
+      <entry value="2" name="ENGINE_CMD_START">
+        <description>Crank and start the engine, energizing the ignition first if that is not already done.</description>
+      </entry>
+      <entry value="4" name="ENGINE_CMD_IGNITION_OFF">
+        <description>De-energize the ignition or keyswitch circuit. Senders stop the engine first: the effect of cutting ignition on a running engine is not defined by this command.</description>
+      </entry>
+      <entry value="5" name="ENGINE_CMD_CLEAR_FAULT">
+        <description>Clear latched engine faults. Does not change whether the engine is running or whether ignition is energized. A fault whose underlying cause is still present is expected to latch again.</description>
       </entry>
     </enum>
     <enum name="TRANSMISSION_STATE">
@@ -228,6 +251,9 @@
       </entry>
       <entry value="4" name="TRANSMISSION_FAULT">
         <description>TRANSMISSION_FAULT indicates a fault in the transmission system.</description>
+      </entry>
+      <entry value="5" name="TRANSMISSION_UNKNOWN">
+        <description>TRANSMISSION_UNKNOWN indicates no data: the sender cannot observe the transmission. Distinct from TRANSMISSION_NONE, which is a positive statement that no transmission system is fitted.</description>
       </entry>
     </enum>
     <enum name="FLUID_TANK_TYPE">
@@ -677,23 +703,23 @@
       <description>Boat actuator status reports status and position of all boat control surfaces (currently rudders, engine leg trims).</description>
       <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
       <field type="uint8_t[6]" name="engine_leg_trim_state" enum="ENGINE_LEG_TRIM_STATE">Engine leg trim state.</field>
-      <field type="float[6]" name="engine_leg_trim_position" units="deg">Engine leg trim position.</field>
+      <field type="float[6]" name="engine_leg_trim_position" units="deg" invalid="NaN">Engine leg trim position. NaN if unknown.</field>
       <field type="uint8_t[6]" name="rudder_state" enum="RUDDER_STATE">Rudder state.</field>
-      <field type="float[6]" name="rudder_position" units="deg">Rudder position.</field>
+      <field type="float[6]" name="rudder_position" units="deg" invalid="NaN">Rudder position. NaN if unknown.</field>
     </message>
     <message id="13667" name="BOAT_ENGINE_STATUS_V2">
       <wip/>
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>Boat engine status reports status and position of all boat engines.</description>
       <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
-      <field type="uint8_t[6]" name="engine_state" enum="ENGINE_STATE">Engine state.</field>
-      <field type="uint8_t[6]" name="engine_load" units="%">Engine load.</field>
-      <field type="uint16_t[6]" name="engine_rpm" units="rpm">Engine RPM.</field>
-      <field type="float" name="fuel_consumption_rate" units="L/h">Fuel consumption rate.</field>
-      <field type="float[6]" name="oil_pressure" units="kPa">Engine oil pressure.</field>
-      <field type="uint8_t[6]" name="throttle_position" units="%">Throttle position.</field>
-      <field type="float[6]" name="engine_coolant_temperature" units="degC">Engine coolant temperature.</field>
-      <field type="uint8_t[6]" name="transmission_state" enum="TRANSMISSION_STATE">Transmission state.</field>
+      <field type="uint8_t[6]" name="engine_state" enum="ENGINE_STATE">Engine state. Index i reports the engine with instance number i; indexes with no engine, no report yet, or a stale report are ENGINE_UNKNOWN, and every other per-engine field at that index carries its own unknown value and must be ignored. Senders collapse any finer-grained internal state onto this enum as follows: a transient start attempt, including a failed crank that will be retried, reports ENGINE_STARTING, and only giving up reports ENGINE_FAULT; a stop in progress reports ENGINE_RUNNING for as long as the shaft is still turning, so a stopped engine is never reported while it moves; a fault in the ignition or keyswitch system reports ENGINE_FAULT rather than ENGINE_OFF, so a broken ignition system is never reported as an engine that is merely switched off.</field>
+      <field type="uint8_t[6]" name="engine_load" units="%" invalid="UINT8_MAX">Engine load. May exceed 100% where the underlying sensor allows it (J1939 SPN 92 ranges 0-125%). UINT8_MAX if unknown.</field>
+      <field type="uint16_t[6]" name="engine_rpm" units="rpm" invalid="UINT16_MAX">Engine RPM. UINT16_MAX if unknown.</field>
+      <field type="float" name="fuel_consumption_rate" units="L/h" invalid="NaN">Fuel consumption rate, summed over all engines reporting a rate: this is a vessel total, not a per-engine value. NaN if unknown.</field>
+      <field type="float[6]" name="oil_pressure" units="kPa" invalid="NaN">Engine oil pressure. NaN if unknown.</field>
+      <field type="uint8_t[6]" name="throttle_position" units="%" invalid="UINT8_MAX">Throttle position. UINT8_MAX if unknown.</field>
+      <field type="float[6]" name="engine_coolant_temperature" units="degC" invalid="NaN">Engine coolant temperature. NaN if unknown — note that 0 is a valid temperature and must not be used to mean "no data".</field>
+      <field type="uint8_t[6]" name="transmission_state" enum="TRANSMISSION_STATE">Transmission state. TRANSMISSION_UNKNOWN if unknown.</field>
     </message>
     <message id="13668" name="FLUID_LEVEL">
       <wip/>
