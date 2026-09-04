@@ -38,6 +38,12 @@
       <field type="uint32_t" name="flags" enum="TRELLYS_FLAGS">Trellys state flags.</field>
       <extensions/>
       <field type="float" name="delta_from_launch" units="m">Height above launch altitude (launch altitude latched on arming; 0 when disarmed).</field>
+      <field type="uint8_t" name="battery" units="%">Battery remaining. UINT8_MAX if unknown.</field>
+      <field type="uint8_t" name="sat_count">Number of GPS satellites visible. UINT8_MAX if unknown.</field>
+      <field type="uint16_t" name="voltage" units="mV">Battery voltage. UINT16_MAX if unknown.</field>
+      <field type="uint16_t" name="flight_time" units="s">Estimated remaining flight time. UINT16_MAX if unknown.</field>
+      <field type="int8_t" name="radio_rssi" units="dBm">Radio link RSSI. INT8_MAX if unknown.</field>
+      <field type="int8_t" name="radio_snr" units="dB">Radio link SNR. INT8_MAX if unknown.</field>
     </message>
     <message id="13674" name="TRELLYS_CMD_IDLE">
       <description>Command agents to idle.</description>
@@ -66,6 +72,8 @@
       <field type="float" name="latitude">Latitude (WGS84)</field>
       <field type="float" name="longitude">Longitude (WGS84)</field>
       <field type="float" name="altitude" units="m">Target altitude (MSL)</field>
+      <extensions/>
+      <field type="uint16_t" name="delay" units="ms"> Inter agent takeoff delay, agents targeted with takeoff at delay*id_in_swarm milliseconds.</field>
     </message>
     <message id="13678" name="TRELLYS_CMD_TAKEOFF_LOCAL">
       <description>Command agents to take off using local coordinates.</description>
@@ -74,6 +82,8 @@
       <field type="float" name="x" units="m">X-axis position</field>
       <field type="float" name="y" units="m">Y-axis position</field>
       <field type="float" name="z" units="m">Z-axis position</field>
+      <extensions/>
+      <field type="uint16_t" name="delay" units="ms"> Inter agent takeoff delay, agents targeted with takeoff at delay*id_in_swarm milliseconds.</field>
     </message>
     <message id="13679" name="TRELLYS_CMD_SET_MODE">
       <description>Set the flight mode of follower agents.</description>
