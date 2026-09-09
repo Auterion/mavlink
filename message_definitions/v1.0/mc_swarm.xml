@@ -21,6 +21,10 @@
       <field type="float" name="gt_alt" units="m">Ground truth: sender GPS altitude AMSL. NaN if no fix</field>
       <extensions/>
       <field type="uint8_t" name="gps_en">Sender EKF GNSS-fusion state, meaningful ONLY from a leader (a drone not flying MC Swarm, i.e. the one broadcasting a finite heading above). 0 = unknown / not leading / sender predates this field, 1 = fusing GNSS, 2 = not fusing GNSS. Extension field, so it is excluded from crc_extra and a drone on the older dialect still parses this message; its absence zero-fills to 0 = unknown, never to "GNSS off"</field>
+      <field type="float" name="circ_off_e" units="m">Sender's open-loop excitation-circle offset (SW_CIRC_R), East component of the vector from the circle centre to the sender. Lets a receiver reconstruct the sender's guiding centre and keep its own formation shape term from reading the sender's excitation as formation error. Extension field: absence zero-fills, and (0,0) is exactly the safe default of "not circling", so a leader, an aborted follower, a peer with SW_CIRC_R=0 and a sender on the older dialect all read alike and get no compensation</field>
+      <field type="float" name="circ_off_n" units="m">Sender's circle offset, North component. See circ_off_e</field>
+      <field type="float" name="circ_vel_e" units="m/s">Sender's circle velocity, East. Pairs with circ_off_e so a receiver can dead-reckon the offset forward over message age using its OWN clock, needing no time sync</field>
+      <field type="float" name="circ_vel_n" units="m/s">Sender's circle velocity, North. See circ_vel_e</field>
     </message>
   </messages>
 </mavlink>
