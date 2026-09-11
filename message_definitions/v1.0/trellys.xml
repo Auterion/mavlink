@@ -44,6 +44,7 @@
       <field type="uint16_t" name="flight_time" units="s">Estimated remaining flight time. UINT16_MAX if unknown.</field>
       <field type="int8_t" name="radio_rssi" units="dBm">Radio link RSSI. INT8_MAX if unknown.</field>
       <field type="int8_t" name="radio_snr" units="dB">Radio link SNR. INT8_MAX if unknown.</field>
+      <field type="uint8_t" name="gnss_fused">EKF GNSS fusion state. 0 = unknown, 1 = fusing GNSS, 2 = not fusing GNSS.</field>
     </message>
     <message id="13674" name="TRELLYS_CMD_IDLE">
       <description>Command agents to idle.</description>
@@ -108,6 +109,12 @@
       <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
       <field type="float" name="latitude">Latitude (WGS84)</field>
       <field type="float" name="longitude">Longitude (WGS84)</field>
+    </message>
+    <message id="13685" name="TRELLYS_CMD_SET_GNSS">
+      <description>Command agents to fuse or stop fusing GNSS in the EKF. A runtime override only: it does not change EKF2_GPS_CTRL, so a reboot returns the agent to its parameter-configured behaviour.</description>
+      <field type="uint8_t" name="swarm_id">Unique Swarm ID</field>
+      <field type="uint8_t[32]" name="agent_ids">Bitset. Bit i (0..255) indicates whether agent ID i+1 is targeted. Byte j contains bits for IDs (j*8+1 .. j*8+8), LSB-first.</field>
+      <field type="uint8_t" name="enable">1 = fuse GNSS, 0 = do not fuse GNSS.</field>
     </message>
     <!-- Trellys specific MAVLink END-->
   </messages>
