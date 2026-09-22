@@ -5444,6 +5444,11 @@
           The mode might still be selected by the FC directly (for example as part of a failsafe).
         </description>
       </entry>
+      <entry value="4" name="MAV_MODE_PROPERTY_AUTO_MODE">
+        <description>If set, this mode is automatically controlled (it may use but does not require a manual controller).
+          If unset the mode is a assumed to require user input (be a manual mode).
+        </description>
+      </entry>
     </enum>
     <enum name="COMPUTER_STATUS_FLAGS" bitmask="true">
       <description>Flags used to report computer status.</description>
