@@ -418,6 +418,15 @@
         <description>Altitude above Mean Sea Level (AMSL).</description>
       </entry>
     </enum>
+    <enum name="RANGING_BEACON_POSITION_REF">
+      <description>Identifies which end of the ranging link the RANGING_BEACON lat, lon and alt fields belong to.</description>
+      <entry value="0" name="RANGING_BEACON_POSITION_REF_LOCAL">
+        <description>Position is that of the local node (the system that performed the range measurement).</description>
+      </entry>
+      <entry value="1" name="RANGING_BEACON_POSITION_REF_REMOTE">
+        <description>Position is that of the remote node (the ranging beacon/station identified by beacon_id).</description>
+      </entry>
+    </enum>
     <enum name="RANGING_BEACON_STATUS_FLAG" bitmask="true">
       <description>Status flags for a RANGING_BEACON.</description>
       <entry value="1" name="RANGING_BEACON_STATUS_FLAG_STATION_SIGNAL_POOR">
@@ -809,10 +818,11 @@
       <field type="uint8_t" name="target_component">Component ID.</field>
       <field type="uint16_t" name="beacon_id" instance="true">ID of the ranging beacon/station.</field>
       <field type="uint32_t" name="range" units="mm" invalid="UINT32_MAX">Range measurement between a beacon and a vehicle.</field>
-      <field type="int32_t" name="lat" units="degE7" invalid="INT32_MAX">Beacon latitude (WGS84).</field>
-      <field type="int32_t" name="lon" units="degE7" invalid="INT32_MAX">Beacon longitude (WGS84).</field>
-      <field type="float" name="alt" units="m" invalid="NaN">Beacon altitude (frame defined in alt_type).</field>
+      <field type="int32_t" name="lat" units="degE7" invalid="INT32_MAX">Latitude (WGS84) of the node defined in position_ref.</field>
+      <field type="int32_t" name="lon" units="degE7" invalid="INT32_MAX">Longitude (WGS84) of the node defined in position_ref.</field>
+      <field type="float" name="alt" units="m" invalid="NaN">Altitude of the node defined in position_ref (frame defined in alt_type).</field>
       <field type="uint8_t" name="alt_type" enum="RANGING_BEACON_ALT_TYPE">Altitude frame for alt field. RANGING_BEACON_ALT_TYPE_WGS84 (0) preferred.</field>
+      <field type="uint8_t" name="position_ref" enum="RANGING_BEACON_POSITION_REF">Node that the lat, lon and alt fields belong to (local or remote).</field>
       <field type="uint32_t" name="hacc_est" units="mm" invalid="UINT32_MAX">Beacon 1-sigma horizontal accuracy estimate.</field>
       <field type="uint32_t" name="vacc_est" units="mm" invalid="UINT32_MAX">Beacon 1-sigma vertical accuracy estimate.</field>
       <field type="uint16_t" name="carrier_freq" units="MHz" invalid="UINT16_MIN">Ranging carrier frequency</field>
