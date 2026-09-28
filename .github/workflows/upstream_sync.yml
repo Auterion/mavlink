@@ -37,6 +37,6 @@ jobs:
             --repo $GITHUB_REPOSITORY \
             --base master \
             --head ${{ env.pr_branch_name }} \
-            --reviewer KonradRudin,sfuhrer \
+            --reviewer haumarco,sfuhrer \
             --title "Upstream merge $(date '+%Y-%m-%d')" \
             --body-file pr_body.md
