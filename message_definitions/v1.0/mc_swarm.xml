@@ -26,5 +26,13 @@
       <field type="float" name="circ_vel_e" units="m/s">Sender's circle velocity, East. Pairs with circ_off_e so a receiver can dead-reckon the offset forward over message age using its OWN clock, needing no time sync</field>
       <field type="float" name="circ_vel_n" units="m/s">Sender's circle velocity, North. See circ_vel_e</field>
     </message>
+    <message id="54002" name="SWARM_LEADER_ACCEL">
+      <description>Broadcast only by the leader (a drone neither flying MC Swarm nor aborted out of it), once per POSITION_TARGET_LOCAL_NED its own PX4 sends (rate SW_ACC_SP_HZ): its horizontal acceleration setpoint, for follower feedforward. Faster than SWARM_RANGE_ODOMETRY, which is paced by ranging events. Times are the sender's ROS clock; common time = t - time_offset.</description>
+      <field type="uint64_t" name="time_usec" units="us">Sender ROS time when PX4's setpoint sample reached the app</field>
+      <field type="uint64_t" name="send_usec" units="us">Sender ROS time at send</field>
+      <field type="int64_t" name="time_offset" units="us">Sender ROS time minus common time (RANGING_BEACON time_usec), from the sender's latest beacon. INT64_MAX = no beacon yet</field>
+      <field type="float" name="acc_n" units="m/s/s">Sender PX4 acceleration setpoint, North</field>
+      <field type="float" name="acc_e" units="m/s/s">Sender PX4 acceleration setpoint, East</field>
+    </message>
   </messages>
 </mavlink>
