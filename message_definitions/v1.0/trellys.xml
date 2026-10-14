@@ -19,6 +19,33 @@
         <description>TBD.</description>
       </entry>
     </enum>
+    <enum name="TRELLYS_FLAGS" bitmask="true">
+      <description>Trellys state flags broadcast in TRELLYS_STATUS. A sender that fills them sets TRELLYS_FLAG_VALID; 0 means a legacy sender.</description>
+      <entry value="1" name="TRELLYS_FLAG_VALID">
+        <description>The sender fills these flags.</description>
+      </entry>
+      <entry value="2" name="TRELLYS_FLAG_AIRBORNE">
+        <description>Airborne latch: set once armed and off the ground, cleared on disarm or landing.</description>
+      </entry>
+      <entry value="4" name="TRELLYS_FLAG_LANDED">
+        <description>The autopilot's land detector reports the vehicle landed.</description>
+      </entry>
+      <entry value="8" name="TRELLYS_FLAG_EMERGENCY">
+        <description>Dropped from the swarm after an autopilot failsafe. Cleared by a TRELLYS_CMD_IDLE that includes the vehicle while it is healthy, or by disarming.</description>
+      </entry>
+      <entry value="16" name="TRELLYS_FLAG_LEAVING">
+        <description>The autopilot is in Return, Land, Descend or Precision Land.</description>
+      </entry>
+      <entry value="32" name="TRELLYS_FLAG_PILOT_MODE">
+        <description>The autopilot is in a pilot-flown mode (Manual, Altitude, Position, Stabilized, Acro).</description>
+      </entry>
+      <entry value="64" name="TRELLYS_FLAG_HEALTHY">
+        <description>Eligible to lead: armed and airborne, not landed, not in emergency, not leaving.</description>
+      </entry>
+      <entry value="128" name="TRELLYS_FLAG_LEADER">
+        <description>The sender is the effective leader of its current command.</description>
+      </entry>
+    </enum>
   </enums>
   <messages>
     <!-- Trellys specific MAVLink-->
@@ -35,7 +62,7 @@
       <field type="float" name="heading" units="rad">Vehicle heading</field>
       <field type="uint16_t" name="command" enum="TRELLYS_CMD">Command ID (of command to send).</field>
       <field type="uint16_t" name="result" enum="MAV_RESULT">Command ID (of command to send).</field>
-      <field type="uint32_t" name="flags" enum="TRELLYS_FLAGS">Trellys state flags.</field>
+      <field type="uint32_t" name="flags" enum="TRELLYS_FLAGS" display="bitmask">Trellys state flags. 0 from a sender that does not fill them.</field>
       <extensions/>
       <field type="float" name="delta_from_launch" units="m">Height above launch altitude (launch altitude latched on arming; 0 when disarmed).</field>
       <field type="uint8_t" name="battery" units="%">Battery remaining. UINT8_MAX if unknown.</field>
