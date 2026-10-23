@@ -2648,6 +2648,15 @@
         <param index="6" label="Longitude">Longitude</param>
         <param index="7" label="Altitude" units="m">Altitude, not used. Should be sent as NaN. May be supported in a future version of this message.</param>
       </entry>
+      <entry value="43004" name="MAV_CMD_EXTERNAL_WIND_ESTIMATE" hasLocation="false" isDestination="false" command="true">
+        <description>Set an external estimate of wind direction and speed.
+          This might be used to provide an initial wind estimate to the estimator (EKF) in the case where the vehicle is wind dead-reckoning, extending the time when operating without GPS before position drift builds to an unsafe level. For this use case the command might reasonably be sent every few minutes when operating at altitude, and the value is cleared if the estimator resets itself.
+        </description>
+        <param index="1" label="Wind speed" units="m/s" minValue="0">Horizontal wind speed.</param>
+        <param index="2" label="Wind speed accuracy" units="m/s">Estimated 1 sigma accuracy of wind speed. Set to NaN if unknown.</param>
+        <param index="3" label="Direction" units="deg" minValue="0" maxValue="360">Azimuth (relative to true north) from where the wind is blowing.</param>
+        <param index="4" label="Direction accuracy" units="deg">Estimated 1 sigma accuracy of wind direction. Set to NaN if unknown.</param>
+      </entry>
       <!-- END of payload range (30000 to 30999) -->
       <!-- BEGIN user defined range (31000 to 31999) -->
       <entry value="31000" name="MAV_CMD_WAYPOINT_USER_1" hasLocation="true" isDestination="true" mission="true">
@@ -2847,9 +2856,7 @@
     </enum>
     <enum name="MAV_ROI">
       <superseded since="2018-01" replaced_by="`MAV_CMD_DO_SET_ROI_*`"/>
-      <description>The ROI (region of interest) for the vehicle. This can be
-                be used by the vehicle for camera/vehicle attitude alignment (see
-                MAV_CMD_NAV_ROI).</description>
+      <description>The ROI (region of interest) for the vehicle. This can be used by the vehicle for camera/vehicle attitude alignment (see MAV_CMD_NAV_ROI).</description>
       <entry value="0" name="MAV_ROI_NONE">
         <description>No region of interest.</description>
       </entry>
@@ -3983,6 +3990,13 @@
       <entry value="4" name="VIDEO_STREAM_TYPE_WHEP">
         <description>Stream is WHEP (WebRTC-HTTP Egress Protocol)</description>
       </entry>
+      <entry value="5" name="VIDEO_STREAM_TYPE_SRT">
+        <description>Stream is SRT (Secure Reliable Transport).
+          The payload is MPEG-TS (as for VIDEO_STREAM_TYPE_MPEG_TS); streams other than video (e.g. KLV metadata, audio) may be ignored.
+          VIDEO_STREAM_INFORMATION.uri is a full URI with the prefix `srt://host:port` followed by query parameters.
+          Recognised parameters include: mode (caller, listener or rendezvous), latency (ms), streamid (opaque string, e.g. for hub access control).
+          Encryption passphrases should be exchanged out of band rather than in the URI, as MAVLink messages are not encrypted.</description>
+      </entry>
     </enum>
     <enum name="VIDEO_STREAM_ENCODING">
       <description>Video stream encodings</description>
@@ -4107,7 +4121,7 @@
         <description>Parameter failed to set</description>
       </entry>
       <entry value="3" name="PARAM_ACK_IN_PROGRESS">
-        <description>Parameter value received but not yet set/accepted. A subsequent PARAM_EXT_ACK with the final result will follow once operation is completed. This is returned immediately for parameters that take longer to set, indicating that the the parameter was received and does not need to be resent.</description>
+        <description>Parameter value received but not yet set/accepted. A subsequent PARAM_EXT_ACK with the final result will follow once operation is completed. This is returned immediately for parameters that take longer to set, indicating that the parameter was received and does not need to be resent.</description>
       </entry>
     </enum>
     <enum name="CAMERA_MODE">
@@ -5409,7 +5423,7 @@
       <entry value="5" name="MAV_STANDARD_MODE_SAFE_RECOVERY">
         <description>Safe recovery mode (auto).
           Automatic mode that takes vehicle to a predefined safe location via a safe flight path, and may also automatically land the vehicle.
-          This mode is more commonly referred to as RTL and/or or Smart RTL.
+          This mode is more commonly referred to as RTL and/or Smart RTL.
           The precise return location, flight path, and landing behaviour depend on vehicle configuration and type.
           For example, the vehicle might return to the home/launch location, a rally point, or the start of a mission landing, it might follow a direct path, mission path, or breadcrumb path, and land using a mission landing pattern or some other kind of descent.
         </description>
@@ -7369,7 +7383,7 @@
         MAV_CMD_REQUEST_MESSAGE can be used to (re)request this message for a specific sequence number or range of sequence numbers:
         MAV_CMD_REQUEST_MESSAGE.param2 indicates the sequence number the first image to send, or set to -1 to send the message for all sequence numbers.
         MAV_CMD_REQUEST_MESSAGE.param3 is used to specify a range of messages to send:
-        set to 0 (default) to send just the the message for the sequence number in param 2,
+        set to 0 (default) to send just the message for the sequence number in param 2,
         set to -1 to send the message for the sequence number in param 2 and all the following sequence numbers,
         set to the sequence number of the final message in the range.</description>
       <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (time since system boot).</field>
@@ -7445,10 +7459,11 @@
       <field type="uint16_t" name="rotation" units="deg">Video image rotation clockwise.</field>
       <field type="uint16_t" name="hfov" units="deg">Horizontal Field of view.</field>
       <field type="char[32]" name="name">Stream name.</field>
-      <field type="char[160]" name="uri">Video stream URI (TCP or RTSP URI ground station should connect to) or port number (UDP port ground station should listen to).</field>
+      <field type="char[160]" name="uri">Video stream URI (TCP, RTSP or SRT URI ground station should connect to) or port number (UDP port ground station should listen to).</field>
       <extensions/>
       <field type="uint8_t" name="encoding" enum="VIDEO_STREAM_ENCODING">Encoding of stream.</field>
       <field type="uint8_t" name="camera_device_id" default="0" minValue="0" maxValue="6">Camera id of a non-MAVLink camera attached to an autopilot (1-6).  0 if the component is a MAVLink camera (with its own component id).</field>
+      <field type="uint16_t" name="vfov" units="cdeg" invalid="0">Vertical field of view (0 if unknown).</field>
     </message>
     <message id="270" name="VIDEO_STREAM_STATUS">
       <description>Information about the status of a video stream. It may be requested using MAV_CMD_REQUEST_MESSAGE.</description>
@@ -7462,9 +7477,10 @@
       <field type="uint16_t" name="hfov" units="deg">Horizontal Field of view</field>
       <extensions/>
       <field type="uint8_t" name="camera_device_id" default="0" minValue="0" maxValue="6">Camera id of a non-MAVLink camera attached to an autopilot (1-6).  0 if the component is a MAVLink camera (with its own component id).</field>
+      <field type="uint16_t" name="vfov" units="cdeg" invalid="0">Vertical field of view (0 if unknown).</field>
     </message>
     <message id="271" name="CAMERA_FOV_STATUS">
-      <description>Information about the field of view of a camera. Can be requested with a MAV_CMD_REQUEST_MESSAGE command.</description>
+      <description>Information about the field of view of a camera. Can be requested with a MAV_CMD_REQUEST_MESSAGE command, where param2 indicates the video stream id: 0 for all streams, 1 for first, 2 for second, etc. A camera with multiple streams that have different fields of view should send one message per stream, with stream_id set.</description>
       <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (time since system boot).</field>
       <field type="int32_t" name="lat_camera" units="degE7" invalid="INT32_MAX">Latitude of camera (INT32_MAX if unknown).</field>
       <field type="int32_t" name="lon_camera" units="degE7" invalid="INT32_MAX">Longitude of camera (INT32_MAX if unknown).</field>
@@ -7477,6 +7493,7 @@
       <field type="float" name="vfov" units="deg" invalid="NaN">Vertical field of view (NaN if unknown).</field>
       <extensions/>
       <field type="uint8_t" name="camera_device_id" default="0" minValue="0" maxValue="6">Camera id of a non-MAVLink camera attached to an autopilot (1-6).  0 if the component is a MAVLink camera (with its own component id).</field>
+      <field type="uint8_t" name="stream_id" instance="true" invalid="0">Video Stream ID (1 for first, 2 for second, etc.), as in VIDEO_STREAM_INFORMATION. 0 if unknown or the field of view is not specific to a stream.</field>
     </message>
     <message id="275" name="CAMERA_TRACKING_IMAGE_STATUS">
       <description>Camera tracking status, sent while in active tracking. Use MAV_CMD_SET_MESSAGE_INTERVAL to define message interval.</description>
@@ -7885,7 +7902,7 @@
         Message data should be from a single modem, but that is not guaranteed.
       </description>
       <field type="uint8_t" name="status" enum="CELLULAR_STATUS_FLAG">Cellular modem status</field>
-      <field type="uint8_t" name="failure_reason" enum="CELLULAR_NETWORK_FAILED_REASON">Failure reason when status in in CELLULAR_STATUS_FLAG_FAILED</field>
+      <field type="uint8_t" name="failure_reason" enum="CELLULAR_NETWORK_FAILED_REASON">Failure reason when status is CELLULAR_STATUS_FLAG_FAILED</field>
       <field type="uint8_t" name="type" enum="CELLULAR_NETWORK_RADIO_TYPE">Cellular network radio type: gsm, cdma, lte...</field>
       <field type="uint8_t" name="quality" invalid="UINT8_MAX">Signal quality in percent. May be used for Received Signal Strength Indicator (RSSI). If unknown, set to UINT8_MAX</field>
       <field type="uint16_t" name="mcc" invalid="UINT16_MAX">Mobile country code. If unknown, set to UINT16_MAX</field>
