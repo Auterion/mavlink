@@ -149,8 +149,8 @@ class CmdParamRangeTests(ConsistencyCheckTestCase):
         messages = self.warnings(check_cmd_param, "test.xml", "MY_CMD", param, {})
         self.assertEqual(
             messages,
-            ["test.xml: Command MY_CMD param 1 min, max close and increment of 1, "
-             "should there be a enum?"],
+            [("test.xml: Command MY_CMD param 1 min, max close and increment of 1, "
+             "should there be a enum?")],
         )
 
     def test_range_incompatible_with_increment_warns(self):
@@ -160,8 +160,8 @@ class CmdParamRangeTests(ConsistencyCheckTestCase):
         messages = self.warnings(check_cmd_param, "test.xml", "MY_CMD", param, {})
         self.assertEqual(
             messages,
-            ["test.xml: Command MY_CMD param 1 range 0.000000 => 10.000000 "
-             "incompatible with increment 3.000000"],
+            [("test.xml: Command MY_CMD param 1 range 0.000000 => 10.000000 "
+             "incompatible with increment 3.000000")],
         )
 
     def test_invalid_range_warns(self):
