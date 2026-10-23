@@ -494,6 +494,31 @@
       <entry value="4" name="APP_VERSION_MISMATCH"/>
       <entry value="8" name="APP_CONFIG_MISMATCH"/>
     </enum>
+    <enum name="VIDEO_STREAM_HEALTH">
+      <description>A video stream's state as judged by its receiver.</description>
+      <entry value="0" name="VIDEO_STREAM_HEALTH_UNKNOWN">
+        <description>Not judged yet, e.g. right after the stream started. Treat as degraded.</description>
+      </entry>
+      <entry value="1" name="VIDEO_STREAM_HEALTH_HEALTHY">
+        <description>The link is clean, and picture damage is repaired quickly.</description>
+      </entry>
+      <entry value="2" name="VIDEO_STREAM_HEALTH_DEGRADED">
+        <description>Picture damage persists or packets stopped arriving: faster loss recovery would help.</description>
+      </entry>
+      <entry value="3" name="VIDEO_STREAM_HEALTH_CONGESTED">
+        <description>The damage comes with mostly late packets: the link is saturated, lowering the bitrate might help.</description>
+      </entry>
+    </enum>
+    <enum name="VIDEO_RECEIVER_REQUEST">
+      <description>Action the video receiver asks of the video sender.</description>
+      <entry value="0" name="VIDEO_RECEIVER_REQUEST_NONE"/>
+      <entry value="1" name="VIDEO_RECEIVER_REQUEST_PLI">
+        <description>A picture was lost; the sender chooses how to repair it (e.g. intra refresh).</description>
+      </entry>
+      <entry value="2" name="VIDEO_RECEIVER_REQUEST_FIR">
+        <description>The decoder needs a full intra picture (key frame).</description>
+      </entry>
+    </enum>
   </enums>
   <messages>
     <!-- Transactions for parameter protocol -->
@@ -802,6 +827,18 @@
       <field type="char[32]" name="actual_version">
         Actual installed/running version
       </field>
+    </message>
+    <message id="13810" name="VIDEO_STREAM_RECEIVER_REPORT">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>A video stream's health as judged by its receiver, sent to the sender at 1 Hz while video arrives, also when nothing changed. The sender decides how to react, e.g. by switching the encoder profile, and treats 3 s without a report as VIDEO_STREAM_HEALTH_DEGRADED.</description>
+      <field type="uint8_t" name="target_system">System ID.</field>
+      <field type="uint8_t" name="target_component">Component ID of the camera.</field>
+      <field type="uint8_t" name="stream_id">Video stream ID (as in VIDEO_STREAM_INFORMATION).</field>
+      <field type="uint8_t" name="health" enum="VIDEO_STREAM_HEALTH">Stream health.</field>
+      <extensions/>
+      <field type="uint8_t" name="request" enum="VIDEO_RECEIVER_REQUEST">Request carried by this report; NONE otherwise.</field>
+      <field type="uint8_t" name="request_count">Identifies the request: the sender acts once per value. 0 when request is NONE; wraps from 255 to 1.</field>
     </message>
   </messages>
 </mavlink>
