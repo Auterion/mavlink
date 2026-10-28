@@ -714,7 +714,7 @@
       <field type="float" name="fuel_consumption_rate" units="L/h" invalid="NaN">Fuel consumption rate, summed over all engines reporting a rate: this is a vessel total, not a per-engine value. NaN if unknown.</field>
       <field type="float[6]" name="oil_pressure" units="kPa" invalid="NaN">Engine oil pressure. NaN if unknown.</field>
       <field type="uint8_t[6]" name="throttle_position" units="%" invalid="UINT8_MAX">Throttle position. UINT8_MAX if unknown.</field>
-      <field type="float[6]" name="engine_coolant_temperature" units="degC" invalid="NaN">Engine coolant temperature. NaN if unknown — note that 0 is a valid temperature and must not be used to mean "no data".</field>
+      <field type="float[6]" name="engine_coolant_temperature" units="degC" invalid="NaN">Engine coolant temperature. NaN if unknown &#x2014; note that 0 is a valid temperature and must not be used to mean "no data".</field>
       <field type="uint8_t[6]" name="transmission_state" enum="TRANSMISSION_STATE">Transmission state. TRANSMISSION_UNKNOWN if unknown.</field>
     </message>
     <message id="13668" name="FLUID_LEVEL">
