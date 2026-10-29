@@ -699,9 +699,9 @@
       <description>Boat actuator status reports status and position of all boat control surfaces (currently rudders, engine leg trims).</description>
       <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
       <field type="uint8_t[6]" name="engine_leg_trim_state" enum="ENGINE_LEG_TRIM_STATE">Engine leg trim state.</field>
-      <field type="float[6]" name="engine_leg_trim_position" units="deg" invalid="NaN">Engine leg trim position. NaN if unknown.</field>
+      <field type="float[6]" name="engine_leg_trim_position" units="deg" invalid="[NaN]">Engine leg trim position. NaN if unknown.</field>
       <field type="uint8_t[6]" name="rudder_state" enum="RUDDER_STATE">Rudder state.</field>
-      <field type="float[6]" name="rudder_position" units="deg" invalid="NaN">Rudder position. NaN if unknown.</field>
+      <field type="float[6]" name="rudder_position" units="deg" invalid="[NaN]">Rudder position. NaN if unknown.</field>
     </message>
     <message id="13667" name="BOAT_ENGINE_STATUS_V2">
       <wip/>
@@ -709,12 +709,12 @@
       <description>Boat engine status reports status and position of all boat engines.</description>
       <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
       <field type="uint8_t[6]" name="engine_state" enum="ENGINE_STATE">Engine state. Index i reports the engine with instance number i; indexes with no engine, no report yet, or a stale report are ENGINE_UNKNOWN, and every other per-engine field at that index carries its own unknown value and must be ignored. Senders collapse any finer-grained internal state onto this enum as follows: a transient start attempt, including a failed crank that will be retried, reports ENGINE_STARTING, and only giving up reports ENGINE_FAULT; a stop in progress reports ENGINE_RUNNING for as long as the shaft is still turning, so a stopped engine is never reported while it moves; a fault in the ignition or keyswitch system reports ENGINE_FAULT rather than ENGINE_OFF, so a broken ignition system is never reported as an engine that is merely switched off.</field>
-      <field type="uint8_t[6]" name="engine_load" units="%" invalid="UINT8_MAX">Engine load. May exceed 100% where the underlying sensor allows it (J1939 SPN 92 ranges 0-125%). UINT8_MAX if unknown.</field>
-      <field type="uint16_t[6]" name="engine_rpm" units="rpm" invalid="UINT16_MAX">Engine RPM. UINT16_MAX if unknown.</field>
+      <field type="uint8_t[6]" name="engine_load" units="%" invalid="[UINT8_MAX]">Engine load. May exceed 100% where the underlying sensor allows it (J1939 SPN 92 ranges 0-125%). UINT8_MAX if unknown.</field>
+      <field type="uint16_t[6]" name="engine_rpm" units="rpm" invalid="[UINT16_MAX]">Engine RPM. UINT16_MAX if unknown.</field>
       <field type="float" name="fuel_consumption_rate" units="L/h" invalid="NaN">Fuel consumption rate, summed over all engines reporting a rate: this is a vessel total, not a per-engine value. NaN if unknown.</field>
-      <field type="float[6]" name="oil_pressure" units="kPa" invalid="NaN">Engine oil pressure. NaN if unknown.</field>
-      <field type="uint8_t[6]" name="throttle_position" units="%" invalid="UINT8_MAX">Throttle position. UINT8_MAX if unknown.</field>
-      <field type="float[6]" name="engine_coolant_temperature" units="degC" invalid="NaN">Engine coolant temperature. NaN if unknown &#x2014; note that 0 is a valid temperature and must not be used to mean "no data".</field>
+      <field type="float[6]" name="oil_pressure" units="kPa" invalid="[NaN]">Engine oil pressure. NaN if unknown.</field>
+      <field type="uint8_t[6]" name="throttle_position" units="%" invalid="[UINT8_MAX]">Throttle position. UINT8_MAX if unknown.</field>
+      <field type="float[6]" name="engine_coolant_temperature" units="degC" invalid="[NaN]">Engine coolant temperature. NaN if unknown &#x2014; note that 0 is a valid temperature and must not be used to mean "no data".</field>
       <field type="uint8_t[6]" name="transmission_state" enum="TRANSMISSION_STATE">Transmission state. TRANSMISSION_UNKNOWN if unknown.</field>
     </message>
     <message id="13668" name="FLUID_LEVEL">
