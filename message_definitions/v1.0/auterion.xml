@@ -494,29 +494,25 @@
       <entry value="4" name="APP_VERSION_MISMATCH"/>
       <entry value="8" name="APP_CONFIG_MISMATCH"/>
     </enum>
-    <enum name="VIDEO_STREAM_HEALTH">
-      <description>A video stream's state as judged by its receiver.</description>
-      <entry value="0" name="VIDEO_STREAM_HEALTH_UNKNOWN">
-        <description>Not judged yet, e.g. right after the stream started. Treat as degraded.</description>
+    <enum name="VIDEO_STREAM_PROFILE">
+      <description>Encoder profile a video receiver asks the video sender to stream with, ordered from the most picture quality to the most loss resilience. What each profile sets (resolution, frame rate, bitrate, intra refresh, FEC) is the sender's configuration.</description>
+      <entry value="0" name="VIDEO_STREAM_PROFILE_NONE">
+        <description>No profile asked for: the report counts as not sent.</description>
       </entry>
-      <entry value="1" name="VIDEO_STREAM_HEALTH_HEALTHY">
-        <description>The link is clean, and picture damage is repaired quickly.</description>
+      <entry value="1" name="VIDEO_STREAM_PROFILE_QUALITY">
+        <description>Clean link: the most picture quality.</description>
       </entry>
-      <entry value="2" name="VIDEO_STREAM_HEALTH_DEGRADED">
-        <description>Picture damage persists or packets stopped arriving: faster loss recovery would help.</description>
+      <entry value="2" name="VIDEO_STREAM_PROFILE_BALANCED">
+        <description>Between quality and resilient.</description>
       </entry>
-      <entry value="3" name="VIDEO_STREAM_HEALTH_CONGESTED">
-        <description>The damage comes with mostly late packets: the link is saturated, lowering the bitrate might help.</description>
+      <entry value="3" name="VIDEO_STREAM_PROFILE_RESILIENT">
+        <description>Isolated losses or short bursts.</description>
       </entry>
-    </enum>
-    <enum name="VIDEO_RECEIVER_REQUEST">
-      <description>Action the video receiver asks of the video sender.</description>
-      <entry value="0" name="VIDEO_RECEIVER_REQUEST_NONE"/>
-      <entry value="1" name="VIDEO_RECEIVER_REQUEST_PLI">
-        <description>A picture was lost; the sender chooses how to repair it (e.g. intra refresh).</description>
+      <entry value="4" name="VIDEO_STREAM_PROFILE_RESILIENT_MID">
+        <description>Between resilient and resilient plus.</description>
       </entry>
-      <entry value="2" name="VIDEO_RECEIVER_REQUEST_FIR">
-        <description>The decoder needs a full intra picture (key frame).</description>
+      <entry value="5" name="VIDEO_STREAM_PROFILE_RESILIENT_PLUS">
+        <description>Sustained bursts: the most loss resilience.</description>
       </entry>
     </enum>
   </enums>
@@ -831,14 +827,11 @@
     <message id="13810" name="VIDEO_STREAM_RECEIVER_REPORT">
       <wip/>
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
-      <description>A video stream's health as judged by its receiver, sent to the sender at 1 Hz while video arrives, also when nothing changed. The sender decides how to react, e.g. by switching the encoder profile, and treats 3 s without a report as VIDEO_STREAM_HEALTH_DEGRADED.</description>
+      <description>The encoder profile a video stream's receiver asks for, from what it measures of the stream, sent to the sender at least once per second while video arrives, also when nothing changed. A receiver can send it faster (e.g. 5 Hz) so that a lost report delays a switch less. When reports stop, the sender falls back to its most resilient profile.</description>
       <field type="uint8_t" name="target_system">System ID.</field>
       <field type="uint8_t" name="target_component">Component ID of the camera.</field>
       <field type="uint8_t" name="stream_id">Video stream ID (as in VIDEO_STREAM_INFORMATION).</field>
-      <field type="uint8_t" name="health" enum="VIDEO_STREAM_HEALTH">Stream health.</field>
-      <extensions/>
-      <field type="uint8_t" name="request" enum="VIDEO_RECEIVER_REQUEST">Request carried by this report; NONE otherwise.</field>
-      <field type="uint8_t" name="request_count">Identifies the request: the sender acts once per value. 0 when request is NONE; wraps from 255 to 1.</field>
+      <field type="uint8_t" name="profile" enum="VIDEO_STREAM_PROFILE">Encoder profile the receiver asks for, which the sender switches to if it has it. With several receivers asking for a profile, the sender follows the most resilient one.</field>
     </message>
   </messages>
 </mavlink>
