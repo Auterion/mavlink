@@ -105,8 +105,8 @@
       <entry value="13674" name="MAV_CMD_CAMERA_TRACKING_SELECTION" hasLocation="false" isDestination="false">
         <wip/>
         <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
-        <description>Operator started or ended target selection for camera tracking, the phase in which the operator is choosing a target before tracking starts. Sent to the components that react to target selection, such as the camera. Does not start tracking; use MAV_CMD_CAMERA_TRACK_POINT or MAV_CMD_CAMERA_TRACK_RECTANGLE for that.</description>
-        <param index="1" label="Selection" minValue="0" maxValue="1" increment="1">1: selection started, 0: selection ended (target chosen or selection cancelled).</param>
+        <description>Camera tracking selection was turned on or off. It is on from the moment the operator enters target selection, or a track started by the vehicle becomes active, until tracking is turned off; choosing a target does not end it. Sent to the components that react to it, e.g. to hold the vehicle still while it is on. Does not start tracking; use MAV_CMD_CAMERA_TRACK_POINT or MAV_CMD_CAMERA_TRACK_RECTANGLE for that.</description>
+        <param index="1" label="Selection" minValue="0" maxValue="1" increment="1">1: tracking selection on (selecting a target or tracking), 0: tracking selection off (tracking stopped or selection cancelled).</param>
         <param index="2" label="Target Camera ID" minValue="0" maxValue="255" increment="1">Target camera ID. 7 to 255: MAVLink camera component id. 1 to 6 for cameras attached to the autopilot, which don't have a distinct component id. 0: all cameras.</param>
         <param index="3">Empty</param>
         <param index="4">Empty</param>
