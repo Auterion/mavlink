@@ -262,7 +262,7 @@
         <description>Energize the ignition or keyswitch circuit without cranking. The engine is left not running.</description>
       </entry>
       <entry value="2" name="ENGINE_CMD_START">
-        <description>Crank and start the engine, energizing the ignition first if that is not already done.</description>
+        <description>Crank and start the engine, energizing the ignition first if that is possible and not already done.</description>
       </entry>
       <entry value="3" name="ENGINE_CMD_RESERVED_3">
         <description>Reserved, never to be allocated. Some existing senders (AMC, USV_POWER_CMD::UNDEFINED) send 3 to mean "no request"; giving this value a real action would make every such no-op execute that action. Receivers must reject this value (MAV_RESULT_DENIED) and take no action.</description>
